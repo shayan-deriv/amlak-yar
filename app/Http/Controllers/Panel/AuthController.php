@@ -12,11 +12,10 @@ class AuthController extends Controller
 {
   public function login(Request $request)
   {
-    return $request->all();
     if ($request->password == "1234") {
       $user = User::firstOrFail();
       Auth::login($user);
-      return redirect()->route('donees.index');
+      return redirect()->route('dashboard');
     } else {
       return redirect()->back();
     }

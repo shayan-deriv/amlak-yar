@@ -16,7 +16,7 @@ class Specification extends Model
     const MUTUAl = 2;
     const EXCLUSIVE = 3;
 
-    public static function typeList()
+    public static function powerTypeList()
     {
         return [
             self::DOESNT_HAVE => 'ندارد',
@@ -27,7 +27,7 @@ class Specification extends Model
 
     public function getWaterTypeStrAttribute()
     {
-        $list = self::typeList();
+        $list = self::powerTypeList();
         return isset($list[$this->water])
             ? $list[$this->water]
             : $this->water;
@@ -35,7 +35,7 @@ class Specification extends Model
 
     public function getElectricityTypeStrAttribute()
     {
-        $list = self::typeList();
+        $list = self::powerTypeList();
         return isset($list[$this->electricity])
             ? $list[$this->electricity]
             : $this->electricity;
@@ -43,7 +43,7 @@ class Specification extends Model
 
     public function getGasTypeStrAttribute()
     {
-        $list = self::typeList();
+        $list = self::powerTypeList();
         return isset($list[$this->gas])
             ? $list[$this->gas]
             : $this->gas;

@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Panel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Drivers\Time;
-use App\Models\Donee;
-use App\Models\Donor;
+use App\Models\State;
+use App\Models\City;
 use App\Http\Requests\DoneeRequest;
 
-class DoneesController extends Controller
+class PropertyController extends Controller
 {
   public function index()
   {
@@ -54,9 +54,9 @@ class DoneesController extends Controller
   }
   public function create()
   {
-    return view('panel.admin.donees.create', [
-      'donors' => Donor::select('id', 'full_name')->get()
-    ]);
+    $states = State::all();
+    $cities = City::all();
+    return view('panel.admin.properties.create',compact('states','cities'));
   }
   public function store(Request $request)
   {

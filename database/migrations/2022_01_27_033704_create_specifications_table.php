@@ -21,6 +21,7 @@ class CreateSpecificationsTable extends Migration
             $table->decimal('deposit', 11, 0)->nullable();
             $table->decimal('rent', 11, 0)->nullable();
             $table->boolean('sold')->default(0);
+            $table->boolean('is_empty')->default(0);
             $table->boolean('rented')->default(0);
             $table->boolean('exchangeable')->default(0); // for sell
             $table->boolean('flexible')->default(0); //for rent

@@ -22,11 +22,7 @@
     <link href="{{asset('admin/css/helper.css')}}" rel="stylesheet">
     <link href="{{asset('admin/css/style.css?v=31')}}" rel="stylesheet">
 
-    <!-- Font -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CMontserrat:400,700' rel='stylesheet'
-        type='text/css'>
-    <link href="https://cdn.rawgit.com/rastikerdar/vazir-font/v18.0.0/dist/font-face.css" rel="stylesheet"
-        type="text/css" />
+
 
     <!-- All Jquery -->
     <script src="{{asset('admin/js/lib/jquery/jquery.min.js')}}"></script>
@@ -207,78 +203,50 @@
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <span class="hide-menu">مددجویان
+                                <span class="hide-menu">املاک
                                     {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
                                 </span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('donees.index')}}">مشاهده همه </a></li>
-                                <li><a href="{{route('donees.create')}}">افزودن مددجو جدید </a></li>
+                                <li><a href="{{route('properties.index')}}">مشاهده همه </a></li>
+                                <li><a href="{{route('properties.create')}}">افزودن ملک جدید </a></li>
                             </ul>
                         </li>
 
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="fa fa-gratipay" aria-hidden="true"></i>
-                                <span class="hide-menu">حامی ها
+                                <span class="hide-menu">همکاران
                                     {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
                                 </span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('donors.index')}}">مشاهده همه </a></li>
-                                <li><a href="{{route('donors.create')}}">افزودن حامی جدید </a></li>
+                                <li><a href="{{route('colleagues.index')}}">مشاهده همه </a></li>
+                                <li><a href="{{route('colleagues.create')}}">افزودن همکار جدید </a></li>
                             </ul>
                         </li>
 
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">
-                                <i class="fa fa-users" aria-hidden="true"></i>
-                                <span class="hide-menu">تراکنش ها
+                                <i class="fa fa-gratipay" aria-hidden="true"></i>
+                                <span class="hide-menu">آرشیو
                                     {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
                                 </span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('transactions.index')}}">مشاهده همه </a></li>
-                                <li><a href="{{route('transactions.create')}}">افزودن تراکنش جدید </a></li>
-                                <li><a onclick="return confirm('آیا مطمئن هستید؟')"
-                                        href="{{route('transactions.bank_bulk_store')}}">افزودن دسته ای بانکی </a></li>
-                                <li><a onclick="return confirm('آیا مطمئن هستید؟')"
-                                        href="{{route('transactions.non_bank_bulk_store')}}">افزودن دسته ای غیر بانکی
-                                    </a></li>
+                                <li><a href="{{route('properties.archived')}}">املاک آرشیو شده </a></li>
+                                <li><a href="{{route('colleagues.archived')}}">همکاران آرشیو شده </a></li>
                             </ul>
                         </li>
 
-                        <li>
-                            <a class="has-arrow" href="#" aria-expanded="false">
-                                <i class="fa fa-gift" aria-hidden="true"></i>
-                                <span class="hide-menu">دوره مالی
-                                    {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
-                                </span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('periods.index')}}">مشاهده همه </a></li>
-                                <li><a href="{{route('periods.store')}}"
-                                        onclick="return confirm('آیا مطمئن هستید؟')">افزودن دوره جدید </a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="{{route('users.deactivated')}}">
-                                <i class="fa  fa-user-times" aria-hidden="true"></i>
-                                <span class="hide-menu">کاربران غیرفعال
-                                    {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
+                        {{-- <li>
                             <a href="{{route('settings.show')}}">
                                 <i class="fa  fa-gear" aria-hidden="true"></i>
                                 <span class="hide-menu">تنظیمات
-                                    {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
+                                     <span class="label label-rouded label-primary pull-right">۲</span> 
                                 </span>
                             </a>
-                        </li>
+                        </li> --}}
 
                 </nav>
                 <!-- End Sidebar navigation -->
