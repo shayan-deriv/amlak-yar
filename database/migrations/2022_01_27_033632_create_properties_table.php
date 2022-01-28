@@ -32,6 +32,7 @@ class CreatePropertiesTable extends Migration
             $table->boolean('parking')->default(0);
             $table->boolean('storage')->default(0);
             $table->boolean('asansor')->default(0);
+            $table->unsignedTinyInteger('share')->default(6);
             $table->unsignedTinyInteger('floor')->default(0);
             $table->unsignedTinyInteger('total_floor')->nullable();
             $table->unsignedTinyInteger('unit')->nullable();

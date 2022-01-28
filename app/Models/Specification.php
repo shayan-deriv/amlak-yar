@@ -48,4 +48,28 @@ class Specification extends Model
             ? $list[$this->gas]
             : $this->gas;
     }
+
+    // heating type
+    const RADIATOR = 1;
+    const HEATER = 2;
+    const CENTERAL = 3;
+    const FIREPLACE = 4;
+
+    public static function heatingTypeList()
+    {
+        return [
+            self::RADIATOR => 'شوفاژ',
+            self::HEATER => 'بخاری',
+            self::CENTERAL => 'موتورخانه',
+            self::FIREPLACE => 'شومینه',
+        ];
+    }
+
+    public function getHeaterTypeStrAttribute()
+    {
+        $list = self::heaterTypeList();
+        return isset($list[$this->heating_type])
+            ? $list[$this->heating_type]
+            : $this->heating_type;
+    }
 }

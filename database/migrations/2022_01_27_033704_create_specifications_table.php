@@ -22,11 +22,13 @@ class CreateSpecificationsTable extends Migration
             $table->decimal('rent', 11, 0)->nullable();
             $table->boolean('sold')->default(0);
             $table->boolean('rented')->default(0);
+            $table->boolean('exchangeable')->default(0); // for sell
+            $table->boolean('flexible')->default(0); //for rent
             $table->boolean('cabinet')->default(0);
             $table->string('cabinet_material')->nullable();
             $table->boolean('parket')->default(0);
             $table->boolean('heating')->default(0);
-            $table->string('heating_type')->nullable();
+            $table->unsignedTinyInteger('heating_type')->nullable();
             $table->boolean('cooling')->default(0);
             $table->boolean('telephone')->default(1);
             $table->unsignedTinyInteger('water')->default(1);
