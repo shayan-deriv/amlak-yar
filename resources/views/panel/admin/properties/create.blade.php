@@ -89,11 +89,11 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">نام</label>
-                        <input autocomplete="off" type="text" id="full_name" name="full_name"
-                          value="{{ old('full_name', '') }}"
-                          class="form-control {{ $errors->has('full_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('full_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('full_name') }}</small>
+                        <input autocomplete="off" type="text" id="landlord_first_name" name="landlord_first_name"
+                          value="{{ old('landlord_first_name', '') }}"
+                          class="form-control {{ $errors->has('landlord_first_name') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('landlord_first_name'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('landlord_first_name') }}</small>
                         @endif
                       </div>
                     </div>
@@ -101,33 +101,33 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">نام خانوادگی </label>
-                        <input autocomplete="off" type="text" id="father_name" name="father_name"
-                          value="{{ old('father_name', '') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="text" id="landlord_last_name" name="landlord_last_name"
+                          value="{{ old('landlord_last_name', '') }}"
+                          class="form-control {{ $errors->has('landlord_last_name') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('landlord_last_name'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('landlord_last_name') }}</small>
                         @endif
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label"> موبایل 1 </label>
-                        <input autocomplete="off" type="text" id="mobile" name="mobile"
-                          class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" maxlength="11"
-                          value="{{ old('mobile', '') }}" onkeyup="onlyNumber(this)">
-                        @if ($errors->has('mobile'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('mobile') }}</small>
+                        <input autocomplete="off" type="text" id="primary_mobile" name="primary_mobile"
+                          class="form-control {{ $errors->has('primary_mobile') ? 'is-invalid' : '' }}" maxlength="11"
+                          value="{{ old('primary_mobile', '') }}" onkeyup="onlyNumber(this)">
+                        @if ($errors->has('primary_mobile'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('primary_mobile') }}</small>
                         @endif
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">موبایل 2 </label>
-                        <input autocomplete="off" type="text" id="mobile" name="mobile"
-                          class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" maxlength="11"
-                          value="{{ old('mobile', '') }}" onkeyup="onlyNumber(this)">
-                        @if ($errors->has('mobile'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('mobile') }}</small>
+                        <input autocomplete="off" type="text" id="secondary_mobile" name="secondary_mobile"
+                          class="form-control {{ $errors->has('secondary_mobile') ? 'is-invalid' : '' }}" maxlength="11"
+                          value="{{ old('secondary_mobile', '') }}" onkeyup="onlyNumber(this)">
+                        @if ($errors->has('secondary_mobile'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('secondary_mobile') }}</small>
                         @endif
                       </div>
                     </div>
@@ -163,10 +163,10 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">استان</label>
-                        <select name="type" id="period" class="form-control selectpicker show-tick"
+                        <select name="state" id="state" class="form-control selectpicker show-tick"
                           data-live-search="true">
                           @foreach ($states as $state)
-                            <option value="{{ $state->id }}">
+                            <option value="{{ $state->id }}" {{old('state') == $state->id ? 'selected' : ''}}>
                               {{ $state->fa_name }}
                             </option>
                           @endforeach
@@ -176,10 +176,10 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">شهر</label>
-                        <select name="type" id="period" class="form-control selectpicker show-tick"
+                        <select name="city" id="city" class="form-control selectpicker show-tick"
                           data-live-search="true">
                           @foreach ($cities as $city)
-                            <option value="{{ $city->id }}">
+                            <option value="{{ $city->id }}" {{old('city') == $city->id ? 'selected' : ''}}>
                               {{ $city->name }}
                             </option>
                           @endforeach
@@ -189,10 +189,10 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">نوع ملک</label>
-                        <select name="type" id="period" class="form-control selectpicker show-tick"
+                        <select name="type" id="type" class="form-control selectpicker show-tick"
                           data-live-search="true">
                           @foreach (\App\Models\Property::typeList() as $id => $str)
-                            <option value="{{ $id }}">
+                            <option value="{{ $id }}" {{old('type') == $id ? 'selected' : ''}}>
                               {{ $str }}
                             </option>
                           @endforeach
@@ -213,11 +213,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">تعداد اتاق ها</label>
-                        <input autocomplete="off" type="number" min="1" max="6" id="father_name" name="father_name"
-                          value="{{ old('father_name', '6') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="0" max="6" id="total_rooms" name="total_rooms"
+                          value="{{ old('total_rooms', '') }}"
+                          class="form-control {{ $errors->has('total_rooms') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('total_rooms'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('total_rooms') }}</small>
                         @endif
                       </div>
                     </div>
@@ -226,11 +226,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">طبقه</label>
-                        <input autocomplete="off" type="number" min="0" id="father_name" name="father_name"
-                          value="{{ old('father_name', '') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="0" id="floor" name="floor"
+                          value="{{ old('floor', '') }}"
+                          class="form-control {{ $errors->has('floor') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('floor'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('floor') }}</small>
                         @endif
                       </div>
                     </div>
@@ -238,11 +238,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">کل طبقات</label>
-                        <input autocomplete="off" type="number" min="0" id="father_name" name="father_name"
-                          value="{{ old('father_name', '') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="0" id="total_floor" name="total_floor"
+                          value="{{ old('total_floor', '') }}"
+                          class="form-control {{ $errors->has('total_floor') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('total_floor'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('total_floor') }}</small>
                         @endif
                       </div>
                     </div>
@@ -251,11 +251,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">واحد</label>
-                        <input autocomplete="off" type="number" min="0" id="father_name" name="father_name"
-                          value="{{ old('father_name', '') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="0" id="unit" name="unit"
+                          value="{{ old('unit', '') }}"
+                          class="form-control {{ $errors->has('unit') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('unit'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('unit') }}</small>
                         @endif
                       </div>
                     </div>
@@ -263,11 +263,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">کل واحد ها</label>
-                        <input autocomplete="off" type="number" min="0" id="father_name" name="father_name"
-                          value="{{ old('father_name', '') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="0" id="total_unit" name="total_unit"
+                          value="{{ old('total_unit', '') }}"
+                          class="form-control {{ $errors->has('total_unit') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('total_unit'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('total_unit') }}</small>
                         @endif
                       </div>
                     </div>
@@ -275,11 +275,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">مساحت</label>
-                        <input autocomplete="off" type="number" min="0" id="father_name" name="father_name"
-                          value="{{ old('father_name', '') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="0" id="total_area" name="total_area"
+                          value="{{ old('total_area', '') }}"
+                          class="form-control {{ $errors->has('total_area') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('total_area'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('total_area') }}</small>
                         @endif
                       </div>
                     </div>
@@ -287,11 +287,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">بنای مفید</label>
-                        <input autocomplete="off" type="number" min="0" id="father_name" name="father_name"
-                          value="{{ old('father_name', '') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="0" id="built_area" name="built_area"
+                          value="{{ old('built_area', '') }}"
+                          class="form-control {{ $errors->has('built_area') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('built_area'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('built_area') }}</small>
                         @endif
                       </div>
                     </div>
@@ -299,11 +299,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">سن بنا</label>
-                        <input autocomplete="off" type="number" min="1" max="6" id="father_name" name="father_name"
-                          value="{{ old('father_name', '6') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="0" id="age" name="age"
+                          value="{{ old('age', '') }}"
+                          class="form-control {{ $errors->has('age') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('age'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('age') }}</small>
                         @endif
                       </div>
                     </div>
@@ -312,11 +312,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">قدر السهم (دانگ)</label>
-                        <input autocomplete="off" type="number" min="1" max="6" id="father_name" name="father_name"
-                          value="{{ old('father_name', '6') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="number" min="1" max="6" id="share" name="share"
+                          value="{{ old('share', '6') }}"
+                          class="form-control {{ $errors->has('share') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('share'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('share') }}</small>
                         @endif
                       </div>
                     </div>
@@ -324,11 +324,11 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">نمای ساختمان</label>
-                        <input autocomplete="off" type="text" id="father_name" name="father_name"
-                          value="{{ old('father_name', '') }}"
-                          class="form-control {{ $errors->has('father_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('father_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('father_name') }}</small>
+                        <input autocomplete="off" type="text" id="texture" name="texture"
+                          value="{{ old('texture', '') }}"
+                          class="form-control {{ $errors->has('texture') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('texture'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('texture') }}</small>
                         @endif
                       </div>
                     </div>
@@ -336,9 +336,9 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">نوع سند</label>
-                        <select name="type" id="period" class="form-control">
+                        <select name="type" id="deed" class="form-control">
                           @foreach (\App\Models\Property::deedList() as $index => $deed)
-                            <option value="{{ $index }}">{{ $deed }}</option>
+                            <option value="{{ $index }}" {{old('deed') == $index ? 'selected' : ''}}>{{ $deed }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -347,9 +347,9 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">کاربری</label>
-                        <select name="type" id="period" class="form-control">
+                        <select name="type" id="usage" class="form-control">
                           @foreach (\App\Models\Property::usageList() as $index => $usage)
-                            <option value="{{ $index }}">{{ $usage }}</option>
+                            <option value="{{ $index }}" {{old('usage') == $index ? 'selected' : ''}}>{{ $usage }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -360,9 +360,9 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">وضعیت سکنه</label>
-                        <select name="type" id="period" class="form-control">
-                          <option value="0" selected>خالی نمی باشد</option>
-                          <option value="1">خالی می باشد</option>
+                        <select name="type" id="is_empty" class="form-control">
+                          <option value="0" {{old('is_empty') == 0 ? 'selected' : ''}}>خالی نمی باشد</option>
+                          <option value="1" {{old('is_empty') == 1 ? 'selected' : ''}}>خالی می باشد</option>
                         </select>
                       </div>
                     </div>
@@ -370,11 +370,11 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label">تاریخ تخلیه</label>
-                        <input autocomplete="off" type="text" autocomplete="off" id="birth_date"
-                          value="{{ old('birth_date', '') }}" name="birth_date"
-                          class="form-control datepicker {{ $errors->has('birth_date') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('birth_date'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('birth_date') }}</small>
+                        <input autocomplete="off" type="text" autocomplete="off" id="evacuation_date"
+                          value="{{ old('evacuation_date', '') }}" name="evacuation_date"
+                          class="form-control datepicker {{ $errors->has('evacuation_date') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('evacuation_date'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('evacuation_date') }}</small>
                         @endif
                       </div>
                     </div>
@@ -389,10 +389,10 @@
                         <br>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                           <label class="btn btn-secondary">
-                            <input type="radio" autocomplete="off" value="1"> باهم
+                            <input type="radio" autocomplete="off" name="toilet_together" value="1" {{old('toilet_together') == 1 ? 'checked' : ''}}> باهم
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="radio" autocomplete="off" value="0"> جدا
+                            <input type="radio" autocomplete="off" name="toilet_together" value="0" {{old('toilet_together') == 1 ? 'checked' : ''}}> جدا
                           </label>
                         </div>
                       </div>
@@ -404,13 +404,13 @@
                         <br>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> اجاره
+                            <input type="checkbox" name="for_rent" {{old('for_rent') == 1 ? 'checked' : ''}} autocomplete="off"> اجاره
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> فروش
+                            <input type="checkbox" name="for_sell" {{old('for_sell') == 1 ? 'checked' : ''}} autocomplete="off"> فروش
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> پیش فروش
+                            <input type="checkbox" name="for_pre_sell" {{old('for_pre_sell') == 1 ? 'checked' : ''}} autocomplete="off"> پیش فروش
                           </label>
                         </div>
                       </div>
@@ -421,34 +421,34 @@
                         <br>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> پارکینگ
+                            <input type="checkbox" name="parking" {{old('parking') == 1 ? 'checked' : ''}} autocomplete="off"> پارکینگ
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> انباری
+                            <input type="checkbox" name="storage" {{old('storage') == 1 ? 'checked' : ''}} autocomplete="off"> انباری
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> آسانسور
+                            <input type="checkbox" name="elevator" {{old('elevator') == 1 ? 'checked' : ''}} autocomplete="off"> آسانسور
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> تراس
+                            <input type="checkbox" name="balcony" {{old('balcony') == 1 ? 'checked' : ''}} autocomplete="off"> تراس
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> حیاط
+                            <input type="checkbox" name="yard" {{old('yard') == 1 ? 'checked' : ''}} autocomplete="off"> حیاط
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> پارکت
+                            <input type="checkbox" name="parket" {{old('parket') == 1 ? 'checked' : ''}} autocomplete="off"> پارکت
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> سرمایشی
+                            <input type="checkbox" name="cooling" {{old('cooling') == 1 ? 'checked' : ''}} autocomplete="off"> سرمایشی
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> گرمایشی
+                            <input type="checkbox" name="heating" {{old('heating') == 1 ? 'checked' : ''}} autocomplete="off"> گرمایشی
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> تلفن
+                            <input type="checkbox" name="telephone" {{old('telephone') == 1 ? 'checked' : ''}} autocomplete="off"> تلفن
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" autocomplete="off"> کابینت
+                            <input type="checkbox" name="cabinet" {{old('cabinet') == 1 ? 'checked' : ''}} autocomplete="off"> کابینت
                           </label>
                         </div>
                       </div>
@@ -457,9 +457,9 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">سیستم گرمایشی</label>
-                        <select name="type" id="period" class="form-control">
+                        <select name="type" id="heating_type" class="form-control">
                           @foreach (\App\Models\Specification::heatingTypeList() as $index => $heating)
-                            <option value="{{ $index }}">{{ $heating }}</option>
+                            <option value="{{ $index }}" {{old('heating_type') == $index ? 'checked' : ''}}>{{ $heating }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -468,9 +468,9 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">آب</label>
-                        <select name="type" id="period" class="form-control">
+                        <select name="water" id="period" class="form-control">
                           @foreach (\App\Models\Specification::powerTypeList() as $index => $heating)
-                            <option value="{{ $index }}">{{ $heating }}</option>
+                            <option value="{{ $index }}" {{old('water') == $index ? 'checked' : ''}}>{{ $heating }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -479,9 +479,9 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">برق</label>
-                        <select name="type" id="period" class="form-control">
+                        <select name="electricity" id="period" class="form-control">
                           @foreach (\App\Models\Specification::powerTypeList() as $index => $heating)
-                            <option value="{{ $index }}">{{ $heating }}</option>
+                            <option value="{{ $index }}" {{old('electricity') == $index ? 'checked' : ''}}>{{ $heating }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -490,9 +490,9 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">گاز</label>
-                        <select name="type" id="period" class="form-control">
+                        <select name="gas" id="period" class="form-control">
                           @foreach (\App\Models\Specification::powerTypeList() as $index => $heating)
-                            <option value="{{ $index }}">{{ $heating }}</option>
+                            <option value="{{ $index }}" {{old('gas') == $index ? 'checked' : ''}}>{{ $heating }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -523,26 +523,26 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label class="control-label">مبلغ کل</label>
-                            <input autocomplete="off" type="text" id="bank_account_number" name="bank_account_number"
-                              value="{{ old('bank_account_number', '') }}"
-                              class="form-control {{ $errors->has('bank_account_number') ? 'is-invalid' : '' }}"
+                            <input autocomplete="off" type="text" id="total_price" name="total_price"
+                              value="{{ old('total_price', '') }}"
+                              class="form-control {{ $errors->has('total_price') ? 'is-invalid' : '' }}"
                               onkeyup="onlyNumber(this)">
-                            @if ($errors->has('bank_account_number'))
+                            @if ($errors->has('total_price'))
                               <small
-                                class="form-control-feedback text-danger">{{ $errors->first('bank_account_number') }}</small>
+                                class="form-control-feedback text-danger">{{ $errors->first('total_price') }}</small>
                             @endif
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
                             <label class="control-label">قیمت هر متر</label>
-                            <input autocomplete="off" maxlength="16" type="text" id="bank_card_number"
-                              name="bank_card_number" value="{{ old('bank_card_number', '') }}"
-                              class="form-control {{ $errors->has('bank_card_number') ? 'is-invalid' : '' }}"
+                            <input autocomplete="off" maxlength="16" type="text" id="unit_price"
+                              name="unit_price" value="{{ old('unit_price', '') }}"
+                              class="form-control {{ $errors->has('unit_price') ? 'is-invalid' : '' }}"
                               onkeyup="onlyNumber(this)">
-                            @if ($errors->has('bank_card_number'))
+                            @if ($errors->has('unit_price'))
                               <small
-                                class="form-control-feedback text-danger">{{ $errors->first('bank_card_number') }}</small>
+                                class="form-control-feedback text-danger">{{ $errors->first('unit_price') }}</small>
                             @endif
                           </div>
                         </div>
@@ -550,7 +550,7 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label class="control-label">قابل معاوضه</label>
-                            <select name="type" id="period" class="form-control">
+                            <select name="exchangeable" id="period" class="form-control">
                               <option value="0">نمی باشد</option>
                               <option value="1">می باشد</option>
                             </select>
@@ -561,24 +561,24 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label class="control-label">ودیعه</label>
-                            <input autocomplete="off" type="text" id="bank_account_owner" name="bank_account_owner"
-                              value="{{ old('bank_account_owner', '') }}"
-                              class="form-control {{ $errors->has('bank_account_owner') ? 'is-invalid' : '' }}">
-                            @if ($errors->has('bank_account_owner'))
+                            <input autocomplete="off" type="text" id="deposit" name="deposit"
+                              value="{{ old('deposit', '') }}"
+                              class="form-control {{ $errors->has('deposit') ? 'is-invalid' : '' }}">
+                            @if ($errors->has('deposit'))
                               <small
-                                class="form-control-feedback text-danger">{{ $errors->first('bank_account_owner') }}</small>
+                                class="form-control-feedback text-danger">{{ $errors->first('deposit') }}</small>
                             @endif
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group">
                             <label class="control-label">اجاره بها</label>
-                            <input autocomplete="off" type="text" id="bank_name" name="bank_name"
-                              value="{{ old('bank_name', '') }}"
-                              class="form-control {{ $errors->has('bank_name') ? 'is-invalid' : '' }}">
-                            @if ($errors->has('bank_name'))
+                            <input autocomplete="off" type="text" id="rent" name="rent"
+                              value="{{ old('rent', '') }}"
+                              class="form-control {{ $errors->has('rent') ? 'is-invalid' : '' }}">
+                            @if ($errors->has('rent'))
                               <small
-                                class="form-control-feedback text-danger">{{ $errors->first('bank_name') }}</small>
+                                class="form-control-feedback text-danger">{{ $errors->first('rent') }}</small>
                             @endif
                           </div>
                         </div>
@@ -586,7 +586,7 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label class="control-label">قابل تبدیل</label>
-                            <select name="type" id="period" class="form-control">
+                            <select name="flexible" id="period" class="form-control">
                               <option value="0">نمی باشد</option>
                               <option value="1">می باشد</option>
                             </select>
@@ -600,10 +600,10 @@
                             <br>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               <label class="btn btn-secondary">
-                                <input type="checkbox" autocomplete="off"> فروخته شد
+                                <input type="checkbox" autocomplete="off" value="sold"> فروخته شد
                               </label>
                               <label class="btn btn-secondary">
-                                <input type="checkbox" autocomplete="off"> اجاره رفت
+                                <input type="checkbox" autocomplete="off" value="rented"> اجاره رفت
                               </label>
                             </div>
                           </div>
@@ -611,8 +611,7 @@
 
                       </div>
                       <div class="form-actions text-left" style="margin-top:80px">
-                        <button type="submit" class="btn btn-success" onclick="submit_form()"> ثبت <i
-                            class="fa fa-check"></i> </button>
+                        <button type="submit" class="btn btn-success" onclick="submit_form()"> ثبت <i class="fa fa-check"></i> </button>
                       </div>
                     </div>
                   </div>
@@ -672,21 +671,7 @@
 
 
     function submit_form() {
-      let content = ``;
-      for (let i = 0; i < donors.length; i++) {
-        content += `
-            <input type="hidden" name="donors[${i}][id]" value="${donors[i].id}">
-            <input type="hidden" name="donors[${i}][type]" value="${donors[i].type}">
-            <input type="hidden" name="donors[${i}][money]" value="${donors[i].money}">
-            <input type="hidden" name="donors[${i}][no_money]" value="${donors[i].no_money}">
-          `
-      }
-
-      $("#property_form").append(content)
-
       $("#property_form").submit();
-
-
     }
   </script>
 

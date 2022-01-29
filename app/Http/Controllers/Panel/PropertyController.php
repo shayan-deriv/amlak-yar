@@ -60,6 +60,8 @@ class PropertyController extends Controller
   }
   public function store(Request $request)
   {
+
+    return $request->all();
     $donee = new Donee;
     $donee->file_number = $request->file_number;
     $donee->full_name = $request->full_name;
