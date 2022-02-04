@@ -100,5 +100,16 @@ class Property extends Model
             : $this->status;
     }
 
+    public function scopePublished($query)
+    {
+        $query->where('status', self::PUBLISHED);
+    }
+
+
+    public function scopeArchived($query)
+    {
+        $query->where('status', self::ARCHIVED);
+    }
+
     
 }

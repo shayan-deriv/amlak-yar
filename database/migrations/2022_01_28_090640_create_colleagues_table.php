@@ -21,6 +21,7 @@ class CreateColleaguesTable extends Migration
             $table->string('secondary_mobile')->nullable();
             $table->string('phone')->nullable();
             $table->string('address', 255)->nullable();
+            $table->unsignedTinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

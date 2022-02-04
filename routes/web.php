@@ -5,6 +5,8 @@ use App\Http\Controllers\Panel\AuthController;
 use App\Http\Controllers\Panel\DashboardController;
 use App\Http\Controllers\Panel\PropertyController;
 use App\Http\Controllers\Panel\ColleagueController;
+use App\Http\Controllers\Panel\AreaController;
+use App\Http\Controllers\Panel\ComplexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +55,33 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         // Route::get('/count_deactivate', 'PropertyController@count_deactivate')->name('count_deactivate');
         // Route::get('/activate/{property?}', 'PropertyController@activate')->name('activate');
         // Route::get('/deactivate/{property?}', 'PropertyController@deactivate')->name('deactivate');
+    });
+
+    Route::prefix('areas')->name('areas.')->group(function () {
+        Route::get('/', [AreaController::class,'index'])->name('index');
+        Route::get('/create', [AreaController::class,'create'])->name('create');
+        Route::get('/archived', [AreaController::class,'archived'])->name('archived');
+        Route::post('/store', [AreaController::class,'store'])->name('store');
+        // Route::get('/show/{property?}', 'PropertyController@show')->name('show');
+        // Route::get('/edit/{property?}', 'PropertyController@edit')->name('edit');
+        // Route::patch('/update/{property}', 'PropertyController@update')->name('update');
+        // Route::get('/remove/{property}', 'PropertyController@remove')->name('remove');
+        // Route::get('/delete', 'PropertyController@delete')->name('delete');
+        // Route::get('/fetch', 'PropertyController@fetch')->name('fetch');
+        // Route::get('/fetch_deactivate', 'PropertyController@fetch_deactivate')->name('fetch_deactivate');
+        // Route::get('/count', 'PropertyController@count')->name('count');
+        // Route::get('/count_deactivate', 'PropertyController@count_deactivate')->name('count_deactivate');
+        // Route::get('/activate/{property?}', 'PropertyController@activate')->name('activate');
+        // Route::get('/deactivate/{property?}', 'PropertyController@deactivate')->name('deactivate');
+    });
+
+    Route::prefix('complexes')->name('complexes.')->group(function () {
+        Route::get('/', [ComplexController::class,'index'])->name('index');
+        Route::get('/create', [ComplexController::class,'create'])->name('create');
+        Route::post('/store', [ComplexController::class,'store'])->name('store');
+        Route::get('/edit/{complex}', [ComplexController::class,'edit'])->name('edit');
+        Route::patch('/update/{complex}', [ComplexController::class,'update'])->name('update');
+        Route::get('/archive', [ComplexController::class,'archive'])->name('archive');
     });
 
     Route::prefix('colleagues')->name('colleagues.')->group(function () {

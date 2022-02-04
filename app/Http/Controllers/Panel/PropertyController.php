@@ -13,7 +13,7 @@ class PropertyController extends Controller
 {
   public function index()
   {
-    return view('panel.admin.donees.index');
+    return view('panel.admin.properties.index');
   }
   public function fetch(Request $request)
   {

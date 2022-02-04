@@ -22,6 +22,7 @@ class CreatePropertiesTable extends Migration
             $table->string('secondary_mobile')->nullable();
             $table->string('phone')->nullable();
             $table->string('address', 255)->nullable();
+            $table->string('description', 255)->nullable();
             $table->timestamp('registered_at')->nullable();
             $table->unsignedTinyInteger('deed')->default(1);//نوع سند
             $table->unsignedTinyInteger('usage')->default(1);//نوع کاربری
@@ -46,9 +47,28 @@ class CreatePropertiesTable extends Migration
             $table->unsignedTinyInteger('total_rooms')->default(0);;
             $table->boolean('toilet_together')->default(0);
             $table->string('texture')->nullable();
-            $table->integer('state_id')->unsigned();
-            $table->integer('city_id')->unsigned();
+            $table->bigInteger('state_id')->unsigned()->nullable();
+            $table->bigInteger('city_id')->unsigned()->nullable();
+            $table->bigInteger('area_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('state_id', 'fk_properties_states')
+            ->references('id')
+            ->on('states')
+            ->onUpdate('CASCADE')
+            ->onDelete('NO ACTION');
+
+            $table->foreign('city_id', 'fk_properties_cities')
+            ->references('id')
+            ->on('cities')
+            ->onUpdate('CASCADE')
+            ->onDelete('NO ACTION');
+
+            $table->foreign('area_id', 'fk_properties_areas')
+            ->references('id')
+            ->on('areas')
+            ->onUpdate('CASCADE')
+            ->onDelete('NO ACTION');
         });
     }
 

@@ -215,6 +215,32 @@
 
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <span class="hide-menu">محله
+                                    {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
+                                </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{route('areas.index')}}">مشاهده همه </a></li>
+                                <li><a href="{{route('areas.create')}}">افزودن محله جدید </a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <span class="hide-menu">مجتمع مسکونی
+                                    {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
+                                </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{route('complexes.index')}}">مشاهده همه </a></li>
+                                <li><a href="{{route('complexes.create')}}">افزودن مجتمع مسکونی جدید </a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="fa fa-gratipay" aria-hidden="true"></i>
                                 <span class="hide-menu">همکاران
                                     {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
