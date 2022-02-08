@@ -9,12 +9,36 @@ class Specification extends Model
 {
     use HasFactory;
 
-    protected $table = 'specification';
+    protected $table = 'specifications';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'property_id',
+        'total_price',
+        'unit_price',
+        'deposit',
+        'rent',
+        'sold',
+        'is_empty',
+        'rented',
+        'exchangeable',
+        'flexible',
+        'cabinet',
+        'cabinet_material',
+        'parket',
+        'heating',
+        'cooling',
+        'telephone',
+        'water',
+        'electricity',
+        'gas',
+        'evacuation_date'
+    ];
 
     // powers type
-    const DOESNT_HAVE = 1;
-    const MUTUAl = 2;
-    const EXCLUSIVE = 3;
+    const DOESNT_HAVE = 0;
+    const MUTUAl = 1;
+    const EXCLUSIVE = 2;
 
     public static function powerTypeList()
     {
@@ -50,6 +74,7 @@ class Specification extends Model
     }
 
     // heating type
+    const NO_HEATING = 0;
     const RADIATOR = 1;
     const HEATER = 2;
     const CENTERAL = 3;
@@ -58,6 +83,7 @@ class Specification extends Model
     public static function heatingTypeList()
     {
         return [
+            self::NO_HEATING => 'ندارد',
             self::RADIATOR => 'شوفاژ',
             self::HEATER => 'بخاری',
             self::CENTERAL => 'موتورخانه',

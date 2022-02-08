@@ -32,7 +32,9 @@ class CreatePropertiesTable extends Migration
             $table->unsignedTinyInteger('status')->default(1);
             $table->boolean('parking')->default(0);
             $table->boolean('storage')->default(0);
-            $table->boolean('asansor')->default(0);
+            $table->boolean('elevator')->default(0);
+            $table->boolean('balcony')->default(0);
+            $table->boolean('yard')->default(0);
             $table->unsignedTinyInteger('share')->default(6);
             $table->unsignedTinyInteger('floor')->default(0);
             $table->unsignedTinyInteger('total_floor')->nullable();
@@ -41,15 +43,13 @@ class CreatePropertiesTable extends Migration
             $table->unsignedInteger('total_area')->nullable();
             $table->unsignedInteger('built_area')->nullable();
             $table->unsignedSmallInteger('age')->nullable();
-            $table->boolean('elevator')->default(0);
-            $table->boolean('balcony')->default(0);
-            $table->boolean('yard')->default(0);
-            $table->unsignedTinyInteger('total_rooms')->default(0);;
+            $table->unsignedTinyInteger('total_rooms')->default(0);
             $table->boolean('toilet_together')->default(0);
             $table->string('texture')->nullable();
             $table->bigInteger('state_id')->unsigned()->nullable();
             $table->bigInteger('city_id')->unsigned()->nullable();
             $table->bigInteger('area_id')->unsigned()->nullable();
+            $table->bigInteger('complex_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('state_id', 'fk_properties_states')
@@ -67,6 +67,12 @@ class CreatePropertiesTable extends Migration
             $table->foreign('area_id', 'fk_properties_areas')
             ->references('id')
             ->on('areas')
+            ->onUpdate('CASCADE')
+            ->onDelete('NO ACTION');
+
+            $table->foreign('complex_id', 'fk_properties_complexes')
+            ->references('id')
+            ->on('complexes')
             ->onUpdate('CASCADE')
             ->onDelete('NO ACTION');
         });

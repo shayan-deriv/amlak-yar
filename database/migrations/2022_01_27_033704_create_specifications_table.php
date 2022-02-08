@@ -15,7 +15,7 @@ class CreateSpecificationsTable extends Migration
     {
         Schema::create('specifications', function (Blueprint $table) {
             $table->id();
-            $table->integer('property_id')->unsigned();
+            $table->integer('property_id')->index();
             $table->decimal('total_price', 11, 0)->nullable();
             $table->decimal('unit_price', 11, 0)->nullable();
             $table->decimal('deposit', 11, 0)->nullable();
@@ -26,15 +26,13 @@ class CreateSpecificationsTable extends Migration
             $table->boolean('exchangeable')->default(0); // for sell
             $table->boolean('flexible')->default(0); //for rent
             $table->boolean('cabinet')->default(0);
-            $table->string('cabinet_material')->nullable();
             $table->boolean('parket')->default(0);
-            $table->boolean('heating')->default(0);
-            $table->unsignedTinyInteger('heating_type')->nullable();
+            $table->unsignedTinyInteger('heating')->defalt(0);
             $table->boolean('cooling')->default(0);
             $table->boolean('telephone')->default(1);
-            $table->unsignedTinyInteger('water')->default(1);
-            $table->unsignedTinyInteger('electricity')->default(1);
-            $table->unsignedTinyInteger('gas')->default(1);
+            $table->unsignedTinyInteger('water')->default(0);
+            $table->unsignedTinyInteger('electricity')->default(0);
+            $table->unsignedTinyInteger('gas')->default(0);
             $table->timestamp('evacuation_date')->nullable();
         });
     }

@@ -160,40 +160,56 @@
                   <h3 class="card-title m-t-15">2) اطلاعات ملک</h3>
                   <hr>
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">استان</label>
-                        <select name="state" id="state" class="form-control selectpicker show-tick"
+                        <select name="state_id" id="state_id" class="form-control selectpicker show-tick"
                           data-live-search="true">
                           @foreach ($states as $state)
-                            <option value="{{ $state->id }}" {{old('state') == $state->id ? 'selected' : ''}}>
+                            <option value="{{ $state->id }}" {{old('state_id') == $state->id ? 'selected' : ''}}>
                               {{ $state->fa_name }}
                             </option>
                           @endforeach
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">شهر</label>
-                        <select name="city" id="city" class="form-control selectpicker show-tick"
+                        <select name="city_id" id="city_id" class="form-control selectpicker show-tick"
                           data-live-search="true">
                           @foreach ($cities as $city)
-                            <option value="{{ $city->id }}" {{old('city') == $city->id ? 'selected' : ''}}>
+                            <option value="{{ $city->id }}" {{old('city_id') == $city->id ? 'selected' : ''}}>
                               {{ $city->name }}
                             </option>
                           @endforeach
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">نوع ملک</label>
-                        <select name="type" id="type" class="form-control selectpicker show-tick"
+                        <label class="control-label">محله</label>
+                        <select name="area_id" id="area_id" class="form-control selectpicker show-tick"
                           data-live-search="true">
-                          @foreach (\App\Models\Property::typeList() as $id => $str)
-                            <option value="{{ $id }}" {{old('type') == $id ? 'selected' : ''}}>
-                              {{ $str }}
+                          @foreach ($areas as $area)
+                            <option value="{{ $area->id }}" {{old('area_id') == $area->id ? 'selected' : ''}}>
+                              {{ $area->name }}
+                            </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">مجتمع مسکونی</label>
+                        <select name="complex_id" id="complex_id" class="form-control selectpicker show-tick"
+                          data-live-search="true">
+                          <option value="no" selected>
+                            ندارد
+                          </option>
+                          @foreach ($complexes as $complex)
+                            <option value="{{ $complex->id }}" {{old('complex_id') == $complex->id ? 'selected' : ''}}>
+                              {{ $complex->name }}
                             </option>
                           @endforeach
                         </select>
@@ -210,6 +226,21 @@
                         @endif
                       </div>
                     </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">نوع ملک</label>
+                        <select name="type" id="type" class="form-control selectpicker show-tick"
+                          data-live-search="true">
+                          @foreach (\App\Models\Property::typeList() as $id => $str)
+                            <option value="{{ $id }}" {{old('type') == $id ? 'selected' : ''}}>
+                              {{ $str }}
+                            </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">تعداد اتاق ها</label>
@@ -336,7 +367,7 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">نوع سند</label>
-                        <select name="type" id="deed" class="form-control">
+                        <select name="deed" id="deed" class="form-control">
                           @foreach (\App\Models\Property::deedList() as $index => $deed)
                             <option value="{{ $index }}" {{old('deed') == $index ? 'selected' : ''}}>{{ $deed }}</option>
                           @endforeach
@@ -347,7 +378,7 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">کاربری</label>
-                        <select name="type" id="usage" class="form-control">
+                        <select name="usage" id="usage" class="form-control">
                           @foreach (\App\Models\Property::usageList() as $index => $usage)
                             <option value="{{ $index }}" {{old('usage') == $index ? 'selected' : ''}}>{{ $usage }}</option>
                           @endforeach
@@ -357,20 +388,20 @@
 
 
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">وضعیت سکنه</label>
-                        <select name="type" id="is_empty" class="form-control">
+                        <select name="is_empty" id="is_empty" class="form-control">
                           <option value="0" {{old('is_empty') == 0 ? 'selected' : ''}}>خالی نمی باشد</option>
                           <option value="1" {{old('is_empty') == 1 ? 'selected' : ''}}>خالی می باشد</option>
                         </select>
                       </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <div class="form-group">
                         <label class="control-label">تاریخ تخلیه</label>
-                        <input autocomplete="off" type="text" autocomplete="off" id="evacuation_date"
+                        <input autocomplete="off" type="text" autocomplete="off" name="evacuation_date"
                           value="{{ old('evacuation_date', '') }}" name="evacuation_date"
                           class="form-control datepicker {{ $errors->has('evacuation_date') ? 'is-invalid' : '' }}">
                         @if ($errors->has('evacuation_date'))
@@ -378,7 +409,17 @@
                         @endif
                       </div>
                     </div>
-
+                    <div class="col-md-10">
+                      <div class="form-group">
+                        <label class="control-label">توضیحات</label>
+                        <input autocomplete="off" type="text" id="description" name="description"
+                          class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                          value="{{ old('description', '') }}">
+                        @if ($errors->has('description'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('description') }}</small>
+                        @endif
+                      </div>
+                    </div>
 
 
 
@@ -442,9 +483,6 @@
                             <input type="checkbox" name="cooling" {{old('cooling') == 1 ? 'checked' : ''}} autocomplete="off"> سرمایشی
                           </label>
                           <label class="btn btn-secondary">
-                            <input type="checkbox" name="heating" {{old('heating') == 1 ? 'checked' : ''}} autocomplete="off"> گرمایشی
-                          </label>
-                          <label class="btn btn-secondary">
                             <input type="checkbox" name="telephone" {{old('telephone') == 1 ? 'checked' : ''}} autocomplete="off"> تلفن
                           </label>
                           <label class="btn btn-secondary">
@@ -456,10 +494,10 @@
 
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">سیستم گرمایشی</label>
-                        <select name="type" id="heating_type" class="form-control">
+                        <label class="control-label">گرمایشی</label>
+                        <select name="heating" id="heating" class="form-control">
                           @foreach (\App\Models\Specification::heatingTypeList() as $index => $heating)
-                            <option value="{{ $index }}" {{old('heating_type') == $index ? 'checked' : ''}}>{{ $heating }}</option>
+                            <option value="{{ $index }}" {{old('heating') == $index ? 'checked' : ''}}>{{ $heating }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -469,8 +507,8 @@
                       <div class="form-group">
                         <label class="control-label">آب</label>
                         <select name="water" id="period" class="form-control">
-                          @foreach (\App\Models\Specification::powerTypeList() as $index => $heating)
-                            <option value="{{ $index }}" {{old('water') == $index ? 'checked' : ''}}>{{ $heating }}</option>
+                          @foreach (\App\Models\Specification::powerTypeList() as $index => $water)
+                            <option value="{{ $index }}" {{old('water') == $index ? 'checked' : ''}}>{{ $water }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -480,8 +518,8 @@
                       <div class="form-group">
                         <label class="control-label">برق</label>
                         <select name="electricity" id="period" class="form-control">
-                          @foreach (\App\Models\Specification::powerTypeList() as $index => $heating)
-                            <option value="{{ $index }}" {{old('electricity') == $index ? 'checked' : ''}}>{{ $heating }}</option>
+                          @foreach (\App\Models\Specification::powerTypeList() as $index => $electricity)
+                            <option value="{{ $index }}" {{old('electricity') == $index ? 'checked' : ''}}>{{ $electricity }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -491,8 +529,8 @@
                       <div class="form-group">
                         <label class="control-label">گاز</label>
                         <select name="gas" id="period" class="form-control">
-                          @foreach (\App\Models\Specification::powerTypeList() as $index => $heating)
-                            <option value="{{ $index }}" {{old('gas') == $index ? 'checked' : ''}}>{{ $heating }}</option>
+                          @foreach (\App\Models\Specification::powerTypeList() as $index => $gas)
+                            <option value="{{ $index }}" {{old('gas') == $index ? 'checked' : ''}}>{{ $gas }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -600,10 +638,10 @@
                             <br>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               <label class="btn btn-secondary">
-                                <input type="checkbox" autocomplete="off" value="sold"> فروخته شد
+                                <input type="checkbox" autocomplete="off" name="sold"> فروخته شد
                               </label>
                               <label class="btn btn-secondary">
-                                <input type="checkbox" autocomplete="off" value="rented"> اجاره رفت
+                                <input type="checkbox" autocomplete="off" name="rented"> اجاره رفت
                               </label>
                             </div>
                           </div>
@@ -635,7 +673,7 @@
       $(".datepicker").datepicker({
         changeMonth: true,
         changeYear: true,
-        yearRange: "1300:1400"
+        yearRange: "1400:1450"
       });
     });
   </script>

@@ -10,6 +10,44 @@ class Property extends Model
     use HasFactory;
     protected $table = 'properties';
 
+    protected $fillable = [
+        'type',
+        'landlord_first_name',
+        'landlord_last_name',
+        'primary_mobile',
+        'secondary_mobile',
+        'phone',
+        'address',
+        'description',
+        'registered_at',
+        'deed',
+        'usage',
+        'for_rent',
+        'for_sell',
+        'for_pre_sell',
+        'status',
+        'parking',
+        'storage',
+        'elevator',
+        'balcony',
+        'yard',
+        'share',
+        'floor',
+        'total_floor',
+        'unit',
+        'total_unit',
+        'total_area',
+        'built_area',
+        'age',
+        'total_rooms',
+        'toilet_together',
+        'texture',
+        'state_id',
+        'city_id',
+        'area_id',
+        'complex_id',
+    ];
+
     //type
     const VILLA = 1;
     const FIELD = 2;
@@ -109,6 +147,10 @@ class Property extends Model
     public function scopeArchived($query)
     {
         $query->where('status', self::ARCHIVED);
+    }
+
+    public function specification(){
+        return $this->hasOne(Property::class);
     }
 
     
