@@ -33,6 +33,8 @@
                         {{-- <th class=" ">ردیف</th> --}}
                         <th class=" text-center">نام بنگاه</th>
                         <th class=" text-center"> صاحب بنگاه</th>
+                        <th class=" text-center"> موبایل</th>
+                        <th class=" text-center"> تلفن</th>
                         <th class=" text-center">محله</th>  
                         <th class=" text-center"> </th>
                       </tr>
@@ -56,6 +58,8 @@
                             </label>
                           </div>
                         </th>
+                        <th></th>
+                        <th></th>
                         <th class=" text-center" style="min-width: 200px;padding-top:15px">
                           <select name="area_id" id="area_id" class="form-control selectpicker show-tick"
                             data-live-search="true">
@@ -78,7 +82,9 @@
                         <tr>
                           <td data-title="نام بنگاه" class="simti_td_center" scope="row">{{ $item->title }}</th>
                           <td data-title="صاحب" class="simti_td_center">{{ $item->owner }}</td>
-                          <td data-title="نام محله" class="row_col_10">{{ $item->area->name }}</td>
+                          <td data-title="موبایل" class="simti_td_center">{{ $item->primary_mobile }}</td>
+                          <td data-title="تلفن" class="simti_td_center">{{ $item->phone }}</td>
+                          <td data-title="نام محله" class="simti_td_center">{{ $item->area->name }}</td>
                           <td data-title="عملیات" class="td_btn_custom_width">
                             <a class="has-arrow" href="{{ route('colleagues.edit', $item->id) }}"
                               aria-expanded="false" style="color:green">
