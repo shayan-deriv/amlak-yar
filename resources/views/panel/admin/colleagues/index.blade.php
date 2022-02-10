@@ -1,12 +1,12 @@
 @extends('layouts.admin.panel')
 @section('page_title')
   <div class="col-md-5 align-self-center">
-    <h3 class="text-primary">مدیریت مجتمع های مسکونی </h3>
+    <h3 class="text-primary">مدیریت همکاران </h3>
   </div>
   <div class="col-md-7 align-self-center">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="javascript:void(0)">خانه</a></li>
-      <li class="breadcrumb-item active">مجتمع های مسکونی</li>
+      <li class="breadcrumb-item active">همکاران</li>
     </ol>
   </div>
 @endsection
@@ -24,25 +24,19 @@
                   <table class="table table-striped ">
                     <thead>
                       <tr>
-                        <th class=" ">ردیف</th>
-                        <th class=" text-center">نام مجتمع</th>
-                        <th class=" text-center">مدیر مجتمع</th>
+                        {{-- <th class=" ">ردیف</th> --}}
+                        <th class=" text-center">نام محله</th>
+                        {{-- <th class=" text-center">استان</th>
+                        <th class=" text-center">شهر</th> --}}
                         <th class=" text-center"> </th>
                       </tr>
                       <tr>
-                        <th class=" "></th>
+                        {{-- <th class=" "></th> --}}
                         <th class=" text-center">
                           <div id="example_filter" class="dataTables_filter" style="float:none">
                             <label>
-                              <input autocomplete="off" type="text" id="title" value="{{ app('request')->input('title') ? app('request')->input('title') : '' }}"
-                                aria-controls="example">
-                            </label>
-                          </div>
-                        </th>
-                        <th class=" text-center">
-                          <div id="example_filter" class="dataTables_filter" style="float:none">
-                            <label>
-                              <input autocomplete="off" type="text" id="manager" value="{{ app('request')->input('manager') ? app('request')->input('manager') : '' }}"
+                              <input autocomplete="off" type="text" id="name"
+                                value="{{ app('request')->input('name') ? app('request')->input('name') : '' }}"
                                 aria-controls="example">
                             </label>
                           </div>
@@ -52,32 +46,37 @@
                       </tr>
                     </thead>
                     <tbody id="donees-content">
-                      @foreach ($model as $item)
+                      @forelse ($model as $item)
                         <tr>
-                          <td data-title="ردیف" class="row_col_10" scope="row">{{ $item->id }}</th>
-                          <td data-title="نام مجتمع" class="simti_td_center">{{ $item->title }}</td>
-                          <td data-title="مدیر مجتمع" class="simti_td_center">{{ $item->manager }}</td>
+                          {{-- <td data-title="ردیف" class="row_col_10" scope="row">{{ $item->id }}</th> --}}
+                          <td data-title="نام محله" class="simti_td_center">{{ $item->name }}</td>
                           <td data-title="عملیات" class="td_btn_custom_width">
-                            <a class="has-arrow" href="{{ route('complexes.edit', $item->id) }}" aria-expanded="false"
-                              style="color:green">
+                            <a class="has-arrow" href="{{ route('colleagues.edit', $item->id) }}"
+                              aria-expanded="false" style="color:green">
                               {{-- <i class="fa fa-edit" aria-hidden="true"></i> --}}
                               <span class="">ویرایش</span>
                             </a>
                             <span style="padding: 0 2px;border-right:1px solid;"></span>
-                            <a class="has-arrow" href="{{ route('complexes.archive') }}?id={{ $item->id }}"
+                            <a class="has-arrow" href="{{ route('colleagues.archive') }}?id={{ $item->id }}"
                               aria-expanded="false" style="color:red">
                               {{-- <i  class="fa fa-close" aria-hidden="true"></i> --}}
                               <span class="">آرشیو</span>
                             </a>
                           </td>
                         </tr>
-                      @endforeach
+                      @empty
+                        <tr>
+                          <td colspan="10" class="text-muted text-center">
+                            موردی یافت نشد
+                          </td>
+                        </tr>
+                      @endforelse
                     </tbody>
                   </table>
                 </div>
-                <div class="row">
-                  <div class="col-md-12 text-center pagination_area" id="donees-pagination">
-                  </div>
+                
+                <div class="pt-4">
+                  {{ $model->links() }}
                 </div>
               </div>
             </div>
@@ -91,19 +90,17 @@
 @section('custom_js')
   <script>
     let params = {
-      "title": "{{ app('request')->input('title') ? app('request')->input('title') : '' }}",
-      "manager": "{{ app('request')->input('manager') ? app('request')->input('manager') : '' }}",
+      "name": "{{ app('request')->input('name') ? app('request')->input('name') : '' }}",
     }
 
     const search = () => {
       let query = '?'
-      params.title = $('#title').val();
-      params.manager = $('#manager').val();
+      params.name = $('#name').val();
       Object.entries(params).forEach(([key, value], index) => {
         if (value != "")
           query += `${key}=${value}&`
       });
-      window.location.href = `{{ route('complexes.index') }}` + query.slice(0, -1)
+      window.location.href = `{{ route('colleagues.index') }}` + query.slice(0, -1)
     }
   </script>
 @endsection

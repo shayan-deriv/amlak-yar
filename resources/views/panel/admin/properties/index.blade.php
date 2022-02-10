@@ -93,9 +93,8 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="row">
-                  <div class="col-md-12 text-center pagination_area" id="donees-pagination">
-                  </div>
+                <div class="pt-4">
+                  {{ $model->links() }}
                 </div>
               </div>
             </div>

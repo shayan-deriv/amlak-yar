@@ -56,7 +56,11 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::get('/create', [AreaController::class,'create'])->name('create');
         Route::get('/archived', [AreaController::class,'archived'])->name('archived');
         Route::post('/store', [AreaController::class,'store'])->name('store');
-
+        Route::get('/edit/{area}', [AreaController::class,'edit'])->name('edit');
+        Route::patch('/update/{area}', [AreaController::class,'update'])->name('update');
+        Route::get('/archive', [AreaController::class,'archive'])->name('archive');
+        Route::get('/publish', [AreaController::class,'publish'])->name('publish');
+        Route::get('/archived', [AreaController::class,'archived'])->name('archived');
 
     });
 

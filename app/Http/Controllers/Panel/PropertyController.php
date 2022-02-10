@@ -15,9 +15,10 @@ use App\Http\Requests\DoneeRequest;
 
 class PropertyController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
-    $model = Property::published()->paginate(10);
+    $model = Property::published()->paginate(50);
+    $model->appends($request->except('page'));
     return view('panel.admin.properties.index',compact('model'));
   }
   public function fetch(Request $request)

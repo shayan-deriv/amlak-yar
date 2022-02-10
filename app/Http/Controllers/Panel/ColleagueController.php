@@ -8,13 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Models\State;
 use App\Models\City;
 use App\Models\Area;
-use App\Models\Complex;
+use App\Models\Colleague;
 
-class ComplexController extends Controller
+class ColleageController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Complex::query();
+        $query = Colleague::query();
 
         if($request->title){
             $query->where('title','like',"%$request->title%");
@@ -26,7 +26,7 @@ class ComplexController extends Controller
 
         $model = $query->published()->paginate(50);
         $model->appends($request->except('page'));
-        return view('panel.admin.complexes.index', compact('model'));
+        return view('panel.admin.colleagues.index', compact('model'));
     }
 
     public function create()
@@ -34,7 +34,7 @@ class ComplexController extends Controller
         $states = State::all();
         $cities = City::all();
         $areas = Area::all();
-        return view('panel.admin.complexes.create', compact('states', 'cities', 'areas'));
+        return view('panel.admin.colleagues.create', compact('states', 'cities', 'areas'));
     }
 
     public function store(Request $request)
@@ -45,47 +45,47 @@ class ComplexController extends Controller
             'city_id' => 'required',
         ]);
         
-        Complex::create($request->all());
+        Colleague::create($request->all());
 
-        return redirect()->route('complexes.index');
+        return redirect()->route('colleagues.index');
     }
 
-    public function edit($complex)
+    public function edit($colleague)
     {
-        $model = Complex::findOrFail($complex);
+        $model = Colleague::findOrFail($colleague);
         $states = State::all();
         $cities = City::all();
         $areas = Area::all();
-        return view('panel.admin.complexes.edit', compact('states', 'cities', 'areas', 'model'));
+        return view('panel.admin.colleagues.edit', compact('states', 'cities', 'areas', 'model'));
     }
 
-    public function update(Request $request, $complex){
+    public function update(Request $request, $colleague){
         $this->validate($request, [
             'title' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
         ]);
         
-        Complex::where('id',$complex)->update($request->except(['_token','_method']));
+        Colleague::where('id',$colleague)->update($request->except(['_token','_method']));
 
-        return redirect()->route('complexes.index');
+        return redirect()->route('colleagues.index');
     }
 
     public function archive(Request $request){
         
-        Complex::where('id',$request->id)->update([
-            'status' => Complex::ARCHIVED
+        Colleague::where('id',$request->id)->update([
+            'status' => Colleague::ARCHIVED
         ]);
 
-        return redirect()->route('complexes.index');
+        return redirect()->route('colleagues.index');
     }
 
     public function unarchive(Request $request){
         
-        Complex::where('id',$request->id)->update([
-            'status' => Complex::PUBLISHED
+        Colleague::where('id',$request->id)->update([
+            'status' => Colleague::PUBLISHED
         ]);
 
-        return redirect()->route('complexes.index');
+        return redirect()->route('colleagues.index');
     }
 }

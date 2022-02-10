@@ -34,7 +34,8 @@
                         <th class=" text-center">
                           <div id="example_filter" class="dataTables_filter" style="float:none">
                             <label>
-                              <input autocomplete="off" type="text" id="title" value="{{ app('request')->input('title') ? app('request')->input('title') : '' }}"
+                              <input autocomplete="off" type="text" id="title"
+                                value="{{ app('request')->input('title') ? app('request')->input('title') : '' }}"
                                 aria-controls="example">
                             </label>
                           </div>
@@ -42,7 +43,8 @@
                         <th class=" text-center">
                           <div id="example_filter" class="dataTables_filter" style="float:none">
                             <label>
-                              <input autocomplete="off" type="text" id="manager" value="{{ app('request')->input('manager') ? app('request')->input('manager') : '' }}"
+                              <input autocomplete="off" type="text" id="manager"
+                                value="{{ app('request')->input('manager') ? app('request')->input('manager') : '' }}"
                                 aria-controls="example">
                             </label>
                           </div>
@@ -52,14 +54,14 @@
                       </tr>
                     </thead>
                     <tbody id="donees-content">
-                      @foreach ($model as $item)
+                      @forelse ($model as $item)
                         <tr>
                           <td data-title="ردیف" class="row_col_10" scope="row">{{ $item->id }}</th>
                           <td data-title="نام مجتمع" class="simti_td_center">{{ $item->title }}</td>
                           <td data-title="مدیر مجتمع" class="simti_td_center">{{ $item->manager }}</td>
                           <td data-title="عملیات" class="td_btn_custom_width">
-                            <a class="has-arrow" href="{{ route('complexes.edit', $item->id) }}" aria-expanded="false"
-                              style="color:green">
+                            <a class="has-arrow" href="{{ route('complexes.edit', $item->id) }}"
+                              aria-expanded="false" style="color:green">
                               {{-- <i class="fa fa-edit" aria-hidden="true"></i> --}}
                               <span class="">ویرایش</span>
                             </a>
@@ -71,13 +73,18 @@
                             </a>
                           </td>
                         </tr>
-                      @endforeach
+                      @empty
+                        <tr>
+                          <td colspan="10" class="text-muted text-center">
+                            موردی یافت نشد
+                          </td>
+                        </tr>
+                      @endforelse
                     </tbody>
                   </table>
                 </div>
-                <div class="row">
-                  <div class="col-md-12 text-center pagination_area" id="donees-pagination">
-                  </div>
+                <div class="pt-4">
+                  {{ $model->links() }}
                 </div>
               </div>
             </div>
