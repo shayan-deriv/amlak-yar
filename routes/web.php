@@ -75,11 +75,17 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::get('/archived', [ComplexController::class,'archived'])->name('archived');
     });
 
+    
     Route::prefix('colleagues')->name('colleagues.')->group(function () {
-        Route::get('/', 'ColleagueController@index')->name('index');
-        Route::get('/archived', 'PropertyController@index')->name('archived');
-        Route::get('/create', 'ColleagueController@create')->name('create');
-        Route::post('/store', 'ColleagueController@store')->name('store');
+        Route::get('/', [ColleagueController::class,'index'])->name('index');
+        Route::get('/create', [ColleagueController::class,'create'])->name('create');
+        Route::post('/store', [ColleagueController::class,'store'])->name('store');
+        Route::get('/edit/{complex}', [ColleagueController::class,'edit'])->name('edit');
+        Route::patch('/update/{complex}', [ColleagueController::class,'update'])->name('update');
+        Route::get('/archive', [ColleagueController::class,'archive'])->name('archive');
+        Route::get('/publish', [ColleagueController::class,'publish'])->name('publish');
+        Route::get('/archived', [ColleagueController::class,'archived'])->name('archived');
     });
+
 
 });

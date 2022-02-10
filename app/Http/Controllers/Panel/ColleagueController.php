@@ -10,23 +10,28 @@ use App\Models\City;
 use App\Models\Area;
 use App\Models\Colleague;
 
-class ColleageController extends Controller
+class ColleagueController extends Controller
 {
     public function index(Request $request)
     {
+        $areas = Area::all();
         $query = Colleague::query();
 
         if($request->title){
             $query->where('title','like',"%$request->title%");
         }
 
-        if($request->manager){
-            $query->where('manager','like',"%$request->manager%");
+        if($request->owner){
+            $query->where('owner','like',"%$request->owner%");
+        }
+
+        if($request->area_id){
+            $query->where('area_id',$request->area_id);
         }
 
         $model = $query->published()->paginate(50);
         $model->appends($request->except('page'));
-        return view('panel.admin.colleagues.index', compact('model'));
+        return view('panel.admin.colleagues.index', compact('model','areas'));
     }
 
     public function create()
@@ -41,8 +46,10 @@ class ColleageController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
+            'owner' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
+            'area_id' => 'required',
         ]);
         
         Colleague::create($request->all());

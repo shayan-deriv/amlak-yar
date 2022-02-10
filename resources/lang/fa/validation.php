@@ -204,5 +204,6 @@ return [
     'water' => 'آب',
     'electricity' => 'برق',
     'gas' => 'گاز',
+    'owner' => 'صاحب  '
   ],
 ];

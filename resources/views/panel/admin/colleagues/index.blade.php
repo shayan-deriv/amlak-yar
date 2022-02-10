@@ -1,4 +1,10 @@
 @extends('layouts.admin.panel')
+@section('custom_css')
+  <link rel="stylesheet" href="{{ url('admin/css/lib/date-picker/bootstrap-datepicker.min.css') }}">
+  <link href="{{ url('admin/css/lib/bootstrap-select/bootstrap-select.min.css?v=3') }}" rel="stylesheet" />
+
+
+@endsection
 @section('page_title')
   <div class="col-md-5 align-self-center">
     <h3 class="text-primary">مدیریت همکاران </h3>
@@ -25,9 +31,9 @@
                     <thead>
                       <tr>
                         {{-- <th class=" ">ردیف</th> --}}
-                        <th class=" text-center">نام محله</th>
-                        {{-- <th class=" text-center">استان</th>
-                        <th class=" text-center">شهر</th> --}}
+                        <th class=" text-center">نام بنگاه</th>
+                        <th class=" text-center"> صاحب بنگاه</th>
+                        <th class=" text-center">محله</th>  
                         <th class=" text-center"> </th>
                       </tr>
                       <tr>
@@ -35,11 +41,33 @@
                         <th class=" text-center">
                           <div id="example_filter" class="dataTables_filter" style="float:none">
                             <label>
-                              <input autocomplete="off" type="text" id="name"
-                                value="{{ app('request')->input('name') ? app('request')->input('name') : '' }}"
+                              <input autocomplete="off" type="text" id="title"
+                                value="{{ app('request')->input('title') ? app('request')->input('title') : '' }}"
                                 aria-controls="example">
                             </label>
                           </div>
+                        </th>
+                        <th class=" text-center">
+                          <div id="example_filter" class="dataTables_filter" style="float:none">
+                            <label>
+                              <input autocomplete="off" type="text" id="owner"
+                                value="{{ app('request')->input('owner') ? app('request')->input('owner') : '' }}"
+                                aria-controls="example">
+                            </label>
+                          </div>
+                        </th>
+                        <th class=" text-center" style="min-width: 200px;padding-top:15px">
+                          <select name="area_id" id="area_id" class="form-control selectpicker show-tick"
+                            data-live-search="true">
+                            <option value="" selected>
+                              همه محله ها
+                            </option>
+                            @foreach ($areas as $area)
+                              <option value="{{ $area->id }}" {{ app('request')->input('area_id') == $area->id ? 'selected' : '' }}>
+                                {{ $area->name }}
+                              </option>
+                            @endforeach
+                          </select>
                         </th>
                         <th class=" text-center"> <button style="margin-top:7px" type="submit" class="btn btn-success"
                             onclick="search()"> جستجو <i class="fa fa-search"></i> </button> </th>
@@ -48,8 +76,9 @@
                     <tbody id="donees-content">
                       @forelse ($model as $item)
                         <tr>
-                          {{-- <td data-title="ردیف" class="row_col_10" scope="row">{{ $item->id }}</th> --}}
-                          <td data-title="نام محله" class="simti_td_center">{{ $item->name }}</td>
+                          <td data-title="نام بنگاه" class="simti_td_center" scope="row">{{ $item->title }}</th>
+                          <td data-title="صاحب" class="simti_td_center">{{ $item->owner }}</td>
+                          <td data-title="نام محله" class="row_col_10">{{ $item->area->name }}</td>
                           <td data-title="عملیات" class="td_btn_custom_width">
                             <a class="has-arrow" href="{{ route('colleagues.edit', $item->id) }}"
                               aria-expanded="false" style="color:green">
@@ -74,7 +103,7 @@
                     </tbody>
                   </table>
                 </div>
-                
+
                 <div class="pt-4">
                   {{ $model->links() }}
                 </div>
@@ -88,14 +117,19 @@
 @endsection
 
 @section('custom_js')
+  <script src="{{ url('admin/js/lib/bootstrap-select/bootstrap-select.min.js') }}"></script>
   <script>
     let params = {
-      "name": "{{ app('request')->input('name') ? app('request')->input('name') : '' }}",
+      "title": "{{ app('request')->input('title') ? app('request')->input('title') : '' }}",
+      "owner": "{{ app('request')->input('owner') ? app('request')->input('owner') : '' }}",
+      "area_id": "{{ app('request')->input('area_id') ? app('request')->input('area_id') : '' }}",
     }
 
     const search = () => {
       let query = '?'
-      params.name = $('#name').val();
+      params.title = $('#title').val();
+      params.owner = $('#owner').val();
+      params.area_id = $('#area_id').val();
       Object.entries(params).forEach(([key, value], index) => {
         if (value != "")
           query += `${key}=${value}&`

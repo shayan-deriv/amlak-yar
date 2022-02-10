@@ -9,7 +9,7 @@ class Colleague extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','manager','primary_mobile','secondary_mobile','phone','address','total_block', 'total_unit', 'description','state_id','city_id','area_id','created_at','updated_at'];
+    protected $fillable = ['title','owner','primary_mobile','secondary_mobile','phone','address','city_id', 'state_id', 'area_id','created_at','updated_at'];
 
     
     //status
@@ -41,5 +41,17 @@ class Colleague extends Model
     public function scopeArchived($query)
     {
         $query->where('status', self::ARCHIVED);
+    }
+
+    public function state(){
+        return $this->belongsTo(State::class,'state_id','id');
+    }
+
+    public function city(){
+        return $this->belongsTo(City::class,'city_id','id');
+    }
+
+    public function area(){
+        return $this->belongsTo(Area::class,'area_id','id');
     }
 }
