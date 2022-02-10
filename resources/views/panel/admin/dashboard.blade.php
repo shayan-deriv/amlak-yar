@@ -116,18 +116,16 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  {{-- <div class="row">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-12">
           <div class="card simti_responsive_table_no_padding" style="padding:5px !important">
               <div class="card-body p-b-0">
-                <!-- Nav tabs -->
                 <ul class="nav nav-tabs customtab" role="tablist">
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link active show" data-toggle="tab" href="#normal_order" role="tab" aria-selected="true">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-home"></i>  --}}
                         <br>  معمولی
                       </span>
                       <span class="hidden-xs-down"> سفارش معمولی </span>
@@ -136,7 +134,6 @@
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link show" data-toggle="tab" href="#activeOrder" role="tab" aria-selected="true">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-home"></i>  --}}
                         <br>پیش سفارش
                       </span>
                       <span class="hidden-xs-down">پیش سفارش </span>
@@ -145,14 +142,12 @@
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link" data-toggle="tab" href="#receiveOrder" role="tab" aria-selected="false">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-user"></i>  --}}
                         <br>نذری
                       </span>
                       <span class="hidden-xs-down"> نذری</span>
                     </a>
                   </li>
                 </ul>
-                <!-- Tab panes -->
                 <div class="tab-content">
                   <div class="tab-pane p-20 active show" id="normal_order" role="tabpanel">
                     <div class="col-lg-12">
@@ -215,12 +210,10 @@
         <div class="col-md-12">
           <div class="card simti_responsive_table_no_padding" style="padding:5px !important">
               <div class="card-body p-b-0">
-                <!-- Nav tabs -->
                 <ul class="nav nav-tabs customtab" role="tablist">
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link active show" data-toggle="tab" href="#pending_kitchen" role="tab" aria-selected="true">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-home"></i>  --}}
                         <br>  در انتظار تایید
                       </span>
                       <span class="hidden-xs-down"> در انتظار تایید  </span>
@@ -229,14 +222,12 @@
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link show" data-toggle="tab" href="#edit_pending_kitchen" role="tab" aria-selected="true">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-home"></i>  --}}
                         <br>در انتظار ویرایش 
                       </span>
                       <span class="hidden-xs-down">در انتظار ویرایش  </span>
                     </a>
                   </li>
                 </ul>
-                <!-- Tab panes -->
                 <div class="tab-content">
                   <div class="tab-pane p-20 active show" id="pending_kitchen" role="tabpanel">
                     <div class="col-lg-12">
@@ -283,12 +274,10 @@
         <div class="col-md-12">
           <div class="card simti_responsive_table_no_padding" style="padding:5px !important">
               <div class="card-body p-b-0">
-                <!-- Nav tabs -->
                 <ul class="nav nav-tabs customtab" role="tablist">
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link active show" data-toggle="tab" href="#suggested_food" role="tab" aria-selected="true">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-home"></i>  --}}
                         <br>  پیشنهاد غذا
                       </span>
                       <span class="hidden-xs-down"> پیشنهاد غذا </span>
@@ -297,7 +286,6 @@
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link show" data-toggle="tab" href="#suggested_menu" role="tab" aria-selected="true">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-home"></i>  --}}
                         <br>پیشنهاد منو
                       </span>
                       <span class="hidden-xs-down">پیشنهاد منو </span>
@@ -306,14 +294,12 @@
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link" data-toggle="tab" href="#suggested_include" role="tab" aria-selected="false">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-user"></i>  --}}
                         <br>پیشنهاد ترکیبات
                       </span>
                       <span class="hidden-xs-down"> پیشنهاد ترکیبات</span>
                     </a>
                   </li>
                 </ul>
-                <!-- Tab panes -->
                 <div class="tab-content">
                   <div class="tab-pane p-20 active show" id="suggested_food" role="tabpanel">
                     <div class="col-lg-12">
@@ -370,19 +356,16 @@
         <div class="col-md-12">
           <div class="card simti_responsive_table_no_padding" style="padding:5px !important">
               <div class="card-body p-b-0">
-                <!-- Nav tabs -->
                 <ul class="nav nav-tabs customtab" role="tablist">
                   <li class="nav-item simti_tab_33">
                     <a class="nav-link active show" data-toggle="tab" href="#pending_cm" role="tab" aria-selected="true">
                       <span class="hidden-sm-up">
-                        {{--  <i class="ti-home"></i>  --}}
                         <br>  معمولی
                       </span>
                       <span class="hidden-xs-down">  نظرات </span>
                     </a>
                   </li>
                 </ul>
-                <!-- Tab panes -->
                 <div class="tab-content">
                   <div class="tab-pane p-20 active show" id="pending_cm" role="tabpanel">
                     <div class="col-lg-12">
@@ -409,7 +392,7 @@
     </div>
 
     
-  </div>
+  </div> --}}
   <script>
     function toTimeFormat(seconds) {
       const date = new Date(seconds * 1000);

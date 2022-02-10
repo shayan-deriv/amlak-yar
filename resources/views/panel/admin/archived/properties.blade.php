@@ -66,6 +66,8 @@
                               <br>
                               مجموع : {{ number_format($item->specification->total_price) ?? '' }}
                             </td>
+                          @else
+                            <td></td>
                           @endif
 
                           <td data-title="عملیات" class="td_btn_custom_width">
