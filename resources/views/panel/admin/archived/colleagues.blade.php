@@ -7,12 +7,12 @@
 @endsection
 @section('page_title')
   <div class="col-md-5 align-self-center">
-    <h3 class="text-primary">مدیریت همکاران </h3>
+    <h3 class="text-primary">مدیریت همکاران آرشیو شده </h3>
   </div>
   <div class="col-md-7 align-self-center">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="javascript:void(0)">خانه</a></li>
-      <li class="breadcrumb-item active">همکاران</li>
+      <li class="breadcrumb-item active">همکاران آرشیو شده</li>
     </ol>
   </div>
 @endsection
@@ -92,10 +92,10 @@
                               <span class="">ویرایش</span>
                             </a>
                             <span style="padding: 0 2px;border-right:1px solid;"></span>
-                            <a class="has-arrow" href="{{ route('colleagues.archive') }}?id={{ $item->id }}"
+                            <a class="has-arrow" href="{{ route('colleagues.publish') }}?id={{ $item->id }}" onclick="return confirm('اطمینان دارید؟')"
                               aria-expanded="false" style="color:red">
                               {{-- <i  class="fa fa-close" aria-hidden="true"></i> --}}
-                              <span class="">آرشیو</span>
+                              <span class="">بازگردانی</span>
                             </a>
                           </td>
                         </tr>

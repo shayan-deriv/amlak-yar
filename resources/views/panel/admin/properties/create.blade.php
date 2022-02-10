@@ -209,7 +209,7 @@
                           </option>
                           @foreach ($complexes as $complex)
                             <option value="{{ $complex->id }}" {{old('complex_id') == $complex->id ? 'selected' : ''}}>
-                              {{ $complex->name }}
+                              {{ $complex->title }}
                             </option>
                           @endforeach
                         </select>

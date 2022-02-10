@@ -58,10 +58,6 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::post('/store', [AreaController::class,'store'])->name('store');
         Route::get('/edit/{area}', [AreaController::class,'edit'])->name('edit');
         Route::patch('/update/{area}', [AreaController::class,'update'])->name('update');
-        Route::get('/archive', [AreaController::class,'archive'])->name('archive');
-        Route::get('/publish', [AreaController::class,'publish'])->name('publish');
-        Route::get('/archived', [AreaController::class,'archived'])->name('archived');
-
     });
 
     Route::prefix('complexes')->name('complexes.')->group(function () {
@@ -70,9 +66,6 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::post('/store', [ComplexController::class,'store'])->name('store');
         Route::get('/edit/{complex}', [ComplexController::class,'edit'])->name('edit');
         Route::patch('/update/{complex}', [ComplexController::class,'update'])->name('update');
-        Route::get('/archive', [ComplexController::class,'archive'])->name('archive');
-        Route::get('/publish', [ComplexController::class,'publish'])->name('publish');
-        Route::get('/archived', [ComplexController::class,'archived'])->name('archived');
     });
 
     
@@ -85,6 +78,11 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::get('/archive', [ColleagueController::class,'archive'])->name('archive');
         Route::get('/publish', [ColleagueController::class,'publish'])->name('publish');
         Route::get('/archived', [ColleagueController::class,'archived'])->name('archived');
+    });
+
+    Route::prefix('archived')->name('archived.')->group(function () {
+        Route::get('/properties', [PropertyController::class,'archived'])->name('properties');
+        Route::get('/colleagues', [ColleagueController::class,'archived'])->name('colleagues');
     });
 
 

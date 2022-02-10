@@ -19,7 +19,7 @@ class PropertyController extends Controller
   {
     $model = Property::published()->paginate(50);
     $model->appends($request->except('page'));
-    return view('panel.admin.properties.index',compact('model'));
+    return view('panel.admin.properties.index', compact('model'));
   }
   public function fetch(Request $request)
   {
@@ -117,7 +117,7 @@ class PropertyController extends Controller
     ]);
 
     $property->refresh();
-    
+
     Specification::create([
       'property_id' => $property->id,
       'total_price' => $request->total_price ?? null,
@@ -201,8 +201,8 @@ class PropertyController extends Controller
       'complex_id' => $request->complex_id && $request->complex_id != 'no' ? $request->complex_id : null,
     ]);
 
-    
-    Specification::where('property_id',$property)->update([
+
+    Specification::where('property_id', $property)->update([
       'total_price' => $request->total_price ?? null,
       'unit_price'  => $request->unit_price ?? null,
       'deposit' => $request->deposit ?? null,
@@ -226,21 +226,30 @@ class PropertyController extends Controller
     return redirect()->route('properties.index');
   }
 
-  public function archive(Request $request){
-        
-    Property::where('id',$request->id)->update([
-        'status' => Property::ARCHIVED
+  public function archive(Request $request)
+  {
+
+    Property::where('id', $request->id)->update([
+      'status' => Property::ARCHIVED
     ]);
 
     return redirect()->route('properties.index');
-}
+  }
 
-public function unarchive(Request $request){
-        
-  Property::where('id',$request->id)->update([
+  public function archived(Request $request)
+  {
+    $model = Property::archived()->paginate(50);
+    $model->appends($request->except('page'));
+    return view('panel.admin.archived.properties',compact('model'));
+  }
+
+  public function publish(Request $request)
+  {
+
+    Property::where('id', $request->id)->update([
       'status' => Property::PUBLISHED
-  ]);
+    ]);
 
-  return redirect()->route('properties.index');
-}
+    return redirect()->route('archived.properties');
+  }
 }

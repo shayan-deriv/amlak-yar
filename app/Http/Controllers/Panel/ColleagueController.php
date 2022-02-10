@@ -87,12 +87,34 @@ class ColleagueController extends Controller
         return redirect()->route('colleagues.index');
     }
 
-    public function unarchive(Request $request){
+    public function archived(Request $request)
+    {
+        $areas = Area::all();
+        $query = Colleague::query();
+
+        if($request->title){
+            $query->where('title','like',"%$request->title%");
+        }
+
+        if($request->owner){
+            $query->where('owner','like',"%$request->owner%");
+        }
+
+        if($request->area_id){
+            $query->where('area_id',$request->area_id);
+        }
+
+        $model = $query->archived()->paginate(50);
+        $model->appends($request->except('page'));
+        return view('panel.admin.archived.colleagues', compact('model','areas'));
+    }
+
+    public function publish(Request $request){
         
         Colleague::where('id',$request->id)->update([
             'status' => Colleague::PUBLISHED
         ]);
 
-        return redirect()->route('colleagues.index');
+        return redirect()->route('archived.colleagues');
     }
 }

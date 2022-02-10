@@ -260,9 +260,8 @@
                                 </span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('properties.archived')}}">املاک </a></li>
-                                <li><a href="{{route('colleagues.archived')}}">همکاران </a></li>
-                                <li><a href="{{route('complexes.archived')}}">مجتمع ها </a></li>
+                                <li><a href="{{route('archived.properties')}}">املاک </a></li>
+                                <li><a href="{{route('archived.colleagues')}}">همکاران </a></li>
                             </ul>
                         </li>
 
