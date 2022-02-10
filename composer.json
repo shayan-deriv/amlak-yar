@@ -23,7 +23,8 @@
     },
     "autoload": {
         "files": [
-            "app/Drivers/General.php"
+            "app/Drivers/General.php",
+            "app/Drivers/ConvertNumber.php"
         ],
         "psr-4": {
             "App\\": "app/",

@@ -78,4 +78,13 @@ class ComplexController extends Controller
 
         return redirect()->route('complexes.index');
     }
+
+    public function unarchive(Request $request){
+        
+        Complex::where('id',$request->id)->update([
+            'status' => Complex::PUBLISHED
+        ]);
+
+        return redirect()->route('complexes.index');
+    }
 }

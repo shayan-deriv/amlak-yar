@@ -564,11 +564,14 @@
                             <input autocomplete="off" type="text" id="total_price" name="total_price"
                               value="{{ old('total_price', '') }}"
                               class="form-control {{ $errors->has('total_price') ? 'is-invalid' : '' }}"
-                              onkeyup="onlyNumber(this)">
+                              oninput="number_to_word(this)">
                             @if ($errors->has('total_price'))
                               <small
                                 class="form-control-feedback text-danger">{{ $errors->first('total_price') }}</small>
                             @endif
+                            <span class="form-control-feedback text-success text-sm alphabetic-number">
+                              {{App\Drivers\Number2Word::numberToWords(old('total_price',0))}} تومان
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -577,11 +580,15 @@
                             <input autocomplete="off" maxlength="16" type="text" id="unit_price"
                               name="unit_price" value="{{ old('unit_price', '') }}"
                               class="form-control {{ $errors->has('unit_price') ? 'is-invalid' : '' }}"
-                              onkeyup="onlyNumber(this)">
+                              oninput="number_to_word(this)">
                             @if ($errors->has('unit_price'))
                               <small
                                 class="form-control-feedback text-danger">{{ $errors->first('unit_price') }}</small>
                             @endif
+
+                            <span class="form-control-feedback text-success text-sm alphabetic-number">
+                              {{App\Drivers\Number2Word::numberToWords(old('unit_price',0))}} تومان
+                            </span>
                           </div>
                         </div>
 
@@ -601,11 +608,15 @@
                             <label class="control-label">ودیعه</label>
                             <input autocomplete="off" type="text" id="deposit" name="deposit"
                               value="{{ old('deposit', '') }}"
-                              class="form-control {{ $errors->has('deposit') ? 'is-invalid' : '' }}">
+                              class="form-control {{ $errors->has('deposit') ? 'is-invalid' : '' }}" oninput="number_to_word(this)">
                             @if ($errors->has('deposit'))
                               <small
                                 class="form-control-feedback text-danger">{{ $errors->first('deposit') }}</small>
                             @endif
+
+                            <span class="form-control-feedback text-success text-sm alphabetic-number">
+                              {{App\Drivers\Number2Word::numberToWords(old('deposit',0))}} تومان
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -613,11 +624,14 @@
                             <label class="control-label">اجاره بها</label>
                             <input autocomplete="off" type="text" id="rent" name="rent"
                               value="{{ old('rent', '') }}"
-                              class="form-control {{ $errors->has('rent') ? 'is-invalid' : '' }}">
+                              class="form-control {{ $errors->has('rent') ? 'is-invalid' : '' }}" oninput="number_to_word(this)">
                             @if ($errors->has('rent'))
                               <small
                                 class="form-control-feedback text-danger">{{ $errors->first('rent') }}</small>
                             @endif
+                            <span class="form-control-feedback text-success text-sm alphabetic-number">
+                              {{App\Drivers\Number2Word::numberToWords(old('rent',0))}} تومان
+                            </span>
                           </div>
                         </div>
 
@@ -707,6 +721,10 @@
       }
     }
 
+    function number_to_word(el){
+      onlyNumber(el);
+      el.parentNode.querySelector('.alphabetic-number').innerHTML = Num2persian(el.value)+" تومان";
+    }
 
     function submit_form() {
       $("#property_form").submit();

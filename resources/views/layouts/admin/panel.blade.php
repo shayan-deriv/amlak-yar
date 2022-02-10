@@ -319,6 +319,7 @@
 
     <script src="{{asset('admin/js/lib/sweetalert/sweetalert.min.js')}}"></script>
     <script src="{{asset('admin/js/lib/sweetalert/swal-forms.js')}}"></script>
+    <script src="{{asset('admin/js/num2persian-min.js')}}"></script>
 
     <!--Custom JavaScript -->
     <script src="{{asset('admin/js/custom.min.js')}}"></script>

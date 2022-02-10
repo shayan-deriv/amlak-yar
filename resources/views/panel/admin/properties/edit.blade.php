@@ -1,374 +1,670 @@
 @extends('layouts.admin.panel')
 
 @section('custom_css')
-  <link rel="stylesheet" href="{{url('admin/css/lib/date-picker/bootstrap-datepicker.min.css')}}">
-  <link href="{{url('admin/css/lib/bootstrap-select/bootstrap-select.min.css?v=3')}}" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url('admin/css/lib/date-picker/bootstrap-datepicker.min.css') }}">
+  <link href="{{ url('admin/css/lib/bootstrap-select/bootstrap-select.min.css?v=3') }}" rel="stylesheet" />
 
-<style>
+  <style>
     .form-control:focus {
       color: #000000;
-  }
+    }
 
-  .form-control {
-    color: #000000;
-}
-</style>
+    .form-control {
+      color: #000000;
+    }
+
+    .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
+      left: 30px !important;
+      top: 15px !important;
+      right: initial !important;
+    }
+
+    .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+      text-align: right;
+    }
+
+    a.dropdown-item.selected.active {
+      color: white !important;
+    }
+
+    .bootstrap-select .dropdown-toggle .filter-option {
+      color: #000 !important;
+    }
+
+
+    .dropdown-item.active,
+    .dropdown-item:active {
+      background-color: #1d9742;
+    }
+
+    .filter-option {
+      border: 1px solid #e7e7e7;
+      border-radius: 4px !important;
+    }
+
+    .btn-light {
+      background: white !important;
+    }
+
+    .btn-secondary:not(:disabled):not(.disabled).active,
+    .btn-secondary:not(:disabled):not(.disabled):active,
+    .show>.btn-secondary.dropdown-toggle {
+      color: #fff !important;
+    }
+
+    .specifications {
+      display: table !important;
+    }
+
+  </style>
 @endsection
 @section('page_title')
   <div class="col-md-5 align-self-center">
-      <h3 class="text-primary"> افزودن مددجو</h3> </div>
+    <h3 class="text-primary"> ویرایش ملک</h3>
+  </div>
   <div class="col-md-7 align-self-center">
-      <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="javascript:void(0)">خانه</a></li>
-          <li class="breadcrumb-item active">مددجو</li>
-          <li class="breadcrumb-item active">جدید </li>
-      </ol>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">داشبورد</a></li>
+      <li class="breadcrumb-item active">ملک</li>
+    </ol>
   </div>
 @endsection
 
 @section('content')
-  <form id="donee_form" action="{{route('donees.update',$donee->id)}}" method="POST" enctype="multipart/form-data" >
-  @csrf
-  @method('PATCH')
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card card-outline-primary">
-        <div class="card-body">
-          <div class="row">
+  <form id="property_form" action="{{ route('properties.update',$model->id)}}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PATCH')
+    <div class="row">
+
+      {{-- اطلاعات مالک --}}
+      <div class="col-lg-12">
+        <div class="card card-outline-primary">
+          <div class="card-body">
+            <div class="row">
               <div class="col-lg-12">
-                  <div class="form-body">
-                      <h3 class="card-title m-t-15">۱) اطلاعات شخصی</h3>
+                <div class="form-body">
+                  <h3 class="card-title m-t-15">۱) اطلاعات مالک</h3>
+                  <hr>
+                  <div class="row p-t-20">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">نام</label>
+                        <input autocomplete="off" type="text" id="landlord_first_name" name="landlord_first_name"
+                          value="{{ old('landlord_first_name', $model->landlord_first_name) }}"
+                          class="form-control {{ $errors->has('landlord_first_name') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('landlord_first_name'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('landlord_first_name') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">نام خانوادگی </label>
+                        <input autocomplete="off" type="text" id="landlord_last_name" name="landlord_last_name"
+                          value="{{ old('landlord_last_name', $model->landlord_last_name) }}"
+                          class="form-control {{ $errors->has('landlord_last_name') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('landlord_last_name'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('landlord_last_name') }}</small>
+                        @endif
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label"> موبایل 1 </label>
+                        <input autocomplete="off" type="text" id="primary_mobile" name="primary_mobile"
+                          class="form-control {{ $errors->has('primary_mobile') ? 'is-invalid' : '' }}" maxlength="11"
+                          value="{{ old('primary_mobile', $model->primary_mobile) }}" onkeyup="onlyNumber(this)">
+                        @if ($errors->has('primary_mobile'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('primary_mobile') }}</small>
+                        @endif
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">موبایل 2 </label>
+                        <input autocomplete="off" type="text" id="secondary_mobile" name="secondary_mobile"
+                          class="form-control {{ $errors->has('secondary_mobile') ? 'is-invalid' : '' }}" maxlength="11"
+                          value="{{ old('secondary_mobile', $model->secondary_mobile) }}" onkeyup="onlyNumber(this)">
+                        @if ($errors->has('secondary_mobile'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('secondary_mobile') }}</small>
+                        @endif
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">شماره تلفن </label>
+                        <input autocomplete="off" maxlength="11" type="text" id="phone" name="phone"
+                          class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+                          value="{{ old('phone', $model->phone) }}" onkeyup="onlyNumber(this)">
+                        @if ($errors->has('phone'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('phone') }}</small>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{-- مشخصات ملک --}}
+      <div class="col-lg-12">
+        <div class="card card-outline-primary">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-body">
+                  <h3 class="card-title m-t-15">2) اطلاعات ملک</h3>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">استان</label>
+                        <select name="state_id" id="state_id" class="form-control selectpicker show-tick"
+                          data-live-search="true">
+                          @foreach ($states as $state)
+                            <option value="{{ $state->id }}" {{old('state_id',$model->state_id) == $state->id ? 'selected' : ''}}>
+                              {{ $state->fa_name }}
+                            </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">شهر</label>
+                        <select name="city_id" id="city_id" class="form-control selectpicker show-tick"
+                          data-live-search="true">
+                          @foreach ($cities as $city)
+                            <option value="{{ $city->id }}" {{old('city_id',$model->city_id) == $city->id ? 'selected' : ''}}>
+                              {{ $city->name }}
+                            </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">محله</label>
+                        <select name="area_id" id="area_id" class="form-control selectpicker show-tick"
+                          data-live-search="true">
+                          @foreach ($areas as $area)
+                            <option value="{{ $area->id }}" {{old('area_id',$model->area_id) == $area->id ? 'selected' : ''}}>
+                              {{ $area->name }}
+                            </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">مجتمع مسکونی</label>
+                        <select name="complex_id" id="complex_id" class="form-control selectpicker show-tick"
+                          data-live-search="true">
+                          <option value="no" selected>
+                            ندارد
+                          </option>
+                          @foreach ($complexes as $complex)
+                            <option value="{{ $complex->id }}" {{old('complex_id',$model->complex_id) == $complex->id ? 'selected' : ''}}>
+                              {{ $complex->title }}
+                            </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label class="control-label">آدرس</label>
+                        <input autocomplete="off" type="text" id="address" name="address"
+                          class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
+                          value="{{ old('address', $model->address) }}">
+                        @if ($errors->has('address'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('address') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">نوع ملک</label>
+                        <select name="type" id="type" class="form-control selectpicker show-tick"
+                          data-live-search="true">
+                          @foreach (\App\Models\Property::typeList() as $id => $str)
+                            <option value="{{ $id }}" {{old('type',$model->type) == $id ? 'selected' : ''}}>
+                              {{ $str }}
+                            </option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">تعداد اتاق ها</label>
+                        <input autocomplete="off" type="number" min="0" max="6" id="total_rooms" name="total_rooms"
+                          value="{{ old('total_rooms', $model->total_rooms) }}"
+                          class="form-control {{ $errors->has('total_rooms') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('total_rooms'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('total_rooms') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">طبقه</label>
+                        <input autocomplete="off" type="number" min="0" id="floor" name="floor"
+                          value="{{ old('floor', $model->floor) }}"
+                          class="form-control {{ $errors->has('floor') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('floor'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('floor') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">کل طبقات</label>
+                        <input autocomplete="off" type="number" min="0" id="total_floor" name="total_floor"
+                          value="{{ old('total_floor', $model->total_floor) }}"
+                          class="form-control {{ $errors->has('total_floor') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('total_floor'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('total_floor') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">واحد</label>
+                        <input autocomplete="off" type="number" min="0" id="unit" name="unit"
+                          value="{{ old('unit', $model->unit) }}"
+                          class="form-control {{ $errors->has('unit') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('unit'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('unit') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">کل واحد ها</label>
+                        <input autocomplete="off" type="number" min="0" id="total_unit" name="total_unit"
+                          value="{{ old('total_unit', $model->total_unit) }}"
+                          class="form-control {{ $errors->has('total_unit') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('total_unit'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('total_unit') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">مساحت</label>
+                        <input autocomplete="off" type="number" min="0" id="total_area" name="total_area"
+                          value="{{ old('total_area', $model->total_area) }}"
+                          class="form-control {{ $errors->has('total_area') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('total_area'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('total_area') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">بنای مفید</label>
+                        <input autocomplete="off" type="number" min="0" id="built_area" name="built_area"
+                          value="{{ old('built_area', $model->built_area) }}"
+                          class="form-control {{ $errors->has('built_area') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('built_area'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('built_area') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">سن بنا</label>
+                        <input autocomplete="off" type="number" min="0" id="age" name="age"
+                          value="{{ old('age', $model->age) }}"
+                          class="form-control {{ $errors->has('age') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('age'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('age') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">قدر السهم (دانگ)</label>
+                        <input autocomplete="off" type="number" min="1" max="6" id="share" name="share"
+                          value="{{ old('share', $model->share) }}"
+                          class="form-control {{ $errors->has('share') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('share'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('share') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">نمای ساختمان</label>
+                        <input autocomplete="off" type="text" id="texture" name="texture"
+                          value="{{ old('texture', $model->texture) }}"
+                          class="form-control {{ $errors->has('texture') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('texture'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('texture') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">نوع سند</label>
+                        <select name="deed" id="deed" class="form-control">
+                          @foreach (\App\Models\Property::deedList() as $index => $deed)
+                            <option value="{{ $index }}" {{old('deed',$model->deed) == $index ? 'selected' : ''}}>{{ $deed }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">کاربری</label>
+                        <select name="usage" id="usage" class="form-control">
+                          @foreach (\App\Models\Property::usageList() as $index => $usage)
+                            <option value="{{ $index }}" {{old('usage',$model->usage) == $index ? 'selected' : ''}}>{{ $usage }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">وضعیت سکنه</label>
+                        <select name="is_empty" id="is_empty" class="form-control">
+                          <option value="0" {{old('is_empty',$model->is_empty) == 0 ? 'selected' : ''}}>خالی نمی باشد</option>
+                          <option value="1" {{old('is_empty',$model->is_empty) == 1 ? 'selected' : ''}}>خالی می باشد</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">تاریخ تخلیه</label>
+                        <input autocomplete="off" type="text" autocomplete="off" name="evacuation_date"
+                          value="{{ old('evacuation_date', \Morilog\Jalali\Jalalian::fromDateTime($model->specification->evacuation_date)->format('Y-m-d')) }}" name="evacuation_date"
+                          class="form-control datepicker {{ $errors->has('evacuation_date') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('evacuation_date'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('evacuation_date') }}</small>
+                        @endif
+                      </div>
+                    </div>
+                    <div class="col-md-10">
+                      <div class="form-group">
+                        <label class="control-label">توضیحات</label>
+                        <input autocomplete="off" type="text" id="description" name="description"
+                          class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                          value="{{ old('description', $model->description) }}">
+                        @if ($errors->has('description'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('description') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label class="control-label">سرویس بهداشتی</label>
+                        <br>
+
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          <label class="btn btn-secondary {{old('toilet_together',$model->toilet_together) == 1 ? 'active' : ''}}">
+                            <input type="radio" autocomplete="off" name="toilet_together" value="1" {{old('toilet_together',$model->toilet_together) == 1 ? 'checked' : ''}}> باهم
+                          </label>
+                          <label class="btn btn-secondary {{old('toilet_together',$model->toilet_together) == 0 ? 'active' : ''}}">
+                            <input type="radio" autocomplete="off" name="toilet_together" value="0" {{old('toilet_together',$model->toilet_together) == 0 ? 'checked' : ''}}> جدا
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">نوع درخواست</label>
+                        <br>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          <label class="btn btn-secondary {{old('for_rent',$model->for_rent) == 1 ? 'active' : ''}}" >
+                            <input type="checkbox" name="for_rent" {{old('for_rent',$model->for_rent) == 1 ? 'checked' : ''}} autocomplete="off"> اجاره
+                          </label>
+                          <label class="btn btn-secondary {{old('for_sell',$model->for_sell) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="for_sell" {{old('for_sell', $model->for_sell) == 1 ? 'checked' : ''}} autocomplete="off"> فروش
+                          </label>
+                          <label class="btn btn-secondary {{old('for_pre_sell',$model->for_pre_sell) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="for_pre_sell" {{old('for_pre_sell', $model->for_pre_sell) == 1 ? 'checked' : ''}} autocomplete="off"> پیش فروش
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="control-label">سایر امکانات</label>
+                        <br>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          <label class="btn btn-secondary {{old('parking',$model->parking) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="parking" {{old('parking',$model->parking) == 1 ? 'checked' : ''}} autocomplete="off"> پارکینگ
+                          </label>
+                          <label class="btn btn-secondary {{old('storage',$model->storage) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="storage" {{old('storage',$model->storage) == 1 ? 'checked' : ''}} autocomplete="off"> انباری
+                          </label>
+                          <label class="btn btn-secondary {{old('elevator',$model->elevator) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="elevator" {{old('elevator',$model->elevator) == 1 ? 'checked' : ''}} autocomplete="off"> آسانسور
+                          </label>
+                          <label class="btn btn-secondary {{old('balcony',$model->balcony) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="balcony" {{old('balcony',$model->balcony) == 1 ? 'checked' : ''}} autocomplete="off"> تراس
+                          </label>
+                          <label class="btn btn-secondary {{old('yard',$model->yard) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="yard" {{old('yard',$model->yard) == 1 ? 'checked' : ''}} autocomplete="off"> حیاط
+                          </label>
+                          <label class="btn btn-secondary {{old('parket',$model->specification->parket) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="parket" {{old('parket',$model->parket) == 1 ? 'checked' : ''}} autocomplete="off"> پارکت
+                          </label>
+                          <label class="btn btn-secondary {{old('cooling',$model->specification->cooling) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="cooling" {{old('cooling',$model->cooling) == 1 ? 'checked' : ''}} autocomplete="off"> سرمایشی
+                          </label>
+                          <label class="btn btn-secondary {{old('telephone',$model->specification->telephone) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="telephone" {{old('telephone',$model->telephone) == 1 ? 'checked' : ''}} autocomplete="off"> تلفن
+                          </label>
+                          <label class="btn btn-secondary {{old('cabinet',$model->specification->cabinet) == 1 ? 'active' : ''}}">
+                            <input type="checkbox" name="cabinet" {{old('cabinet',$model->cabinet) == 1 ? 'checked' : ''}} autocomplete="off"> کابینت
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">گرمایشی</label>
+                        <select name="heating" id="heating" class="form-control">
+                          @foreach (\App\Models\Specification::heatingTypeList() as $index => $heating)
+                            <option value="{{ $index }}" {{old('heating',$model->specification->heating) == $index ? 'selected' : ''}}>{{ $heating }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">آب</label>
+                        <select name="water" id="period" class="form-control">
+                          @foreach (\App\Models\Specification::powerTypeList() as $index => $water)
+                            <option value="{{ $index }}" {{old('water',$model->specification->water) == $index ? 'selected' : ''}}>{{ $water }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">برق</label>
+                        <select name="electricity" id="period" class="form-control">
+                          @foreach (\App\Models\Specification::powerTypeList() as $index => $electricity)
+                            <option value="{{ $index }}" {{old('electricity',$model->specification->electricity) == $index ? 'selected' : ''}}>{{ $electricity }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label class="control-label">گاز</label>
+                        <select name="gas" id="period" class="form-control">
+                          @foreach (\App\Models\Specification::powerTypeList() as $index => $gas)
+                            <option value="{{ $index }}" {{old('gas',$model->specification->gas) == $index ? 'selected' : ''}}>{{ $gas }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{-- ثمن معامله --}}
+
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card card-outline-primary">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-body">
+                      <h3 class="box-title m-t-7">3) قیمت ملک</h3>
                       <hr>
                       <div class="row p-t-20">
-                          <div class="col-md-4">
-                              <div class="form-group">
-                                  <label class="control-label">نام و نام خانوادگی    </label>
-                                  <input autocomplete="off" type="text" id="full_name" name="full_name" value="{{old('full_name',$donee->full_name)}}" class="form-control {{$errors->has('full_name')?'is-invalid':''}}">
-                                  @if($errors->has('full_name'))
-                                    <small class="form-control-feedback text-danger">{{$errors->first('full_name')}}</small>
-                                  @endif
-                              </div>
-                          </div>
-                          <!--/span-->
-                          <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">نام پدر   </label>
-                                <input autocomplete="off" type="text" id="father_name" name="father_name" value="{{old('father_name',$donee->father_name)}}" class="form-control {{$errors->has('father_name')?'is-invalid':''}}">
-                                @if($errors->has('father_name'))
-                                  <small class="form-control-feedback text-danger">{{$errors->first('father_name')}}</small>
-                                @endif
-                            </div>
-                        </div>
-                        <!--/span-->
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label class="control-label">کدملی </label>
-                              <input autocomplete="off" maxlength="10" type="text" id="national_id" name="national_id" value="{{old('national_id',$donee->national_id)}}" class="form-control {{$errors->has('national_id')?'is-invalid':''}}" onkeyup="onlyNumber(this)" >
-                              @if($errors->has('national_id'))
-                                <small class="form-control-feedback text-danger">{{$errors->first('national_id')}}</small>
-                              @endif
-                            </div>
-                          </div>
-                          <!--/span-->
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label class="control-label">شماره شناسنامه </label>
-                              <input autocomplete="off" type="text" id="birth_certificate_id" name="birth_certificate_id" value="{{old('birth_certificate_id',$donee->birth_certificate_id)}}" class="form-control {{$errors->has('birth_certificate_id')?'is-invalid':''}}" onkeyup="onlyNumber(this)" >
-                              @if($errors->has('birth_certificate_id'))
-                                <small class="form-control-feedback text-danger">{{$errors->first('birth_certificate_id')}}</small>
-                              @endif
-                            </div>
-                          </div>
-                          <!--/span-->
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label class="control-label">شماره تلفن  </label>
-                              <input autocomplete="off" type="text" id="phone" name="phone" class="form-control {{$errors->has('phone')?'is-invalid':''}}" value="{{old('phone',$donee->phone)}}" onkeyup="onlyNumber(this)" >
-                              @if($errors->has('phone'))
-                                <small class="form-control-feedback text-danger">{{$errors->first('phone')}}</small>
-                              @endif
-                            </div>
-                          </div>
-                          <!--/span-->
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label class="control-label">شماره همراه </label>
-                              <input autocomplete="off" type="text" id="mobile" name="mobile" class="form-control {{$errors->has('mobile')?'is-invalid':''}}" maxlength="11" value="{{old('mobile',$donee->mobile)}}" onkeyup="onlyNumber(this)">
-                              @if($errors->has('mobile'))
-                                <small class="form-control-feedback text-danger">{{$errors->first('mobile')}}</small>
-                              @endif
-                            </div>
-                          </div>
-                          <!--/span-->
-                          <div class="col-md-4">
-                              {{--  has-success  --}}
-                              <div class="form-group">
-                                <label class="control-label">جنسیت</label>
-                                <select name="gender" class="form-control">
-                                    <option value="1" {{old('gender', $donee->gender) == '1'? 'selected': ''}}>مرد</option>
-                                    <option value="2" {{old('gender', $donee->gender) == '2'? 'selected': ''}}>زن</option>
-                                </select>
-                                @if($errors->has('gender'))
-                                  <small class="form-control-feedback text-danger">{{$errors->first('gender')}}</small>
-                                @endif
-                              </div>
-                            </div>
-                          
-                          <!--/span-->
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label class="control-label">میزان تحصیلات  </label>
-                              <input autocomplete="off" type="text" id="education" name="education" value="{{old('education',$donee->education)}}" class="form-control {{$errors->has('education')?'is-invalid':''}}" >
-                              @if($errors->has('education'))
-                                <small class="form-control-feedback text-danger">{{$errors->first('education')}}</small>
-                              @endif
-                            </div>
-                          </div>
-                          <!--/span-->
-                          <div class="col-md-4">
-                              <div class="form-group">
-                                <label class="control-label">تاریخ  تولد </label>
-                                <input autocomplete="off" type="text" autocomplete="off" id="birth_date" value="{{old('birth_date',App\Drivers\Time::jdate('Y-m-d', $timestamp = $donee->birth_date, $none = '', $time_zone = 'Asia/Tehran', $tr_num = 'en'))}}"  name="birth_date" class="form-control datepicker" >
-                                @if($errors->has('birth_date'))
-                                  <small class="form-control-feedback text-danger">{{$errors->first('birth_date')}}</small>
-                                @endif
-                              </div>
-                            </div>
-                      </div>
-                      <!--/row-->
-                      <div class="row">
-                          <div class="col-md-12">
-                              <div class="form-group">
-                                <label class="control-label">آدرس</label>
-                                <input autocomplete="off" type="text" id="address" name="address" class="form-control {{$errors->has('address')?'is-invalid':''}}"  value="{{old('address',$donee->address)}}" >
-                                @if($errors->has('address'))
-                                  <small class="form-control-feedback text-danger">{{$errors->first('address')}}</small>
-                                @endif
-                              </div>
-                            </div>
-                          <!--/span-->
-                        <!--/span-->
-                      </div>
-                      <!--/row-->
-                      <!--/row-->
-                      
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="card card-outline-primary">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="form-body">
-                    <h3 class="box-title m-t-7">۲) اطلاعات بانکی</h3>
-                    <hr>
-                    <div class="row p-t-20">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">شماره حساب</label>
-                          <input autocomplete="off" type="text" id="bank_account_number" name="bank_account_number" value="{{old('bank_account_number',$donee->bank_account_number )}}" class="form-control" onkeyup="onlyNumber(this)">
-                          @if($errors->has('bank_account_number'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('bank_account_number')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                        <!--/span-->
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">شماره کارت</label>
-                          <input autocomplete="off" maxlength="16" type="text" id="bank_card_number" name="bank_card_number" value="{{old('bank_card_number',$donee->bank_card_number)}}" class="form-control" onkeyup="onlyNumber(this)">
-                          @if($errors->has('bank_card_number'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('bank_card_number')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                        <!--/span-->
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">صاحب حساب</label>
-                          <input autocomplete="off" type="text" id="bank_account_owner" name="bank_account_owner" value="{{old('bank_account_owner',$donee->bank_account_owner)}}" class="form-control" >
-                          @if($errors->has('bank_account_owner'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('bank_account_owner')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                        <!--/span-->
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">نام بانک</label>
-                          <input autocomplete="off" type="text" id="bank_name" name="bank_name" value="{{old('bank_name',$donee->bank_name)}}" class="form-control">
-                          @if($errors->has('bank_name'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('bank_name')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                        <!--/span-->
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">شعبه</label>
-                          <input autocomplete="off" type="text" id="bank_branch_name" name="bank_branch_name" value="{{old('bank_branch_name',$donee->bank_branch_name)}}" class="form-control">
-                          @if($errors->has('bank_branch_name'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('bank_branch_name')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-12">
-          <div class="card card-outline-primary">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="form-body">
-                    <h3 class="box-title m-t-7">3) اطلاعات پرونده</h3>
-                    <hr>
-                    <div class="row p-t-20">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label">شماره پرونده </label>
-                            <input autocomplete="off" type="text" id="file_number" name="file_number" value="{{old('file_number',$donee->file_number)}}"  class="form-control {{$errors->has('file_number')?'is-invalid':''}}" onkeyup="onlyNumber(this)">
-                            @if($errors->has('file_number'))
-                              <small class="form-control-feedback text-danger">{{$errors->first('file_number')}}</small>
-                            @endif
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">تاریخ شروع فعالیت </label>
-                          <input autocomplete="off" type="text" autocomplete="off" id="membership_start_date" value="{{old('membership_start_date', App\Drivers\Time::jdate('Y-m-d', $timestamp = $donee->membership_start_date, $none = '', $time_zone = 'Asia/Tehran', $tr_num = 'en'))}}"  name="membership_start_date" class="form-control datepicker" >
-                          @if($errors->has('membership_start_date'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('membership_start_date')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                      <!--/span-->
-                      <div class="col-md-4">
-                          {{--  has-success  --}}
+                        <div class="col-md-4">
                           <div class="form-group">
-                            <label class="control-label">واحد سازمانی</label>
-                            <select name="organization_branch" class="form-control">
-                                <option value="1" {{old('organization_branch',$donee->organization_branch) == '1'? 'selected': ''}}>توانبخشی</option>
-                                <option value="2" {{old('organization_branch',$donee->organization_branch) == '2'? 'selected': ''}}>اجتماعی </option>
-                                <option value="3" {{old('organization_branch',$donee->organization_branch) == '3'? 'selected': ''}}>پیشگیری </option>
+                            <label class="control-label">مبلغ کل</label>
+                            <input autocomplete="off" type="text" id="total_price" name="total_price"
+                              value="{{ old('total_price', $model->specification->total_price ) }}"
+                              class="form-control {{ $errors->has('total_price') ? 'is-invalid' : '' }}"
+                              oninput="number_to_word(this)">
+                            @if ($errors->has('total_price'))
+                              <small
+                                class="form-control-feedback text-danger">{{ $errors->first('total_price') }}</small>
+                            @endif
+                            <span class="form-control-feedback text-success text-sm alphabetic-number">
+                              {{App\Drivers\Number2Word::numberToWords(old('total_price', $model->specification->total_price ))}} تومان
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="control-label">قیمت هر متر</label>
+                            <input autocomplete="off" maxlength="16" type="text" id="unit_price"
+                              name="unit_price" value="{{ old('unit_price', $model->specification->unit_price) }}"
+                              class="form-control {{ $errors->has('unit_price') ? 'is-invalid' : '' }}"
+                              oninput="number_to_word(this)">
+                            @if ($errors->has('unit_price'))
+                              <small
+                                class="form-control-feedback text-danger">{{ $errors->first('unit_price') }}</small>
+                            @endif
+                            <span class="form-control-feedback text-success text-sm alphabetic-number">
+                              {{App\Drivers\Number2Word::numberToWords(old('total_price', $model->specification->unit_price ))}} تومان
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="control-label">قابل معاوضه</label>
+                            <select name="exchangeable" id="period" class="form-control">
+                              <option value="0" {{ old('exchangeable', $model->specification->exchangeable) == 0 ? 'selected' : '' }}>نمی باشد</option>
+                              <option value="1" {{old('exchangeable', $model->specification->exchangeable) == 1 ? 'selected' : '' }}>می باشد</option>
                             </select>
-                            @if($errors->has('organization_branch'))
-                              <small class="form-control-feedback text-danger">{{$errors->first('organization_branch')}}</small>
-                            @endif
                           </div>
                         </div>
-                        <!--/span-->
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">تعداد افراد معلول خانواده</label>
-                          <input autocomplete="off" type="number" id="number_of_disabled_members_in_family" name="number_of_disabled_members_in_family" value="{{old('number_of_disabled_members_in_family',$donee->number_of_disabled_members_in_family)}}" class="form-control" onkeyup="onlyNumber(this)">
-                          @if($errors->has('number_of_disabled_members_in_family'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('number_of_disabled_members_in_family')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                        <!--/span-->
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label class="control-label">تعداد افراد خانواده</label>
-                          <input autocomplete="off" type="number" id="number_of_family_members" name="number_of_family_members" value="{{old('number_of_family_members',$donee->number_of_family_members)}}" class="form-control" onkeyup="onlyNumber(this)">
-                          @if($errors->has('number_of_family_members'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('number_of_family_members')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                        <!--/span-->
-                      <div class="col-md-4">
-                        {{--  has-success  --}}
-                        <div class="form-group">
-                          <label class="control-label">معلول</label>
-                          <select name="disabled" class="form-control">
-                              <option value="1" {{old('disabled',$donee->disabled) == '1'? 'selected': ''}}>می باشد</option>
-                              <option value="2" {{old('disabled',$donee->disabled) == '2'? 'selected': ''}}>نمی باشد</option>
-                          </select>
-                          @if($errors->has('disabled'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('disabled')}}</small>
-                          @endif
-                        </div>
-                      </div>
 
-                      <div class="col-md-4">
-                        {{--  has-success  --}}
-                        <div class="form-group">
-                          <label class="control-label">نوع خروجی</label>
-                          <select name="output_type" class="form-control">
-                              <option value="1" {{old('output_type', $donee->output_type) == '1'? 'selected': ''}}>بانک</option>
-                              <option value="2" {{old('output_type', $donee->output_type) == '2'? 'selected': ''}}> درون سازمانی</option>
-                          </select>
-                          @if($errors->has('output_type'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('output_type')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                        <!--/span-->
-                      <div class="col-md-8">
-                        <div class="form-group">
-                          <label class="control-label">علت حمایت</label>
-                          <input autocomplete="off" type="text" id="reasons_to_help" name="reasons_to_help" value="{{old('reasons_to_help',$donee->reasons_to_help)}}" class="form-control">
-                          @if($errors->has('reasons_to_help'))
-                            <small class="form-control-feedback text-danger">{{$errors->first('reasons_to_help')}}</small>
-                          @endif
-                        </div>
-                      </div>
-                      <div class="col-md-4">
+
+                        <div class="col-md-4">
                           <div class="form-group">
-                            <label class="control-label">&nbsp;</label><br>
-                            <button type="button" class="btn btn-primary" onclick="open_modal()">افزودن حامی</button>
+                            <label class="control-label">ودیعه</label>
+                            <input autocomplete="off" type="text" id="deposit" name="deposit"
+                              value="{{ old('deposit', $model->specification->deposit) }}"
+                              class="form-control {{ $errors->has('deposit') ? 'is-invalid' : '' }}" oninput="number_to_word(this)">
+                            @if ($errors->has('deposit'))
+                              <small
+                                class="form-control-feedback text-danger">{{ $errors->first('deposit') }}</small>
+                            @endif
+                            <span class="form-control-feedback text-success text-sm alphabetic-number">
+                              {{App\Drivers\Number2Word::numberToWords(old('deposit', $model->specification->deposit))}} تومان
+                            </span>
                           </div>
                         </div>
-                    </div>
-                    <div class="row p-t-20">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table table-striped ">
-                                    <thead>
-                                        <tr>
-                                            <th>مددجو</th>
-                                            <th>کمک نقدی</th>
-                                            <th>کمک غیرنقدی</th>
-                                            <th>حذف</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="donors-content">
-                                        @foreach ($donee->donors as $index=>$donor)
-                                          <tr id="donees-content">
-                                            <td data-title="مددجو">{{$donor->full_name}}</td>
-                                            <td data-title="کمک نقدی">{{$donor->pivot->money_amount}}</td>
-                                            <td data-title="کمک غیرنقدی">{{$donor->pivot->non_money_detail=='null'||$donor->pivot->non_money_detail==null||$donor->pivot->non_money_detail==''?'-':$donor->pivot->non_money_detail}}</td>
-                                            <td  style="cursor:pointer;color: #5c4ac7;    font-size: larger;" >
-                                              <i class="fa fa-trash" aria-hidden="true" onclick="remove_donor({{$index}})"></i>
-                                              &nbsp;&nbsp;
-                                              <i class="fa fa-edit" aria-hidden="true" onclick="open_edit_modal({{$index}})" style="    margin-top: 3px;"></i>
-                                            </td>
-                                          </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div> 
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="control-label">اجاره بها</label>
+                            <input autocomplete="off" type="text" id="rent" name="rent"
+                              value="{{ old('rent', $model->specification->rent) }}"
+                              class="form-control {{ $errors->has('rent') ? 'is-invalid' : '' }}" oninput="number_to_word(this)">
+                            @if ($errors->has('rent'))
+                              <small
+                                class="form-control-feedback text-danger">{{ $errors->first('rent') }}</small>
+                            @endif
+                            <span class="form-control-feedback text-success text-sm alphabetic-number">
+                              {{App\Drivers\Number2Word::numberToWords(old('rent', $model->specification->rent))}} تومان
+                            </span>
+                          </div>
                         </div>
-                    </div>
-                    <div class="form-actions text-left" style="margin-top:80px">
-                        <button type="submit" class="btn btn-success" onclick="submit_form()"> بروزرسانی اطلاعات <i class="fa fa-check"></i> </button>
+
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="control-label">قابل تبدیل</label>
+                            <select name="flexible" id="period" class="form-control">
+                              <option value="0" {{old('flexible', $model->specification->flexible) == 0 ? 'selected' : '' }}>نمی باشد</option>
+                              <option value="1" {{old('flexible', $model->specification->flexible) == 1 ? 'selected' : '' }}>می باشد</option>
+                            </select>
+                          </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label class="control-label">وضعیت</label>
+                            <br>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-secondary {{old('sold',$model->specification->sold) == 1 ? 'active' : ''}}">
+                                <input type="checkbox" autocomplete="off" name="sold" {{old('sold',$model->specification->sold) == 1 ? 'checked' : ''}}> فروخته شد
+                              </label>
+                              <label class="btn btn-secondary {{old('rented',$model->specification->rented) == 1 ? 'active' : ''}}">
+                                <input type="checkbox" autocomplete="off" name="rented" {{old('rented',$model->specification->rented) == 1 ? 'checked' : ''}}> اجاره رفت
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+
                       </div>
+                      <div class="form-actions text-left" style="margin-top:80px">
+                        <button type="submit" class="btn btn-success" onclick="submit_form()"> ثبت <i class="fa fa-check"></i> </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -377,322 +673,63 @@
         </div>
       </div>
     </div>
-  </div>
-  
+
   </form>
 @endsection
 @section('custom_js')
 
-  <script src="{{url('admin/js/lib/date-picker/bootstrap-datepicker.min.js')}}"></script>
-  <script src="{{url('admin/js/lib/date-picker/bootstrap-datepicker.fa.min.js')}}"></script>
-  <script src="{{url('admin/js/lib/bootstrap-select/bootstrap-select.min.js')}}"></script>
+  <script src="{{ url('admin/js/lib/date-picker/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ url('admin/js/lib/date-picker/bootstrap-datepicker.fa.min.js') }}"></script>
+  <script src="{{ url('admin/js/lib/bootstrap-select/bootstrap-select.min.js') }}"></script>
   <script>
     $(document).ready(function() {
       $(".datepicker").datepicker({
         changeMonth: true,
         changeYear: true,
-        yearRange:"1300:1400"
+        yearRange: "1400:1450"
       });
     });
   </script>
-    
+
 @endsection
 
 @section('custom_modal')
+
   <script>
-      var all_donors = @json($all_donors);
-      let donors_belongs_to_donee = @json($donee->donors);
-      let donors = []
-      for(let i=0;i<donors_belongs_to_donee.length;i++){
-        let obj = {}
-        obj.id = donors_belongs_to_donee[i].id;
-        obj.name = donors_belongs_to_donee[i].full_name;
-        obj.type = donors_belongs_to_donee[i].pivot.donation_type;
-        obj.money = donors_belongs_to_donee[i].pivot.money_amount;
-        obj.non_money = donors_belongs_to_donee[i].pivot.non_money_detail;
-        donors[i] = obj
+    function disable_input() {
+      if (Number($("#support_type").val()) == 1) {
+        $("#support_amount").removeAttr("disabled")
+        $("#support_description").val('')
+        $("#support_description").attr("disabled", true)
+      } else {
+        $("#support_amount").attr("disabled", true)
+        $("#support_amount").val(0);
+        $("#support_description").removeAttr("disabled")
       }
-  </script>
-  <script>
-      function open_modal(){
-        $('.menu_title').val('')
-        $('.simti_overlay').show();
-        $('#new_modal').show();
-        $('body').addClass('stop-scrolling')
-      }
-      function close_modal(){
-        $('.simti_overlay').hide();
-        $('.simti_modal').hide();
-        $('body').removeClass('stop-scrolling')
-      }
-      function disable_input(){
-        if(Number($("#support_type").val())==1){
-          $("#support_amount").removeAttr("disabled")
-          $("#support_description").val('')
-          $("#support_description").attr("disabled",true)
-        }else{
-          $("#support_amount").attr("disabled",true)
-          $("#support_amount").val(0);
-          $("#support_description").removeAttr("disabled")
-        }
-      }
-      function disable_input_edit(){
-        if(Number($("#support_type_edit").val())==1){
-          $("#support_amount_edit").removeAttr("disabled")
-          $("#support_description_edit").val('')
-          $("#support_description_edit").attr("disabled",true)
-        }else{
-          $("#support_amount_edit").attr("disabled",true)
-          $("#support_amount_edit").val(0);
-          $("#support_description_edit").removeAttr("disabled")
-        }
-      }
-      function remove_donor(index){
-        donors.splice(index,1)
-        //update table
-        render_donors(donors)
-      }
+    }
 
-      //modal close on outside
-      $(document).ready(function() {
-        $('.simti_overlay').click(function(){
-          close_modal()
-        })
-      })
-      //store donors
-      function add_donor(){
-        let donor = {};
-        //check for uniqueness
-        if(donors.length>0){
-          if(typeof(donors.find(donor => donor.id == $('#donor').val())) != "object"){
-            //get selected full_name
-            for(let i = 1; i <=all_donors.length;i++){
-              if(all_donors[i-1].id == Number($('#donor').val())){
-                donor.name = all_donors[i-1].full_name;
-              }
-            }
-            //get values
-            donor.id = $('#donor').val()
-            donor.type = $("#support_type").val()
-            donor.money = $("#support_amount").val()
-            donor.non_money = $("#support_description").val()
-
-            //add to object
-            donors[donors.length] = donor
-
-            //update table
-            render_donors(donors)
-            $("#support_amount").val('')
-            $("#support_description").val('')
-            close_modal()
-          }else{
-            toast_alert("این مددجو قبلا اضافه شده است","true");
-          }
-        }else{
-          //get selected full_name
-          for(let i = 1; i <=all_donors.length;i++){
-            if(all_donors[i-1].id == Number($('#donor').val())){
-              donor.name = all_donors[i-1].full_name;
-            }
-          }
-          //get values
-          donor.id = $('#donor').val()
-          donor.type = $("#support_type").val()
-          donor.money = $("#support_amount").val()
-          donor.non_money = $("#support_description").val()
-
-          //add to object
-          donors[donors.length] = donor
-
-          //update table
-          render_donors(donors);
-          $("#support_amount").val('')
-          $("#support_description").val('')
-          close_modal()
-        }
-      }
-
-      function open_edit_modal(index) {
-        
-        $("#support_amount_edit").removeAttr("disabled");
-        //initiate values
-        $("#support_type_edit").val(donors[index].type)
-        $("#support_amount_edit").val(donors[index].money);
-        $("#support_description_edit").val(donors[index].non_money)
-        $("#donor_edit").val(donors[index].id);
-        $("#donor_edit").selectpicker('render');
-        if(Number(donors[index].type) == 1){
-          $("#support_amount_edit").removeAttr("disabled")
-          $("#support_description_edit").attr("disabled",true)
-        }else{
-          $("#support_amount_edit").attr("disabled",true)
-          $("#support_description_edit").removeAttr("disabled");
-        }
-        
-        
-        $("#donor-update-button").attr("onclick", `update_donor(${index})`)
-            //open box
-        $('.simti_overlay').fadeIn("slow");
-        $('#edit_modal').fadeIn("slow");
-        $('body').addClass('stop-scrolling')
-      }
-
-      function update_donor(index){
-        let found = donors.find(donor => donor.id == $('#donor_edit').val());
-  
-        if(typeof(found) == "undefined"){
-          //get selected full_name
-          for(let i = 1; i <=all_donors.length;i++){
-            if(all_donors[i-1].id == Number($('#donor_edit').val())){
-              donors[index].name = all_donors[i-1].full_name;
-            }
-          }
-          //get values
-          donors[index].id = $('#donor_edit').val()
-          donors[index].type = $("#support_type_edit").val()
-          donors[index].money = $("#support_amount_edit").val()
-          donors[index].non_money = $("#support_description_edit").val()
-
-        }else{
-          if(found.id == donors[index].id){
-            donors[index].type = $("#support_type_edit").val()
-            donors[index].money = $("#support_amount_edit").val()
-            donors[index].non_money = $("#support_description_edit").val()
-          }else{
-            toast_alert("این مددجو قبلا اضافه شده است","true");
-          }
-        }
-
-        //update table
-        render_donors(donors)
-        $("#support_amount_edit").val('')
+    function disable_input_edit() {
+      if (Number($("#support_type_edit").val()) == 1) {
+        $("#support_amount_edit").removeAttr("disabled")
         $("#support_description_edit").val('')
-        close_modal()
+        $("#support_description_edit").attr("disabled", true)
+      } else {
+        $("#support_amount_edit").attr("disabled", true)
+        $("#support_amount_edit").val(0);
+        $("#support_description_edit").removeAttr("disabled")
       }
-      
+    }
 
-      function submit_form(){
-        let content=``;
-        for(let i=0;i<donors.length;i++){
-          content+=`
-            <input type="hidden" name="donors[${i}][id]" value="${donors[i].id}">
-            <input type="hidden" name="donors[${i}][type]" value="${donors[i].type}">
-            <input type="hidden" name="donors[${i}][money]" value="${donors[i].money}">
-            <input type="hidden" name="donors[${i}][no_money]" value="${donors[i].non_money}">
-          `
-        }
-
-        $("#donee_form").append(content)
-
-        $("#donee_form").submit();
+    function number_to_word(el){
+      onlyNumber(el);
+      el.parentNode.querySelector('.alphabetic-number').innerHTML = Num2persian(el.value)+" تومان";
+    }
 
 
-      }
-
-      function render_donors(list){
-        let content = '';
-        for(let i =0;i<list.length;i++){
-          content+=`
-            <tr id="donors-content">
-              <td data-title="مددجو">${list[i].name}</td>
-              <td data-title="کمک نقدی">${list[i].money}</td>
-              <td data-title="کمک غیرنقدی">${list[i].non_money==''?'-': list[i].non_money}</td>
-              <td data-title="عملیات" style="cursor:pointer;color: #5c4ac7;    font-size: larger;">
-                <i class="fa fa-trash" aria-hidden="true" onclick="remove_donor(${i})"></i>
-                &nbsp;&nbsp;
-                <i class="fa fa-edit" aria-hidden="true" onclick="open_edit_modal(${i})" style="    margin-top: 3px;"></i>
-              </td>
-              
-            </tr>
-          `
-        }
-        $("#donors-content").html(content)
-      }
+    function submit_form() {
+      $("#property_form").submit();
+    }
   </script>
-  <div  class="simti_overlay"></div>
-  <div id="new_modal" class="simti_modal visible">
-    <div class="simti_modal_title">
-      <h2 class="modal-title">منوی جدید</h2>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label class="control-label">حامی</label>
-            <select id="donor" class="selectpicker form-control" data-style="simti_o" name="donors[]" data-live-search="true">
-              @foreach($all_donors as $donor)
-                <option value="{{$donor->id}}" {{ in_array($donor->id, old('donors', []))? 'selected': ''}}>{{$donor->full_name}}</option>
-              @endforeach
-            </select>
-            @if($errors->has('donors'))
-              <small class="form-control-feedback text-danger">{{$errors->first('donors')}}</small>
-            @endif
-          </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="control-label">نوع حمایت</label>
-                <select id="support_type" class="form-control" onchange="disable_input()">
-                    <option value="1">نقدی</option>
-                    <option value="2">غیر نقدی</option>
-                    <option value="3">خدمات</option>
-                </select>
-              </div>
-        </div> 
-        <div class="col-md-12">
-          <div class="form-group" i >
-            <label class="control-label" > مبلغ (ریال)</label>
-            <input autocomplete="off" type="number" id="support_amount" class="form-control" >
-          </div>
 
-          <div class="form-group">
-            <label class="control-label" >شرح کمک</label>
-            <textarea row="3" id="support_description" class="form-control" style="height:auto !important" disabled></textarea>
-          </div>
-        </div>
-    </div>
-    <button class="btn btn-primary modal-submit" onclick="add_donor()">افزودن</button>
-  </div>
-  <div id="edit_modal" class="simti_modal visible">
-    <div class="simti_modal_title">
-      <h2 class="modal-title">ویرایش مددجو</h2>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label class="control-label">مددجو</label>
-            <select id="donor_edit" class="selectpicker form-control" data-style="simti_o" name="donors[]" data-live-search="true">
-              @foreach($all_donors as $donor)
-                <option value="{{$donor->id}}" {{ in_array($donor->id, old('donors', []))? 'selected': ''}}>{{$donor->full_name}}</option>
-              @endforeach
-            </select>
-            @if($errors->has('donors'))
-              <small class="form-control-feedback text-danger">{{$errors->first('donors')}}</small>
-            @endif
-          </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="control-label">نوع حمایت</label>
-                <select id="support_type_edit" class="form-control" onchange="disable_input_edit()">
-                    <option value="1">نقدی</option>
-                    <option value="2">غیر نقدی</option>
-                    <option value="3">خدمات</option>
-                </select>
-              </div>
-        </div> 
-        <div class="col-md-12">
-          <div class="form-group" i >
-            <label class="control-label" > مبلغ (ریال)</label>
-            <input autocomplete="off" type="number" id="support_amount_edit" class="form-control" >
-          </div>
-
-          <div class="form-group">
-            <label class="control-label" >شرح کمک</label>
-            <textarea row="3" id="support_description_edit" class="form-control" style="height:auto !important" disabled></textarea>
-          </div>
-        </div>
-    </div>
-    <button id="donor-update-button" class="btn btn-primary modal-submit" >ویرایش</button>
-  </div>
 
 @endsection

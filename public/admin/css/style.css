@@ -8936,3 +8936,7 @@ a:hover {
  html,body{
      background: #f7f6f6 !important;
  }
+
+ .alphabetic-number {
+    font-size: 14px !important;
+}

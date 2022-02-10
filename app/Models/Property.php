@@ -138,6 +138,11 @@ class Property extends Model
             : $this->status;
     }
 
+    public function getLandlordAttribute()
+    {
+        return $this->landlord_first_name." ".$this->landlord_last_name;
+    }
+
     public function scopePublished($query)
     {
         $query->where('status', self::PUBLISHED);
@@ -150,8 +155,23 @@ class Property extends Model
     }
 
     public function specification(){
-        return $this->hasOne(Property::class);
+        return $this->hasOne(Specification::class,'property_id','id');
     }
 
+    public function state(){
+        return $this->belongsTo(State::class,'state_id','id');
+    }
+
+    public function city(){
+        return $this->belongsTo(City::class,'city_id','id');
+    }
+
+    public function area(){
+        return $this->belongsTo(Area::class,'area_id','id');
+    }
+
+    public function complex(){
+        return $this->belongsTo(Complex::class,'complex_id','id');
+    }
     
 }
