@@ -7,12 +7,12 @@
 @endsection
 @section('page_title')
   <div class="col-md-5 align-self-center">
-    <h3 class="text-primary">مدیریت همکاران آرشیو شده </h3>
+    <h3 class="text-primary">مدیریت همکاران بایگانی شده </h3>
   </div>
   <div class="col-md-7 align-self-center">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="javascript:void(0)">خانه</a></li>
-      <li class="breadcrumb-item active">همکاران آرشیو شده</li>
+      <li class="breadcrumb-item active">همکاران بایگانی شده</li>
     </ol>
   </div>
 @endsection

@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}">
-    <title>حامی رشت | پنل ادمین</title>
+    <title>املاک فرهنگیان سبز</title>
     <link href="{{asset('admin/css/lib/toastr/toastr.min.css')}}" rel="stylesheet">
     <link href="{{asset('admin/css/lib/sweetalert/sweetalert.css')}}" rel="stylesheet">
     <link href="{{asset('admin/css/lib/sweetalert/swal-forms.css')}}" rel="stylesheet">
@@ -192,9 +192,9 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="nav-label" style="text-align: center;">
-                            <a href="">
-                                <i class="fa fa-desktop"></i>
-                                مشاهده وبسایت
+                            <a href="{{route('dashboard')}}">
+                                <i class="fa fa-dashboard"></i>
+                               داشبورد
                             </a>
                         </li>
                         <li class="nav-devider"></li>
@@ -202,7 +202,7 @@
 
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">
-                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <i class="fa fa-home" aria-hidden="true"></i>
                                 <span class="hide-menu">املاک
                                     {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
                                 </span>
@@ -228,7 +228,7 @@
 
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">
-                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <i class="fa fa-building" aria-hidden="true"></i>
                                 <span class="hide-menu">مجتمع مسکونی
                                     {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
                                 </span>
@@ -241,7 +241,7 @@
 
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">
-                                <i class="fa fa-gratipay" aria-hidden="true"></i>
+                                <i class="fa fa-user" aria-hidden="true"></i>
                                 <span class="hide-menu">همکاران
                                     {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
                                 </span>
@@ -254,8 +254,8 @@
 
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">
-                                <i class="fa fa-gratipay" aria-hidden="true"></i>
-                                <span class="hide-menu">آرشیو
+                                <i class="fa fa-folder" aria-hidden="true"></i>
+                                <span class="hide-menu">بایگانی
                                     {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
                                 </span>
                             </a>
@@ -267,7 +267,7 @@
 
                         <li>
                             <a href="{{route('to_be_evacuated')}}">
-                                <i class="fa  fa-gear" aria-hidden="true"></i>
+                                <i class="fa  fa-calendar" aria-hidden="true"></i>
                                 <span class="hide-menu">نزدیک تخلیه</span>
                             </a>
                         </li>

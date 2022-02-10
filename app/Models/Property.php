@@ -126,7 +126,7 @@ class Property extends Model
     {
         return [
             self::PUBLISHED => 'منتشر شده',
-            self::ARCHIVED => 'آرشیو شده',
+            self::ARCHIVED => 'بایگانی شده',
         ];
     }
 

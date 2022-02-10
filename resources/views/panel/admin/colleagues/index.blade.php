@@ -95,7 +95,7 @@
                             <a class="has-arrow" href="{{ route('colleagues.archive') }}?id={{ $item->id }}" onclick="return confirm('اطمینان دارید؟')"
                               aria-expanded="false" style="color:red">
                               {{-- <i  class="fa fa-close" aria-hidden="true"></i> --}}
-                              <span class="">آرشیو</span>
+                              <span class="">بایگانی</span>
                             </a>
                           </td>
                         </tr>
