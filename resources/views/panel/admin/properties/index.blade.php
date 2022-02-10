@@ -71,7 +71,7 @@
                           @endif
 
                           <td data-title="عملیات" class="td_btn_custom_width">
-                            <a class="has-arrow" href="{{ route('properties.edit', $item->id) }}"
+                            <a class="has-arrow" target="_blank" href="{{ route('properties.edit', $item->id) }}"
                               aria-expanded="false" style="color:green">
                               {{-- <i class="fa fa-edit" aria-hidden="true"></i> --}}
                               <span class="">ویرایش</span>

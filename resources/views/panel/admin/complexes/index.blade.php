@@ -60,7 +60,7 @@
                           <td data-title="نام مجتمع" class="simti_td_center">{{ $item->title }}</td>
                           <td data-title="مدیر مجتمع" class="simti_td_center">{{ $item->manager }}</td>
                           <td data-title="عملیات" class="td_btn_custom_width">
-                            <a class="has-arrow" href="{{ route('complexes.edit', $item->id) }}"
+                            <a class="has-arrow" target="_blank" href="{{ route('complexes.edit', $item->id) }}"
                               aria-expanded="false" style="color:green">
                               {{-- <i class="fa fa-edit" aria-hidden="true"></i> --}}
                               <span class="">ویرایش</span>

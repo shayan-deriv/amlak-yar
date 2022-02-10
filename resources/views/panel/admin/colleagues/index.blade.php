@@ -86,7 +86,7 @@
                           <td data-title="تلفن" class="simti_td_center">{{ $item->phone }}</td>
                           <td data-title="نام محله" class="simti_td_center">{{ $item->area->name }}</td>
                           <td data-title="عملیات" class="td_btn_custom_width">
-                            <a class="has-arrow" href="{{ route('colleagues.edit', $item->id) }}"
+                            <a class="has-arrow" target="_blank" href="{{ route('colleagues.edit', $item->id) }}"
                               aria-expanded="false" style="color:green">
                               {{-- <i class="fa fa-edit" aria-hidden="true"></i> --}}
                               <span class="">ویرایش</span>

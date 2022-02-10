@@ -11,6 +11,7 @@ use App\Models\Area;
 use App\Models\Complex;
 use App\Models\Property;
 use App\Models\Specification;
+use Carbon\Carbon;
 use App\Http\Requests\DoneeRequest;
 
 class PropertyController extends Controller
@@ -214,5 +215,16 @@ class PropertyController extends Controller
     ]);
 
     return redirect()->route('archived.properties');
+  }
+
+  public function toBeEvacuated(Request $request){
+    $model = Property::published()
+      ->join('specifications', 'specifications.property_id', '=', 'properties.id')
+      ->where('specifications.evacuation_date','<=',Carbon::now()->addDays(60)->toDateString())
+      ->orderBy('specifications.evacuation_date')
+      ->paginate(50);
+
+    $model->appends($request->except('page'));
+    return view('panel.admin.to_be_evacuated.index', compact('model'));
   }
 }

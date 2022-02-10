@@ -85,5 +85,7 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::get('/colleagues', [ColleagueController::class,'archived'])->name('colleagues');
     });
 
+    Route::get('/to-be-evacuated', [PropertyController::class,'toBeEvacuated'])->name('to_be_evacuated');
+
 
 });

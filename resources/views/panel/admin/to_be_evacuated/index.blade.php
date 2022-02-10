@@ -29,8 +29,7 @@
                         <th class=" text-center">نوع ملک</th>
                         <th class=" text-center">نوع معامله</th>
                         <th class=" text-center">آدرس ملک</th>
-                        <th class=" text-center">اجاره بها</th>
-                        <th class=" text-center">قیمت فروش / پیش فروش</th>
+                        <th class=" text-center">تاریخ تخلیه</th>
                         <th class=" text-center"> </th>
                       </tr>
                     </thead>
@@ -46,41 +45,16 @@
                             {{ $item->for_pre_sell ? '/ پیش فروش' : '' }}
                           </td>
                           <td data-title="آدرس" class="simti_td_center">{{ $item->city->name }} {{ $item->area ? ' - '.$item->area->name : ''}} {{ $item->complex ? ' - مجتمع '.$item->complex->title : ''}} - {{ $item->address}}</td>
-
-                            <td data-title="اجاره بها" class="simti_td_center">
-                              پیش: {{ number_format($item->specification->deposit) ?? '' }}
-                              <br>
-                              کرایه : {{ number_format($item->specification->rent) ?? '' }}
-                            </td>
-
-                          @if (isset($item->for_sell) && $item->for_sell)
-                            <td data-title="قیمت فروش" class="simti_td_center">
-                              متری : {{ number_format($item->specification->unit_price) ?? '' }}
-                              <br>
-                              مجموع : {{ number_format($item->specification->total_price) ?? '' }}
-                            </td>
+                          <td data-title="مالک" class="simti_td_center">
+                            {{\Morilog\Jalali\Jalalian::fromDateTime($item->specification->evacuation_date)->format('Y-m-d')}}
+                          </td>
                           
-                          @elseif (isset($item->for_pre_sell) && $item->for_pre_sell)
-                            <td data-title="قیمت پیش فروش" class="simti_td_center">
-                              متری : {{ number_format($item->specification->unit_price) ?? '' }}
-                              <br>
-                              مجموع : {{ number_format($item->specification->total_price) ?? '' }}
-                            </td>
-                          @else
-                            <td></td>
-                          @endif
 
                           <td data-title="عملیات" class="td_btn_custom_width">
-                            <a class="has-arrow" href="{{ route('properties.edit', $item->id) }}"
-                              aria-expanded="false"  target="_blank" style="color:green">
+                            <a class="has-arrow" target="_blank" href="{{ route('properties.edit', $item->id) }}"
+                              aria-expanded="false" style="color:green">
                               {{-- <i class="fa fa-edit" aria-hidden="true"></i> --}}
-                              <span class="">ویرایش</span>
-                            </a>
-                            <span style="padding: 0 2px;border-right:1px solid;"></span>
-                            <a class="has-arrow" href="{{ route('properties.publish') }}?id={{ $item->id }}" onclick="return confirm('اطمینان دارید؟')"
-                              aria-expanded="false" style="color:red">
-                              {{-- <i  class="fa fa-close" aria-hidden="true"></i> --}}
-                              <span class="">بازگردانی</span>
+                              <span class="">مشاهده</span>
                             </a>
                           </td>
                         </tr>

@@ -265,6 +265,13 @@
                             </ul>
                         </li>
 
+                        <li>
+                            <a href="{{route('to_be_evacuated')}}">
+                                <i class="fa  fa-gear" aria-hidden="true"></i>
+                                <span class="hide-menu">نزدیک تخلیه</span>
+                            </a>
+                        </li>
+
                         {{-- <li>
                             <a href="{{route('settings.show')}}">
                                 <i class="fa  fa-gear" aria-hidden="true"></i>
