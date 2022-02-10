@@ -227,4 +227,14 @@ class PropertyController extends Controller
     $model->appends($request->except('page'));
     return view('panel.admin.to_be_evacuated.index', compact('model'));
   }
+
+  public function duplicate($property)
+  {
+    $model = Property::find($property);
+    $states = State::all();
+    $cities = City::all();
+    $areas = Area::all();
+    $complexes = Complex::all();
+    return view('panel.admin.properties.duplicate', compact('model', 'states', 'cities', 'areas', 'complexes'));
+  }
 }

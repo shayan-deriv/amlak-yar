@@ -49,6 +49,7 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::get('/archive', [PropertyController::class,'archive'])->name('archive');
         Route::get('/publish', [PropertyController::class,'publish'])->name('publish');
         Route::get('/archived', [PropertyController::class,'archived'])->name('archived');
+        Route::get('/duplicate/{property}', [PropertyController::class,'duplicate'])->name('duplicate');
     });
 
     Route::prefix('areas')->name('areas.')->group(function () {

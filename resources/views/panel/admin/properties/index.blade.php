@@ -71,6 +71,12 @@
                           @endif
 
                           <td data-title="عملیات" class="td_btn_custom_width">
+                            <a class="has-arrow"  href="{{ route('properties.duplicate', $item->id) }}"
+                              aria-expanded="false" style="color:rgb(209, 161, 41)">
+                              {{-- <i class="fa fa-edit" aria-hidden="true"></i> --}}
+                              <span class="">کپی</span>
+                            </a>
+                            <span style="padding: 0 2px;border-right:1px solid;"></span>
                             <a class="has-arrow" target="_blank" href="{{ route('properties.edit', $item->id) }}"
                               aria-expanded="false" style="color:green">
                               {{-- <i class="fa fa-edit" aria-hidden="true"></i> --}}
