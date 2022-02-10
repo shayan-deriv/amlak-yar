@@ -64,24 +64,4 @@ class AreaController extends Controller
 
         return redirect()->route('areas.index');
     }
-
-    public function archive(Request $request)
-    {
-
-        Area::where('id', $request->id)->update([
-            'status' => Area::ARCHIVED
-        ]);
-
-        return redirect()->route('areas.index');
-    }
-
-    public function unarchive(Request $request)
-    {
-
-        Area::where('id', $request->id)->update([
-            'status' => Area::PUBLISHED
-        ]);
-
-        return redirect()->route('areas.index');
-    }
 }
