@@ -29,7 +29,7 @@ class ColleagueController extends Controller
             $query->where('area_id',$request->area_id);
         }
 
-        $model = $query->published()->paginate(50);
+        $model = $query->published()->orderByDesc('created_at')->paginate(50);
         $model->appends($request->except('page'));
         return view('panel.admin.colleagues.index', compact('model','areas'));
     }
@@ -104,7 +104,7 @@ class ColleagueController extends Controller
             $query->where('area_id',$request->area_id);
         }
 
-        $model = $query->archived()->paginate(50);
+        $model = $query->archived()->orderByDesc('created_at')->paginate(50);
         $model->appends($request->except('page'));
         return view('panel.admin.archived.colleagues', compact('model','areas'));
     }
