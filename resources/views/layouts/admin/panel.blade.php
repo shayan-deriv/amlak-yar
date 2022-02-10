@@ -272,6 +272,13 @@
                             </a>
                         </li>
 
+                        <li>
+                            <a href="{{route('backup')}}">
+                                <i class="fa  fa-database" aria-hidden="true"></i>
+                                <span class="hide-menu">بکاپ اطلاعات</span>
+                            </a>
+                        </li>
+
                         {{-- <li>
                             <a href="{{route('settings.show')}}">
                                 <i class="fa  fa-gear" aria-hidden="true"></i>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Panel\PropertyController;
 use App\Http\Controllers\Panel\ColleagueController;
 use App\Http\Controllers\Panel\AreaController;
 use App\Http\Controllers\Panel\ComplexController;
+use App\Http\Controllers\Panel\BackupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,8 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
     });
 
     Route::get('/to-be-evacuated', [PropertyController::class,'toBeEvacuated'])->name('to_be_evacuated');
+
+    Route::get('/backup', [BackupController::class,'backup'])->name('backup');
 
 
 });
