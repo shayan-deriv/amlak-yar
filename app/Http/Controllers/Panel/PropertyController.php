@@ -17,46 +17,9 @@ class PropertyController extends Controller
 {
   public function index(Request $request)
   {
-    $model = Property::published()->paginate(50);
+    $model = Property::published()->orderByDesc('created_at')->paginate(50);
     $model->appends($request->except('page'));
     return view('panel.admin.properties.index', compact('model'));
-  }
-  public function fetch(Request $request)
-  {
-    $donees = Donee::where('full_name', 'LIKE', '%' . $request->input('term', '') . '%')
-      ->orWhere('national_id', 'LIKE', '%' . $request->input('term', '') . '%')
-      ->offset($request->input('page', 0) * 10)
-      ->limit($request->input('limit', 10))
-      ->Active()
-      ->with('donors')
-      ->get();
-    return $donees;
-  }
-  public function count(Request $request)
-  {
-    $count = Donee::where('full_name', 'LIKE', '%' . $request->input('term', '') . '%')
-      ->orWhere('national_id', 'LIKE', '%' . $request->input('term', '') . '%')
-      ->Active()
-      ->count();
-    return $count;
-  }
-  public function fetch_deactivate(Request $request)
-  {
-    $donees = Donee::where('full_name', 'LIKE', '%' . $request->input('term', '') . '%')
-      ->orWhere('national_id', 'LIKE', '%' . $request->input('term', '') . '%')
-      ->offset($request->input('page', 0) * 10)
-      ->limit($request->input('limit', 10))
-      ->Deactive()
-      ->get();
-    return $donees;
-  }
-  public function count_deactivate(Request $request)
-  {
-    $count = Donee::where('full_name', 'LIKE', '%' . $request->input('term', '') . '%')
-      ->orWhere('national_id', 'LIKE', '%' . $request->input('term', '') . '%')
-      ->Deactive()
-      ->count();
-    return $count;
   }
   public function create()
   {
@@ -238,9 +201,9 @@ class PropertyController extends Controller
 
   public function archived(Request $request)
   {
-    $model = Property::archived()->paginate(50);
+    $model = Property::archived()->orderByDesc('created_at')->paginate(50);
     $model->appends($request->except('page'));
-    return view('panel.admin.archived.properties',compact('model'));
+    return view('panel.admin.archived.properties', compact('model'));
   }
 
   public function publish(Request $request)

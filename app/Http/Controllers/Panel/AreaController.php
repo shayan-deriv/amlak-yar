@@ -18,7 +18,7 @@ class AreaController extends Controller
             $query->where('name', 'like', "%$request->name%");
         }
 
-        $model = $query->published()->paginate(50);
+        $model = $query->published()->orderByDesc('created_at')->paginate(50);
         $model->appends($request->except('page'));
         return view('panel.admin.areas.index', compact('model'));
     }

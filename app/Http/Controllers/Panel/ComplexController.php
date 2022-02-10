@@ -24,7 +24,7 @@ class ComplexController extends Controller
             $query->where('manager','like',"%$request->manager%");
         }
 
-        $model = $query->published()->paginate(50);
+        $model = $query->published()->orderByDesc('created_at')->paginate(50);
         $model->appends($request->except('page'));
         return view('panel.admin.complexes.index', compact('model'));
     }
