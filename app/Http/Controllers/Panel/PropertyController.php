@@ -18,9 +18,13 @@ class PropertyController extends Controller
 {
   public function index(Request $request)
   {
+    $states = State::all();
+    $cities = City::all();
+    $areas = Area::all();
+    $complexes = Complex::all();
     $model = Property::published()->orderByDesc('created_at')->paginate(50);
     $model->appends($request->except('page'));
-    return view('panel.admin.properties.index', compact('model'));
+    return view('panel.admin.properties.index', compact('model', 'states', 'cities', 'areas', 'complexes'));
   }
   public function create()
   {
@@ -34,8 +38,7 @@ class PropertyController extends Controller
   {
 
     $this->validate($request, [
-      'landlord_first_name' => 'required',
-      'landlord_last_name' => 'required',
+      'landlord' => 'required',
       'state_id' => 'required',
       'city_id' => 'required',
       'area_id' => 'required',
@@ -47,8 +50,7 @@ class PropertyController extends Controller
     ]);
     $property = Property::create([
       'type' => $request->type ?? 1,
-      'landlord_first_name' => $request->landlord_first_name,
-      'landlord_last_name' => $request->landlord_last_name,
+      'landlord' => $request->landlord,
       'primary_mobile' => $request->primary_mobile ?? null,
       'secondary_mobile' => $request->secondary_mobile ?? null,
       'phone' => $request->phone ?? null,
@@ -118,8 +120,7 @@ class PropertyController extends Controller
   public function update(Request $request, $property)
   {
     $this->validate($request, [
-      'landlord_first_name' => 'required',
-      'landlord_last_name' => 'required',
+      'landlord' => 'required',
       'state_id' => 'required',
       'city_id' => 'required',
       'area_id' => 'required',
@@ -132,8 +133,7 @@ class PropertyController extends Controller
 
     Property::findOrFail($property)->update([
       'type' => $request->type ?? 1,
-      'landlord_first_name' => $request->landlord_first_name,
-      'landlord_last_name' => $request->landlord_last_name,
+      'landlord' => $request->landlord,
       'primary_mobile' => $request->primary_mobile ?? null,
       'secondary_mobile' => $request->secondary_mobile ?? null,
       'phone' => $request->phone ?? null,
@@ -217,10 +217,11 @@ class PropertyController extends Controller
     return redirect()->route('archived.properties');
   }
 
-  public function toBeEvacuated(Request $request){
+  public function toBeEvacuated(Request $request)
+  {
     $model = Property::published()
       ->join('specifications', 'specifications.property_id', '=', 'properties.id')
-      ->where('specifications.evacuation_date','<=',Carbon::now()->addDays(60)->toDateString())
+      ->where('specifications.evacuation_date', '<=', Carbon::now()->addDays(60)->toDateString())
       ->orderBy('specifications.evacuation_date')
       ->paginate(50);
 

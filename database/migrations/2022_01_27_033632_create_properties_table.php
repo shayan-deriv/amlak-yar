@@ -16,8 +16,7 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->unsignedTinyInteger('type')->default(1);
-            $table->string('landlord_first_name')->nullable();
-            $table->string('landlord_last_name')->nullable();
+            $table->string('landlord')->nullable();
             $table->string('primary_mobile')->nullable();
             $table->string('secondary_mobile')->nullable();
             $table->string('phone')->nullable();

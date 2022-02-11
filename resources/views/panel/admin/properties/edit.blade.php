@@ -88,27 +88,16 @@
                   <div class="row p-t-20">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="control-label">نام</label>
-                        <input autocomplete="off" type="text" id="landlord_first_name" name="landlord_first_name"
-                          value="{{ old('landlord_first_name', $model->landlord_first_name) }}"
-                          class="form-control {{ $errors->has('landlord_first_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('landlord_first_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('landlord_first_name') }}</small>
+                        <label class="control-label">مالک</label>
+                        <input autocomplete="off" type="text" id="landlord" name="landlord"
+                          value="{{ old('landlord', $model->landlord) }}"
+                          class="form-control {{ $errors->has('landlord') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('landlord'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('landlord') }}</small>
                         @endif
                       </div>
                     </div>
 
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class="control-label">نام خانوادگی </label>
-                        <input autocomplete="off" type="text" id="landlord_last_name" name="landlord_last_name"
-                          value="{{ old('landlord_last_name', $model->landlord_last_name) }}"
-                          class="form-control {{ $errors->has('landlord_last_name') ? 'is-invalid' : '' }}">
-                        @if ($errors->has('landlord_last_name'))
-                          <small class="form-control-feedback text-danger">{{ $errors->first('landlord_last_name') }}</small>
-                        @endif
-                      </div>
-                    </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="control-label"> موبایل 1 </label>

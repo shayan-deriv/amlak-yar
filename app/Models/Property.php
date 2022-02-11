@@ -138,11 +138,6 @@ class Property extends Model
             : $this->status;
     }
 
-    public function getLandlordAttribute()
-    {
-        return $this->landlord_first_name." ".$this->landlord_last_name;
-    }
-
     public function scopePublished($query)
     {
         $query->where('status', self::PUBLISHED);
