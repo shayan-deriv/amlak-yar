@@ -83,7 +83,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <div class="form-body">
-                  <h3 class="card-title m-t-15">۱) اطلاعات مالک</h3>
+                  <h3 class="card-title m-t-15">۱) اطلاعات مالک و مستاجر</h3>
                   <hr>
                   <div class="row p-t-20">
                     <div class="col-md-4">
@@ -132,6 +132,45 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row p-t-20">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label">مستاجر</label>
+                        <input autocomplete="off" type="text" id="tenant" name="tenant"
+                          value="{{ old('tenant', '') }}"
+                          class="form-control {{ $errors->has('tenant') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('tenant'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('tenant') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label"> موبایل </label>
+                        <input autocomplete="off" type="text" id="tenant_mobile" name="tenant_mobile"
+                          class="form-control {{ $errors->has('tenant_mobile') ? 'is-invalid' : '' }}" maxlength="11"
+                          value="{{ old('tenant_mobile', '') }}" onkeyup="onlyNumber(this)">
+                        @if ($errors->has('tenant_mobile'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('tenant_mobile') }}</small>
+                        @endif
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="control-label"> تلفن منزل </label>
+                        <input autocomplete="off" maxlength="11" type="text" id="house_phone" name="house_phone"
+                          class="form-control {{ $errors->has('house_phone') ? 'is-invalid' : '' }}"
+                          value="{{ old('house_phone', '') }}" onkeyup="onlyNumber(this)">
+                        @if ($errors->has('house_phone'))
+                          <small class="form-control-feedback text-danger">{{ $errors->first('house_phone') }}</small>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -410,19 +449,25 @@
                       </div>
                     </div>
 
-
-
+                    <div class="col-md-12" style="margin-bottom:25px;">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" {{old('for_colleague') == 'on' ? 'checked' : ''}} name="for_colleague" id="for_colleague">
+                        <label class="form-check-label" for="for_colleague" style="    margin-right: 20px;">
+                          برای همکار
+                        </label>
+                      </div>
+                    </div>
 
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="control-label">سرویس بهداشتی</label>
                         <br>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                          <label class="btn btn-secondary">
+                          <label class="btn btn-secondary {{old('toilet_together') == 1 ? 'active' : ''}}">
                             <input type="radio" autocomplete="off" name="toilet_together" value="1" {{old('toilet_together') == 1 ? 'checked' : ''}}> باهم
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="radio" autocomplete="off" name="toilet_together" value="0" {{old('toilet_together') == 1 ? 'checked' : ''}}> جدا
+                          <label class="btn btn-secondary {{old('toilet_together') == 0 ? 'active' : ''}}">
+                            <input type="radio" autocomplete="off" name="toilet_together" value="0" {{old('toilet_together') == 0 ? 'checked' : ''}}> جدا
                           </label>
                         </div>
                       </div>
@@ -433,14 +478,14 @@
                         <label class="control-label">نوع درخواست</label>
                         <br>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="for_rent" {{old('for_rent') == 1 ? 'checked' : ''}} autocomplete="off"> اجاره
+                          <label class="btn btn-secondary {{old('for_rent') == 'on' ? 'active' : ''}} ">
+                            <input type="checkbox" name="for_rent" {{old('for_rent') == 'on' ? 'checked' : ''}} autocomplete="off"> اجاره
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="for_sell" {{old('for_sell') == 1 ? 'checked' : ''}} autocomplete="off"> فروش
+                          <label class="btn btn-secondary {{old('for_sell') == 'on' ? 'active' : ''}} ">
+                            <input type="checkbox" name="for_sell" {{old('for_sell') == 'on' ? 'checked' : ''}} autocomplete="off"> فروش
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="for_pre_sell" {{old('for_pre_sell') == 1 ? 'checked' : ''}} autocomplete="off"> پیش فروش
+                          <label class="btn btn-secondary {{old('for_pre_sell') == 'on' ? 'active' : ''}} ">
+                            <input type="checkbox" name="for_pre_sell" {{old('for_pre_sell') == 'on' ? 'checked' : ''}} autocomplete="off"> پیش فروش
                           </label>
                         </div>
                       </div>
@@ -450,32 +495,38 @@
                         <label class="control-label">سایر امکانات</label>
                         <br>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="parking" {{old('parking') == 1 ? 'checked' : ''}} autocomplete="off"> پارکینگ
+                          <label class="btn btn-secondary {{old('parking') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="parking" {{old('parking') == 'on' ? 'checked' : ''}} autocomplete="off"> پارکینگ
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="storage" {{old('storage') == 1 ? 'checked' : ''}} autocomplete="off"> انباری
+                          <label class="btn btn-secondary {{old('storage') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="storage" {{old('storage') == 'on' ? 'checked' : ''}} autocomplete="off"> انباری
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="elevator" {{old('elevator') == 1 ? 'checked' : ''}} autocomplete="off"> آسانسور
+                          <label class="btn btn-secondary {{old('elevator') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="elevator" {{old('elevator') == 'on' ? 'checked' : ''}} autocomplete="off"> آسانسور
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="balcony" {{old('balcony') == 1 ? 'checked' : ''}} autocomplete="off"> تراس
+                          <label class="btn btn-secondary {{old('balcony') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="balcony" {{old('balcony') == 'on' ? 'checked' : ''}} autocomplete="off"> تراس
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="yard" {{old('yard') == 1 ? 'checked' : ''}} autocomplete="off"> حیاط
+                          <label class="btn btn-secondary {{old('yard') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="yard" {{old('yard') == 'on' ? 'checked' : ''}} autocomplete="off"> حیاط
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="parket" {{old('parket') == 1 ? 'checked' : ''}} autocomplete="off"> پارکت
+                          <label class="btn btn-secondary {{old('parket') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="parket" {{old('parket') == 'on' ? 'checked' : ''}} autocomplete="off"> پارکت
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="cooling" {{old('cooling') == 1 ? 'checked' : ''}} autocomplete="off"> سرمایشی
+                          <label class="btn btn-secondary {{old('cooling') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="cooling" {{old('cooling') == 'on' ? 'checked' : ''}} autocomplete="off"> سرمایشی
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="telephone" {{old('telephone') == 1 ? 'checked' : ''}} autocomplete="off"> تلفن
+                          <label class="btn btn-secondary {{old('telephone') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="telephone" {{old('telephone') == 'on' ? 'checked' : ''}} autocomplete="off"> تلفن
                           </label>
-                          <label class="btn btn-secondary">
-                            <input type="checkbox" name="cabinet" {{old('cabinet') == 1 ? 'checked' : ''}} autocomplete="off"> کابینت
+                          <label class="btn btn-secondary {{old('cabinet') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="cabinet" {{old('cabinet') == 'on' ? 'checked' : ''}} autocomplete="off"> کابینت
+                          </label>
+                          <label class="btn btn-secondary {{old('farangi_toilet') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="farangi_toilet" {{old('farangi_toilet') == 'on' ? 'checked' : ''}} autocomplete="off"> توالت فرنگی
+                          </label>
+                          <label class="btn btn-secondary {{old('ceramic_floor') == 'on' ? 'active' : ''}}">
+                            <input type="checkbox" name="ceramic_floor" {{old('ceramic_floor') == 'on' ? 'checked' : ''}} autocomplete="off"> کف سرامیک
                           </label>
                         </div>
                       </div>
@@ -483,21 +534,23 @@
 
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label class="control-label">گرمایشی</label>
-                        <select name="heating" id="heating" class="form-control">
+                        <label class="control-label">گرمایشی 
+                        </label>
+
+                        <select name="heating[]" id="heating" class="form-control selectpicker show-tick" multiple>
                           @foreach (\App\Models\Specification::heatingTypeList() as $index => $heating)
-                            <option value="{{ $index }}" {{old('heating') == $index ? 'checked' : ''}}>{{ $heating }}</option>
+                            <option value="{{ $index }}" {{ in_array(strval($index),old('heating',[])) ? 'selected' : ''}}>{{ $heating }}
+                            </option>
                           @endforeach
                         </select>
                       </div>
                     </div>
-
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="control-label">آب</label>
                         <select name="water" id="period" class="form-control">
                           @foreach (\App\Models\Specification::powerTypeList() as $index => $water)
-                            <option value="{{ $index }}" {{old('water') == $index ? 'checked' : ''}}>{{ $water }}</option>
+                            <option value="{{ $index }}" {{old('water') == $index ? 'selected' : ''}}>{{ $water }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -508,7 +561,7 @@
                         <label class="control-label">برق</label>
                         <select name="electricity" id="period" class="form-control">
                           @foreach (\App\Models\Specification::powerTypeList() as $index => $electricity)
-                            <option value="{{ $index }}" {{old('electricity') == $index ? 'checked' : ''}}>{{ $electricity }}</option>
+                            <option value="{{ $index }}" {{old('electricity') == $index ? 'selected' : ''}}>{{ $electricity }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -519,7 +572,7 @@
                         <label class="control-label">گاز</label>
                         <select name="gas" id="period" class="form-control">
                           @foreach (\App\Models\Specification::powerTypeList() as $index => $gas)
-                            <option value="{{ $index }}" {{old('gas') == $index ? 'checked' : ''}}>{{ $gas }}</option>
+                            <option value="{{ $index }}" {{old('gas') == $index ? 'selected' : ''}}>{{ $gas }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -640,11 +693,11 @@
                             <label class="control-label">وضعیت</label>
                             <br>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                              <label class="btn btn-secondary">
-                                <input type="checkbox" autocomplete="off" name="sold"> فروخته شد
+                              <label class="btn btn-secondary {{old('sold') == 'on' ? 'active' : ''}}">
+                                <input type="checkbox" autocomplete="off" name="sold" {{old('sold') == 'on' ? 'checked' : ''}}> فروخته شد
                               </label>
-                              <label class="btn btn-secondary">
-                                <input type="checkbox" autocomplete="off" name="rented"> اجاره رفت
+                              <label class="btn btn-secondary {{old('rented') == 'on' ? 'active' : ''}}">
+                                <input type="checkbox" autocomplete="off" name="rented" {{old('rented') == 'on' ? 'checked' : ''}}> اجاره رفت
                               </label>
                             </div>
                           </div>

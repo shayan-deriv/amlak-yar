@@ -36,7 +36,7 @@
                     </thead>
                     <tbody id="donees-content">
                       @forelse ($model as $item)
-                        <tr>
+                        <tr {{ ($item->sold || $item->rented )? 'style="background-color:#e9626252"' : '' }}>
                           {{-- <td data-title="ردیف" class="row_col_10" scope="row">{{ $item->id }}</th> --}}
                           <td data-title="مالک" class="simti_td_center">{{ $item->landlord }}</td>
                           <td data-title="مالک" class="simti_td_center">{{ $item->type_str }}</td>
