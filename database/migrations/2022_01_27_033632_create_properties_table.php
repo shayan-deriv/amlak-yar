@@ -20,6 +20,7 @@ class CreatePropertiesTable extends Migration
             $table->string('primary_mobile')->nullable();
             $table->string('secondary_mobile')->nullable();
             $table->string('phone')->nullable();
+            $table->string('house_phone')->nullable();
             $table->string('address', 255)->nullable();
             $table->string('description', 255)->nullable();
             $table->timestamp('registered_at')->nullable();
@@ -44,6 +45,7 @@ class CreatePropertiesTable extends Migration
             $table->unsignedSmallInteger('age')->nullable();
             $table->unsignedTinyInteger('total_rooms')->default(0);
             $table->boolean('toilet_together')->default(0);
+            $table->boolean('for_colleague')->default(0);
             $table->string('texture')->nullable();
             $table->bigInteger('state_id')->unsigned()->nullable();
             $table->bigInteger('city_id')->unsigned()->nullable();

@@ -37,6 +37,7 @@ class PropertyController extends Controller
   public function store(Request $request)
   {
 
+    
     $this->validate($request, [
       'landlord' => 'required',
       'state_id' => 'required',
@@ -48,12 +49,14 @@ class PropertyController extends Controller
       'electricity' => 'required',
       'gas' => 'required',
     ]);
+
     $property = Property::create([
       'type' => $request->type ?? 1,
       'landlord' => $request->landlord,
       'primary_mobile' => $request->primary_mobile ?? null,
       'secondary_mobile' => $request->secondary_mobile ?? null,
       'phone' => $request->phone ?? null,
+      'house_phone' => $request->house_phone ?? null,
       'address' => $request->address ?? null,
       'description' => $request->description ?? null,
       'deed' => $request->deed ?? Property::SANAD,
@@ -61,6 +64,7 @@ class PropertyController extends Controller
       'for_rent' => ($request->for_rent && $request->for_rent == "on") ? true : false,
       'for_sell' => ($request->for_sell && $request->for_sell == "on") ? true : false,
       'for_pre_sell' => ($request->for_pre_sell && $request->for_pre_sell == "on") ? true : false,
+      'for_colleague' => ($request->for_colleague && $request->for_colleague == "on") ? true : false,
       'parking' => ($request->parking && $request->parking == "on") ? true : false,
       'storage' => ($request->storage && $request->storage == "on") ? true : false,
       'elevator' => ($request->elevator && $request->elevator == "on") ? true : false,
@@ -87,6 +91,8 @@ class PropertyController extends Controller
     Specification::create([
       'property_id' => $property->id,
       'total_price' => $request->total_price ?? null,
+      'tenant_mobile' => $request->tenant_mobile ?? null,
+      'tenant' => $request->tenant ?? null,
       'unit_price'  => $request->unit_price ?? null,
       'deposit' => $request->deposit ?? null,
       'rent'  => $request->rent ?? null,
@@ -97,12 +103,14 @@ class PropertyController extends Controller
       'flexible'  => $request->flexible ?? 0,
       'cabinet' => ($request->cabinet && $request->cabinet == "on") ? true : false,
       'parket'  => ($request->parket && $request->parket == "on") ? true : false,
-      'heating' => $request->heating ?? 0,
+      'heating' => $request->heating ? serialize($request->heating) : '0',
       'cooling' => ($request->cooling && $request->cooling == "on") ? true : false,
       'telephone' => ($request->telephone && $request->telephone == "on") ? true : false,
       'water' => $request->water ?? 0,
       'electricity' => $request->electricity ?? 0,
       'gas' => $request->gas ?? 0,
+      'ceramic_floor' => ($request->ceramic_floor && $request->ceramic_floor == "on") ? true : false,
+      'farangi_toilet' => ($request->farangi_toilet && $request->farangi_toilet == "on") ? true : false,
       'evacuation_date' =>  $request->evacuation_date ? (\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $request->evacuation_date)->format('Y-m-d H:i:s')) : null
     ]);
 
@@ -119,6 +127,7 @@ class PropertyController extends Controller
   }
   public function update(Request $request, $property)
   {
+
     $this->validate($request, [
       'landlord' => 'required',
       'state_id' => 'required',
@@ -137,6 +146,8 @@ class PropertyController extends Controller
       'primary_mobile' => $request->primary_mobile ?? null,
       'secondary_mobile' => $request->secondary_mobile ?? null,
       'phone' => $request->phone ?? null,
+      'house_phone' => $request->house_phone ?? null,
+      'for_colleague' => ($request->for_colleague && $request->for_colleague == "on") ? true : false,
       'address' => $request->address ?? null,
       'description' => $request->description ?? null,
       'deed' => $request->deed ?? Property::SANAD,
@@ -168,9 +179,13 @@ class PropertyController extends Controller
 
     Specification::where('property_id', $property)->update([
       'total_price' => $request->total_price ?? null,
+      'tenant_mobile' => $request->tenant_mobile ?? null,
+      'tenant' => $request->tenant ?? null,
       'unit_price'  => $request->unit_price ?? null,
       'deposit' => $request->deposit ?? null,
       'rent'  => $request->rent ?? null,
+      'ceramic_floor' => $request->ceramic_floor ?? 0,
+      'farangi_toilet' => $request->farangi_toilet ?? 0,
       'is_empty'  => $request->is_empty ?? 0,
       'sold'  => ($request->rent && $request->rent == "on") ? true : false,
       'rented'  => ($request->rented && $request->rented == "on") ? true : false,
@@ -178,9 +193,11 @@ class PropertyController extends Controller
       'flexible'  => $request->flexible ?? 0,
       'cabinet' => ($request->cabinet && $request->cabinet == "on") ? true : false,
       'parket'  => ($request->parket && $request->parket == "on") ? true : false,
-      'heating' => $request->heating ?? 0,
+      'heating' => $request->heating ? serialize($request->heating) : '0',
       'cooling' => ($request->cooling && $request->cooling == "on") ? true : false,
       'telephone' => ($request->telephone && $request->telephone == "on") ? true : false,
+      'ceramic_floor' => ($request->ceramic_floor && $request->ceramic_floor == "on") ? true : false,
+      'farangi_toilet' => ($request->farangi_toilet && $request->farangi_toilet == "on") ? true : false,
       'water' => $request->water ?? 0,
       'electricity' => $request->electricity ?? 0,
       'gas' => $request->gas ?? 0,

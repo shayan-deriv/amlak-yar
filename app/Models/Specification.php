@@ -14,6 +14,8 @@ class Specification extends Model
 
     protected $fillable = [
         'property_id',
+        'tenant',
+        'tenant_mobile',
         'total_price',
         'unit_price',
         'deposit',
@@ -32,6 +34,8 @@ class Specification extends Model
         'water',
         'electricity',
         'gas',
+        'farangi_toilet',
+        'ceramic_floor',
         'evacuation_date'
     ];
 

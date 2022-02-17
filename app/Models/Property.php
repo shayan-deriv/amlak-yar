@@ -12,11 +12,11 @@ class Property extends Model
 
     protected $fillable = [
         'type',
-        'landlord_first_name',
-        'landlord_last_name',
+        'landlord',
         'primary_mobile',
         'secondary_mobile',
         'phone',
+        'house_phone',
         'address',
         'description',
         'registered_at',
@@ -41,6 +41,7 @@ class Property extends Model
         'age',
         'total_rooms',
         'toilet_together',
+        'for_colleague',
         'texture',
         'state_id',
         'city_id',

@@ -122,11 +122,11 @@
           <div class="col-md-2">
             <div class="form-group">
               <label class="control-label">مالک</label>
-              <input autocomplete="off" type="text" id="landlord_first_name" name="landlord_first_name"
-                value="{{ old('landlord_first_name', '') }}"
-                class="form-control {{ $errors->has('landlord_first_name') ? 'is-invalid' : '' }}">
-              @if ($errors->has('landlord_first_name'))
-                <small class="form-control-feedback text-danger">{{ $errors->first('landlord_first_name') }}</small>
+              <input autocomplete="off" type="text" id="landlord" name="landlord"
+                value="{{ old('landlord', '') }}"
+                class="form-control {{ $errors->has('landlord') ? 'is-invalid' : '' }}">
+              @if ($errors->has('landlord'))
+                <small class="form-control-feedback text-danger">{{ $errors->first('landlord') }}</small>
               @endif
             </div>
           </div>
@@ -379,7 +379,7 @@
                     </thead>
                     <tbody id="donees-content">
                       @forelse ($model as $item)
-                        <tr>
+                        <tr {{ ($item->sold || $item->rented )? 'style="background-color:#e9626252"' : '' }}>
                           {{-- <td data-title="ردیف" class="row_col_10" scope="row">{{ $item->id }}</th> --}}
                           <td data-title="مالک" class="simti_td_center">{{ $item->landlord }}</td>
                           <td data-title="مالک" class="simti_td_center">{{ $item->type_str }}</td>
