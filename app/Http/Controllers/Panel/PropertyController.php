@@ -103,7 +103,7 @@ class PropertyController extends Controller
       'flexible'  => $request->flexible ?? 0,
       'cabinet' => ($request->cabinet && $request->cabinet == "on") ? true : false,
       'parket'  => ($request->parket && $request->parket == "on") ? true : false,
-      'heating' => $request->heating ? serialize($request->heating) : '0',
+      'heating' => $request->heating ? serialize($request->heating) : serialize(['0']),
       'cooling' => ($request->cooling && $request->cooling == "on") ? true : false,
       'telephone' => ($request->telephone && $request->telephone == "on") ? true : false,
       'water' => $request->water ?? 0,
@@ -127,7 +127,6 @@ class PropertyController extends Controller
   }
   public function update(Request $request, $property)
   {
-
     $this->validate($request, [
       'landlord' => 'required',
       'state_id' => 'required',
@@ -193,7 +192,7 @@ class PropertyController extends Controller
       'flexible'  => $request->flexible ?? 0,
       'cabinet' => ($request->cabinet && $request->cabinet == "on") ? true : false,
       'parket'  => ($request->parket && $request->parket == "on") ? true : false,
-      'heating' => $request->heating ? serialize($request->heating) : '0',
+      'heating' => $request->heating ? serialize($request->heating) : serialize(['0']),
       'cooling' => ($request->cooling && $request->cooling == "on") ? true : false,
       'telephone' => ($request->telephone && $request->telephone == "on") ? true : false,
       'ceramic_floor' => ($request->ceramic_floor && $request->ceramic_floor == "on") ? true : false,
