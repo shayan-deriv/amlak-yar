@@ -22,7 +22,128 @@ class PropertyController extends Controller
     $cities = City::all();
     $areas = Area::all();
     $complexes = Complex::all();
-    $model = Property::published()->orderByDesc('created_at')->paginate(50);
+    $query = Property::published();
+    if($request->city_id){
+      $query->where('city_id',$request->city_id);
+    }
+    if($request->area_id){
+      $query->where('area_id',$request->area_id);
+    }
+    if($request->complex_id){
+      if($request->complex_id == "no")
+        $query->where('complex_id',null);
+      else
+        $query->where('complex_id',$request->complex_id);
+    }
+    if($request->total_price){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->where('total_price',"<=",$request->total_price);
+      });
+    }
+    if($request->deposit){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->where('deposit',"<=",$request->deposit);
+      });
+    }
+    if($request->rent){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->where('rent',"<=",$request->rent);
+      });
+    }
+    if($request->landlord){
+      $query->where('landlord',"like","%$request->landlord%");
+    }
+    if($request->type){
+      $query->where('type',$request->type);
+    }
+    if($request->total_rooms){
+      $query->where('total_rooms',$request->total_rooms);
+    }
+    if($request->floor){
+      $query->where('floor',$request->floor);
+    }
+    if($request->total_area){
+      $query->where('total_area',"<=",$request->total_area);
+    }
+    if($request->built_area){
+      $query->where('built_area',"<=",$request->built_area);
+    }
+    if($request->age){
+      $query->where('age',"<=",$request->age);
+    }
+    if($request->deed){
+      $query->where('deed',$request->deed);
+    }
+    if($request->usage){
+      $query->where('usage',$request->usage);
+    }
+    if($request->is_empty){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->where('is_empty',$request->is_empty);
+      });
+    }
+    if($request->evacuation_date){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->whereDate('evacuation_date',"<=",\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $request->evacuation_date)->format('Y-m-d H:i:s'));
+      });
+    }
+    // if($request->heating){
+    //   $query->where('heating',$request->heating);
+    // }
+    // if($request->water){
+    //   $query->where('water',$request->water);
+    // }
+    // if($request->electricity){
+    //   $query->where('electricity',$request->electricity);
+    // }
+    // if($request->gas){
+    //   $query->where('gas',$request->gas);
+    // }
+    if($request->for_rent){
+      $query->where('for_rent',1);
+    }
+    if($request->for_sell){
+      $query->where('for_sell',1);
+    }
+    if($request->for_pre_sell){
+      $query->where('for_pre_sell',1);
+    }
+    if($request->parking){
+      $query->where('parking',1);
+    }
+    if($request->storage){
+      $query->where('storage',1);
+    }
+    if($request->elevator){
+      $query->where('elevator',1);
+    }
+    if($request->balcony){
+      $query->where('balcony',1);
+    }
+    if($request->yard){
+      $query->where('yard',1);
+    }
+    if($request->parket){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->where('parket',1);
+      });
+    }
+    if($request->cooling){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->where('cooling',1);
+      });
+    }
+    if($request->telephone){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->where('telephone',1);
+      });
+    }
+    if($request->cabinet){
+      $query->whereHas('specification',function($sub_query){
+        $sub_query->where('cabinet',1);
+      });
+    }
+    $model = $query->orderByDesc('created_at')->paginate(50);
     $model->appends($request->except('page'));
     return view('panel.admin.properties.index', compact('model', 'states', 'cities', 'areas', 'complexes'));
   }

@@ -33,8 +33,11 @@
               <label class="control-label">شهر</label>
               <select name="city_id" id="city_id" class="form-control selectpicker show-tick"
                 data-live-search="true">
+                <option value="" selected>
+                  همه
+                </option>
                 @foreach ($cities as $city)
-                  <option value="{{ $city->id }}" {{old('city_id') == $city->id ? 'selected' : ''}}>
+                  <option value="{{ $city->id }}" {{app('request')->input('city_id') == $city->id ? 'selected' : ''}}>
                     {{ $city->name }}
                   </option>
                 @endforeach
@@ -46,8 +49,11 @@
               <label class="control-label">محله</label>
               <select name="area_id" id="area_id" class="form-control selectpicker show-tick"
                 data-live-search="true">
+                <option value="" selected>
+                  همه
+                </option>
                 @foreach ($areas as $area)
-                  <option value="{{ $area->id }}" {{old('area_id') == $area->id ? 'selected' : ''}}>
+                  <option value="{{ $area->id }}" {{app('request')->input('area_id') == $area->id ? 'selected' : ''}}>
                     {{ $area->name }}
                   </option>
                 @endforeach
@@ -60,10 +66,15 @@
               <select name="complex_id" id="complex_id" class="form-control selectpicker show-tick"
                 data-live-search="true">
                 <option value="no" selected>
-                  ندارد
+                  نباشد
                 </option>
+                @if(count($complexes))
+                  <option value="" selected>
+                    همه
+                  </option>
+                @endif
                 @foreach ($complexes as $complex)
-                  <option value="{{ $complex->id }}" {{old('complex_id') == $complex->id ? 'selected' : ''}}>
+                  <option value="{{ $complex->id }}" {{app('request')->input('complex_id') == $complex->id ? 'selected' : ''}}>
                     {{ $complex->title }}
                   </option>
                 @endforeach
@@ -75,7 +86,7 @@
             <div class="form-group">
               <label class="control-label">حداکثر بودجه خرید</label>
               <input autocomplete="off" type="text" id="total_price" name="total_price"
-                value="{{ old('total_price', '') }}"
+                value="{{ app('request')->input('total_price', '') }}"
                 class="form-control {{ $errors->has('total_price') ? 'is-invalid' : '' }}"
                 oninput="number_to_word(this)">
               @if ($errors->has('total_price'))
@@ -83,7 +94,7 @@
                   class="form-control-feedback text-danger">{{ $errors->first('total_price') }}</small>
               @endif
               <span class="form-control-feedback text-success text-sm alphabetic-number">
-                {{App\Drivers\Number2Word::numberToWords(old('total_price',0))}} تومان
+                {{App\Drivers\Number2Word::numberToWords(app('request')->input('total_price',0))}} تومان
               </span>
             </div>
           </div>
@@ -92,7 +103,7 @@
             <div class="form-group">
               <label class="control-label">حداکثر ودیعه</label>
               <input autocomplete="off" type="text" id="deposit" name="deposit"
-                value="{{ old('deposit', '') }}"
+                value="{{ app('request')->input('deposit', '') }}"
                 class="form-control {{ $errors->has('deposit') ? 'is-invalid' : '' }}" oninput="number_to_word(this)">
               @if ($errors->has('deposit'))
                 <small
@@ -100,7 +111,7 @@
               @endif
 
               <span class="form-control-feedback text-success text-sm alphabetic-number">
-                {{App\Drivers\Number2Word::numberToWords(old('deposit',0))}} تومان
+                {{App\Drivers\Number2Word::numberToWords(app('request')->input('deposit',0))}} تومان
               </span>
             </div>
           </div>
@@ -108,14 +119,14 @@
             <div class="form-group">
               <label class="control-label">حداکثر اجاره بها</label>
               <input autocomplete="off" type="text" id="rent" name="rent"
-                value="{{ old('rent', '') }}"
+                value="{{ app('request')->input('rent', '') }}"
                 class="form-control {{ $errors->has('rent') ? 'is-invalid' : '' }}" oninput="number_to_word(this)">
               @if ($errors->has('rent'))
                 <small
                   class="form-control-feedback text-danger">{{ $errors->first('rent') }}</small>
               @endif
               <span class="form-control-feedback text-success text-sm alphabetic-number">
-                {{App\Drivers\Number2Word::numberToWords(old('rent',0))}} تومان
+                {{App\Drivers\Number2Word::numberToWords(app('request')->input('rent',0))}} تومان
               </span>
             </div>
           </div>
@@ -123,7 +134,7 @@
             <div class="form-group">
               <label class="control-label">مالک</label>
               <input autocomplete="off" type="text" id="landlord" name="landlord"
-                value="{{ old('landlord', '') }}"
+                value="{{ app('request')->input('landlord', '') }}"
                 class="form-control {{ $errors->has('landlord') ? 'is-invalid' : '' }}">
               @if ($errors->has('landlord'))
                 <small class="form-control-feedback text-danger">{{ $errors->first('landlord') }}</small>
@@ -135,8 +146,11 @@
               <label class="control-label">نوع ملک</label>
               <select name="type" id="type" class="form-control selectpicker show-tick"
                 data-live-search="true">
+                <option value="" selected>
+                  همه
+                </option>
                 @foreach (\App\Models\Property::typeList() as $id => $str)
-                  <option value="{{ $id }}" {{old('type') == $id ? 'selected' : ''}}>
+                  <option value="{{ $id }}" {{app('request')->input('type') == $id ? 'selected' : ''}}>
                     {{ $str }}
                   </option>
                 @endforeach
@@ -148,7 +162,7 @@
             <div class="form-group">
               <label class="control-label">تعداد اتاق ها</label>
               <input autocomplete="off" type="number" min="0" max="6" id="total_rooms" name="total_rooms"
-                value="{{ old('total_rooms', '') }}"
+                value="{{ app('request')->input('total_rooms', '') }}"
                 class="form-control {{ $errors->has('total_rooms') ? 'is-invalid' : '' }}">
               @if ($errors->has('total_rooms'))
                 <small class="form-control-feedback text-danger">{{ $errors->first('total_rooms') }}</small>
@@ -161,7 +175,7 @@
             <div class="form-group">
               <label class="control-label">طبقه</label>
               <input autocomplete="off" type="number" min="0" id="floor" name="floor"
-                value="{{ old('floor', '') }}"
+                value="{{ app('request')->input('floor', '') }}"
                 class="form-control {{ $errors->has('floor') ? 'is-invalid' : '' }}">
               @if ($errors->has('floor'))
                 <small class="form-control-feedback text-danger">{{ $errors->first('floor') }}</small>
@@ -171,9 +185,9 @@
 
           <div class="col-md-2">
             <div class="form-group">
-              <label class="control-label">مساحت</label>
+              <label class="control-label">حداکثر مساحت</label>
               <input autocomplete="off" type="number" min="0" id="total_area" name="total_area"
-                value="{{ old('total_area', '') }}"
+                value="{{ app('request')->input('total_area', '') }}"
                 class="form-control {{ $errors->has('total_area') ? 'is-invalid' : '' }}">
               @if ($errors->has('total_area'))
                 <small class="form-control-feedback text-danger">{{ $errors->first('total_area') }}</small>
@@ -183,9 +197,9 @@
 
           <div class="col-md-2">
             <div class="form-group">
-              <label class="control-label">بنای مفید</label>
+              <label class="control-label">حداکثر بنای مفید</label>
               <input autocomplete="off" type="number" min="0" id="built_area" name="built_area"
-                value="{{ old('built_area', '') }}"
+                value="{{ app('request')->input('built_area', '') }}"
                 class="form-control {{ $errors->has('built_area') ? 'is-invalid' : '' }}">
               @if ($errors->has('built_area'))
                 <small class="form-control-feedback text-danger">{{ $errors->first('built_area') }}</small>
@@ -197,7 +211,7 @@
             <div class="form-group">
               <label class="control-label">حداکثر سن بنا</label>
               <input autocomplete="off" type="number" min="0" id="age" name="age"
-                value="{{ old('age', '') }}"
+                value="{{ app('request')->input('age', '') }}"
                 class="form-control {{ $errors->has('age') ? 'is-invalid' : '' }}">
               @if ($errors->has('age'))
                 <small class="form-control-feedback text-danger">{{ $errors->first('age') }}</small>
@@ -210,8 +224,11 @@
             <div class="form-group">
               <label class="control-label">نوع سند</label>
               <select name="deed" id="deed" class="form-control">
+                <option value="" selected>
+                  همه
+                </option>
                 @foreach (\App\Models\Property::deedList() as $index => $deed)
-                  <option value="{{ $index }}" {{old('deed') == $index ? 'selected' : ''}}>{{ $deed }}</option>
+                  <option value="{{ $index }}" {{app('request')->input('deed') == $index ? 'selected' : ''}}>{{ $deed }}</option>
                 @endforeach
               </select>
             </div>
@@ -221,8 +238,11 @@
             <div class="form-group">
               <label class="control-label">کاربری</label>
               <select name="usage" id="usage" class="form-control">
+                <option value="" selected>
+                  همه
+                </option>
                 @foreach (\App\Models\Property::usageList() as $index => $usage)
-                  <option value="{{ $index }}" {{old('usage') == $index ? 'selected' : ''}}>{{ $usage }}</option>
+                  <option value="{{ $index }}" {{app('request')->input('usage') == $index ? 'selected' : ''}}>{{ $usage }}</option>
                 @endforeach
               </select>
             </div>
@@ -232,8 +252,11 @@
             <div class="form-group">
               <label class="control-label">وضعیت سکنه</label>
               <select name="is_empty" id="is_empty" class="form-control">
-                <option value="0" {{old('is_empty') == 0 ? 'selected' : ''}}>خالی نمی باشد</option>
-                <option value="1" {{old('is_empty') == 1 ? 'selected' : ''}}>خالی می باشد</option>
+                <option value="" selected>
+                  مهم نیست
+                </option>
+                <option value="0" {{app('request')->input('is_empty') === 0 ? 'selected' : ''}}>خالی نمی باشد</option>
+                <option value="1" {{app('request')->input('is_empty') === 1 ? 'selected' : ''}}>خالی می باشد</option>
               </select>
             </div>
           </div>
@@ -241,31 +264,31 @@
           <div class="col-md-2">
             <div class="form-group">
               <label class="control-label">تاریخ تخلیه</label>
-              <input autocomplete="off" type="text" autocomplete="off" name="evacuation_date"
-                value="{{ old('evacuation_date', '') }}" name="evacuation_date"
+              <input autocomplete="off" type="text" autocomplete="off" id="evacuation_date"
+                value="{{ app('request')->input('evacuation_date', '') }}" name="evacuation_date"
                 class="form-control datepicker {{ $errors->has('evacuation_date') ? 'is-invalid' : '' }}">
               @if ($errors->has('evacuation_date'))
                 <small class="form-control-feedback text-danger">{{ $errors->first('evacuation_date') }}</small>
               @endif
             </div>
           </div>
-          <div class="col-md-2">
+          {{-- <div class="col-md-2">
             <div class="form-group">
               <label class="control-label">گرمایشی</label>
               <select name="heating" id="heating" class="form-control">
                 @foreach (\App\Models\Specification::heatingTypeList() as $index => $heating)
-                  <option value="{{ $index }}" {{old('heating') == $index ? 'checked' : ''}}>{{ $heating }}</option>
+                  <option value="{{ $index }}" {{app('request')->input('heating') == $index ? 'checked' : ''}}>{{ $heating }}</option>
                 @endforeach
               </select>
             </div>
-          </div>
+          </div> --}}
 
-          <div class="col-md-2">
+          {{-- <div class="col-md-2">
             <div class="form-group">
               <label class="control-label">آب</label>
-              <select name="water" id="period" class="form-control">
+              <select name="water" id="water" class="form-control">
                 @foreach (\App\Models\Specification::powerTypeList() as $index => $water)
-                  <option value="{{ $index }}" {{old('water') == $index ? 'checked' : ''}}>{{ $water }}</option>
+                  <option value="{{ $index }}" {{app('request')->input('water') == $index ? 'checked' : ''}}>{{ $water }}</option>
                 @endforeach
               </select>
             </div>
@@ -274,9 +297,9 @@
           <div class="col-md-2">
             <div class="form-group">
               <label class="control-label">برق</label>
-              <select name="electricity" id="period" class="form-control">
+              <select name="electricity" id="electricity" class="form-control">
                 @foreach (\App\Models\Specification::powerTypeList() as $index => $electricity)
-                  <option value="{{ $index }}" {{old('electricity') == $index ? 'checked' : ''}}>{{ $electricity }}</option>
+                  <option value="{{ $index }}" {{app('request')->input('electricity') == $index ? 'checked' : ''}}>{{ $electricity }}</option>
                 @endforeach
               </select>
             </div>
@@ -285,13 +308,13 @@
           <div class="col-md-2">
             <div class="form-group">
               <label class="control-label">گاز</label>
-              <select name="gas" id="period" class="form-control">
+              <select name="gas" id="gas" class="form-control">
                 @foreach (\App\Models\Specification::powerTypeList() as $index => $gas)
-                  <option value="{{ $index }}" {{old('gas') == $index ? 'checked' : ''}}>{{ $gas }}</option>
+                  <option value="{{ $index }}" {{app('request')->input('gas') == $index ? 'checked' : ''}}>{{ $gas }}</option>
                 @endforeach
               </select>
             </div>
-          </div>
+          </div> --}}
         </div>
         <div class="row">
           <div class="col-md-4">
@@ -299,14 +322,14 @@
               <label class="control-label">نوع درخواست</label>
               <br>
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="for_rent" {{old('for_rent') == 1 ? 'checked' : ''}} autocomplete="off"> اجاره
+                <label class="btn btn-secondary {{app('request')->input('for_rent') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="for_rent" id="for_rent" {{app('request')->input('for_rent') == true ? 'checked' : ''}} autocomplete="off"> اجاره
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="for_sell" {{old('for_sell') == 1 ? 'checked' : ''}} autocomplete="off"> فروش
+                <label class="btn btn-secondary {{app('request')->input('for_sell') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="for_sell" id="for_sell" {{app('request')->input('for_sell') == true ? 'checked' : ''}} autocomplete="off"> فروش
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="for_pre_sell" {{old('for_pre_sell') == 1 ? 'checked' : ''}} autocomplete="off"> پیش فروش
+                <label class="btn btn-secondary {{app('request')->input('for_pre_sell') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="for_pre_sell" id="for_pre_sell" {{app('request')->input('for_pre_sell') == true ? 'checked' : ''}} autocomplete="off"> پیش فروش
                 </label>
               </div>
             </div>
@@ -317,39 +340,39 @@
               <label class="control-label">سایر امکانات</label>
               <br>
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="parking" {{old('parking') == 1 ? 'checked' : ''}} autocomplete="off"> پارکینگ
+                <label class="btn btn-secondary {{app('request')->input('parking') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="parking" id="parking" {{app('request')->input('parking') == true ? 'checked' : ''}} autocomplete="off"> پارکینگ
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="storage" {{old('storage') == 1 ? 'checked' : ''}} autocomplete="off"> انباری
+                <label class="btn btn-secondary {{app('request')->input('storage') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="storage" id="storage" {{app('request')->input('storage') == true ? 'checked' : ''}} autocomplete="off"> انباری
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="elevator" {{old('elevator') == 1 ? 'checked' : ''}} autocomplete="off"> آسانسور
+                <label class="btn btn-secondary {{app('request')->input('elevator') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="elevator" id="elevator" {{app('request')->input('elevator') == true ? 'checked' : ''}} autocomplete="off"> آسانسور
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="balcony" {{old('balcony') == 1 ? 'checked' : ''}} autocomplete="off"> تراس
+                <label class="btn btn-secondary {{app('request')->input('balcony') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="balcony" id="balcony" {{app('request')->input('balcony') == true ? 'checked' : ''}} autocomplete="off"> تراس
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="yard" {{old('yard') == 1 ? 'checked' : ''}} autocomplete="off"> حیاط
+                <label class="btn btn-secondary {{app('request')->input('yard') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="yard" id="yard" {{app('request')->input('yard') == true ? 'checked' : ''}} autocomplete="off"> حیاط
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="parket" {{old('parket') == 1 ? 'checked' : ''}} autocomplete="off"> پارکت
+                <label class="btn btn-secondary {{app('request')->input('parket') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="parket" id="parket" {{app('request')->input('parket') == true ? 'checked' : ''}} autocomplete="off"> پارکت
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="cooling" {{old('cooling') == 1 ? 'checked' : ''}} autocomplete="off"> سرمایشی
+                <label class="btn btn-secondary {{app('request')->input('cooling') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="cooling" id="cooling" {{app('request')->input('cooling') == true ? 'checked' : ''}} autocomplete="off"> سرمایشی
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="telephone" {{old('telephone') == 1 ? 'checked' : ''}} autocomplete="off"> تلفن
+                <label class="btn btn-secondary {{app('request')->input('telephone') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="telephone" id="telephone" {{app('request')->input('telephone') == true ? 'checked' : ''}} autocomplete="off"> تلفن
                 </label>
-                <label class="btn btn-secondary">
-                  <input type="checkbox" name="cabinet" {{old('cabinet') == 1 ? 'checked' : ''}} autocomplete="off"> کابینت
+                <label class="btn btn-secondary {{app('request')->input('cabinet') == true ? 'active' : ''}}">
+                  <input type="checkbox" name="cabinet" id="cabinet" {{app('request')->input('cabinet') == true ? 'checked' : ''}} autocomplete="off"> کابینت
                 </label>
               </div>
             </div>
           </div>
         </div>
         <div class="form-actions text-left" >
-          <button type="submit" class="btn btn-success" onclick="submit_form()"> جستجو <i class="fa fa-search"></i> </button>
+          <button type="submit" class="btn btn-success" onclick="search()"> جستجو <i class="fa fa-search"></i> </button>
         </div>
       </div>
     </div>
@@ -472,18 +495,81 @@
   <script>
     filter = false;
     let params = {
-      "title": "{{ app('request')->input('title') ? app('request')->input('title') : '' }}",
-      "manager": "{{ app('request')->input('manager') ? app('request')->input('manager') : '' }}",
+      "city_id": "{{ app('request')->input('city_id') ? app('request')->input('city_id') : '' }}",
+      "area_id": "{{ app('request')->input('area_id') ? app('request')->input('area_id') : '' }}",
+      "complex_id": "{{ app('request')->input('complex_id') ? app('request')->input('complex_id') : '' }}",
+      "total_price": "{{ app('request')->input('total_price') ? app('request')->input('total_price') : '' }}",
+      "deposit": "{{ app('request')->input('deposit') ? app('request')->input('deposit') : '' }}",
+      "rent": "{{ app('request')->input('rent') ? app('request')->input('rent') : '' }}",
+      "landlord": "{{ app('request')->input('landlord') ? app('request')->input('landlord') : '' }}",
+      "type": "{{ app('request')->input('type') ? app('request')->input('type') : '' }}",
+      "total_rooms": "{{ app('request')->input('total_rooms') ? app('request')->input('total_rooms') : '' }}",
+      "floor": "{{ app('request')->input('floor') ? app('request')->input('floor') : '' }}",
+      "total_area": "{{ app('request')->input('total_area') ? app('request')->input('total_area') : '' }}",
+      "built_area": "{{ app('request')->input('built_area') ? app('request')->input('built_area') : '' }}",
+      "age": "{{ app('request')->input('age') ? app('request')->input('age') : '' }}",
+      "deed": "{{ app('request')->input('deed') ? app('request')->input('deed') : '' }}",
+      "usage": "{{ app('request')->input('usage') ? app('request')->input('usage') : '' }}",
+      "is_empty": "{{ app('request')->input('is_empty') ? app('request')->input('is_empty') : '' }}",
+      "evacuation_date": "{{ app('request')->input('evacuation_date') ? app('request')->input('evacuation_date') : '' }}",
+      // "heating": "{{ app('request')->input('heating') ? app('request')->input('heating') : '' }}",
+      // "water": "{{ app('request')->input('water') ? app('request')->input('water') : '' }}",
+      // "electricity": "{{ app('request')->input('electricity') ? app('request')->input('electricity') : '' }}",
+      // "gas": "{{ app('request')->input('gas') ? app('request')->input('gas') : '' }}",
+      "for_rent": "{{ app('request')->input('for_rent') ? app('request')->input('for_rent') : '' }}",
+      "for_sell": "{{ app('request')->input('for_sell') ? app('request')->input('for_sell') : '' }}",
+      "for_pre_sell": "{{ app('request')->input('for_pre_sell') ? app('request')->input('for_pre_sell') : '' }}",
+      "parking": "{{ app('request')->input('parking') ? app('request')->input('parking') : '' }}",
+      "storage": "{{ app('request')->input('storage') ? app('request')->input('storage') : '' }}",
+      "elevator": "{{ app('request')->input('elevator') ? app('request')->input('elevator') : '' }}",
+      "balcony": "{{ app('request')->input('balcony') ? app('request')->input('balcony') : '' }}",
+      "yard": "{{ app('request')->input('yard') ? app('request')->input('yard') : '' }}",
+      "parket": "{{ app('request')->input('parket') ? app('request')->input('parket') : '' }}",
+      "cooling": "{{ app('request')->input('cooling') ? app('request')->input('cooling') : '' }}",
+      "telephone": "{{ app('request')->input('telephone') ? app('request')->input('telephone') : '' }}",
+      "cabinet": "{{ app('request')->input('cabinet') ? app('request')->input('cabinet') : '' }}",
     }
 
     const search = () => {
       let query = '?'
-      params.title = $('#title').val();
-      params.manager = $('#manager').val();
+      params.city_id = $('#city_id').val();
+      params.area_id = $('#area_id').val();
+      params.complex_id = $('#complex_id').val();
+      params.total_price = $('#total_price').val();
+      params.deposit = $('#deposit').val();
+      params.rent = $('#rent').val();
+      params.landlord = $('#landlord').val();
+      params.type = $('#type').val();
+      params.total_rooms = $('#total_rooms').val();
+      params.floor = $('#floor').val();
+      params.total_area = $('#total_area').val();
+      params.built_area = $('#built_area').val();
+      params.age = $('#age').val();
+      params.deed = $('#deed').val();
+      params.usage = $('#usage').val();
+      params.is_empty = $('#is_empty').val();
+      params.evacuation_date = $('#evacuation_date').val();
+      // params.heating = $('#heating').val();
+      // params.water = $('#water').val();
+      // params.electricity = $('#electricity').val();
+      // params.gas = $('#gas').val();
+      params.for_rent = $('#for_rent').is(":checked");
+      params.for_sell = $('#for_sell').is(":checked");
+      params.for_pre_sell = $('#for_pre_sell').is(":checked");
+      params.parking = $('#parking').is(':checked');
+      params.storage = $('#storage').is(':checked');
+      params.elevator = $('#elevator').is(':checked');
+      params.balcony = $('#balcony').is(':checked');
+      params.yard = $('#yard').is(':checked');
+      params.parket = $('#parket').is(':checked');
+      params.cooling = $('#cooling').is(':checked');
+      params.telephone = $('#telephone').is(':checked');
+      params.cabinet = $('#cabinet').is(':checked');
       Object.entries(params).forEach(([key, value], index) => {
         if (value != "")
           query += `${key}=${value}&`
       });
+      // console.log(`{{ route('properties.index') }}` + query.slice(0, -1))
       window.location.href = `{{ route('properties.index') }}` + query.slice(0, -1)
     }
 
