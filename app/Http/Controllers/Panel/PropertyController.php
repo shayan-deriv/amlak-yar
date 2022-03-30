@@ -10,6 +10,7 @@ use App\Models\City;
 use App\Models\Area;
 use App\Models\Complex;
 use App\Models\Property;
+use App\Models\Attachment;
 use App\Models\Specification;
 use Carbon\Carbon;
 use App\Http\Requests\DoneeRequest;
@@ -157,8 +158,6 @@ class PropertyController extends Controller
   }
   public function store(Request $request)
   {
-
-    
     $this->validate($request, [
       'landlord' => 'required',
       'state_id' => 'required',
@@ -169,6 +168,7 @@ class PropertyController extends Controller
       'water' => 'required',
       'electricity' => 'required',
       'gas' => 'required',
+      'attachments.*' => ""
     ]);
 
     $property = Property::create([
@@ -234,6 +234,20 @@ class PropertyController extends Controller
       'farangi_toilet' => ($request->farangi_toilet && $request->farangi_toilet == "on") ? true : false,
       'evacuation_date' =>  $request->evacuation_date ? (\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $request->evacuation_date)->format('Y-m-d H:i:s')) : null
     ]);
+
+    if($request->hasFile('attachments')){
+      foreach($request->file('attachments') as $image)
+      {
+          $destinationPath = 'images/';
+          $filename = $image->getClientOriginalName();
+          $image->move($destinationPath, $filename);
+          $attachment = Attachment::create([
+            'property_id' => $property->id,
+            'url' => $destinationPath.$filename
+          ]);
+
+      }
+  }
 
     return redirect()->route('properties.index');
   }

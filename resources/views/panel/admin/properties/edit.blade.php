@@ -577,8 +577,6 @@
                         </select>
                       </div>
                     </div>
-
-
                   </div>
                 </div>
               </div>
@@ -700,6 +698,36 @@
                             </div>
                           </div>
                         </div>
+
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="control-label">تصاویر</label>
+                            <br>
+                            <div class="attachments_container">
+                              @foreach ($model->attachments as $index => $attachment)
+                                <div>
+                                  <span>
+                                    <a href='{{ asset("$attachment->url") }}' target='_blank'>
+                                      تصویر {{$index+1}}
+                                    </a>
+                                  </span>
+                                  |
+                                  <a href="#" >حذف</a>
+                                </div>
+                              @endforeach
+                            </div>
+                          </div>
+                        </div>
+
+                        @for ($i=0; $i < (5 - count($model->attachments)); $i++)
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="control-label">تصویر {{(count($model->attachments)+($i+1))}}</label>
+                                  <input type="file" autocomplete="off" name="attachments[]"> 
+                                </label>
+                            </div>
+                          </div>
+                        @endfor
 
                       </div>
                       <div class="form-actions text-left" style="margin-top:80px">

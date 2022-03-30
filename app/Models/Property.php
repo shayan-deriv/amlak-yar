@@ -169,5 +169,8 @@ class Property extends Model
     public function complex(){
         return $this->belongsTo(Complex::class,'complex_id','id');
     }
+    public function attachments(){
+        return $this->hasMany(Attachment::class, 'property_id', 'id');
+    }
     
 }
