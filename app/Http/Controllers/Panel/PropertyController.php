@@ -37,17 +37,17 @@ class PropertyController extends Controller
         $query->where('complex_id',$request->complex_id);
     }
     if($request->total_price){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->where('total_price',"<=",$request->total_price);
       });
     }
     if($request->deposit){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->where('deposit',"<=",$request->deposit);
       });
     }
     if($request->rent){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->where('rent',"<=",$request->rent);
       });
     }
@@ -79,12 +79,12 @@ class PropertyController extends Controller
       $query->where('usage',$request->usage);
     }
     if($request->is_empty){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->where('is_empty',$request->is_empty);
       });
     }
     if($request->evacuation_date){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->whereDate('evacuation_date',"<=",\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $request->evacuation_date)->format('Y-m-d H:i:s'));
       });
     }
@@ -125,22 +125,22 @@ class PropertyController extends Controller
       $query->where('yard',1);
     }
     if($request->parket){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->where('parket',1);
       });
     }
     if($request->cooling){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->where('cooling',1);
       });
     }
     if($request->telephone){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->where('telephone',1);
       });
     }
     if($request->cabinet){
-      $query->whereHas('specification',function($sub_query){
+      $query->whereHas('specification',function($sub_query)  use($request){
         $sub_query->where('cabinet',1);
       });
     }
