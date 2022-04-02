@@ -239,7 +239,7 @@ class PropertyController extends Controller
       foreach($request->file('attachments') as $image)
       {
           $destinationPath = 'images/';
-          $filename = $image->getClientOriginalName();
+          $filename = time()."_".str_random(10).".".pathinfo($image->getClientOriginalName(),PATHINFO_EXTENSION);
           $image->move($destinationPath, $filename);
           $attachment = Attachment::create([
             'property_id' => $property->id,
@@ -338,6 +338,20 @@ class PropertyController extends Controller
       'evacuation_date' =>  $request->evacuation_date ? (\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d', $request->evacuation_date)->format('Y-m-d H:i:s')) : null
     ]);
 
+    if($request->hasFile('attachments')){
+      foreach($request->file('attachments') as $image)
+      {
+          $destinationPath = 'images/';
+          $filename = time()."_".str_random(10).".".pathinfo($image->getClientOriginalName(),PATHINFO_EXTENSION);
+          $image->move($destinationPath, $filename);
+          $attachment = Attachment::create([
+            'property_id' => $property,
+            'url' => $destinationPath.$filename
+          ]);
+
+      }
+  }
+
     return redirect()->route('properties.index');
   }
 
@@ -388,5 +402,17 @@ class PropertyController extends Controller
     $areas = Area::all();
     $complexes = Complex::all();
     return view('panel.admin.properties.duplicate', compact('model', 'states', 'cities', 'areas', 'complexes'));
+  }
+
+  public function deleteAttachment($attachment){
+    $pic = Attachment::find($attachment);
+    $path_to_be_deleted = $pic->url;
+    if($pic->delete()){
+      if (file_exists($path_to_be_deleted)) {
+        @unlink($path_to_be_deleted);
+     }
+    }
+
+    return redirect()->back();
   }
 }

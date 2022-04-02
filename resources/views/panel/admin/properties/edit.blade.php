@@ -706,13 +706,14 @@
                             <div class="attachments_container">
                               @foreach ($model->attachments as $index => $attachment)
                                 <div>
-                                  <span>
-                                    <a href='{{ asset("$attachment->url") }}' target='_blank'>
-                                      تصویر {{$index+1}}
-                                    </a>
-                                  </span>
-                                  |
-                                  <a href="#" >حذف</a>
+                                  <div>
+                                    <div class="pic" style="background:url('{{asset("$attachment->url")}}');background-position: center;background-size: cover;"></div>
+                                    <div style="margin-top:20px;margin-bottom:20px;">
+                                      <a href="{{asset("$attachment->url")}}" target="_blank" >مشاهده</a>
+                                      |
+                                      <a href="{{route('properties.delete-attachment',$attachment->id)}}" >حذف</a>
+                                    </div>
+                                  </div>
                                 </div>
                               @endforeach
                             </div>

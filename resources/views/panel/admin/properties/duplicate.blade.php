@@ -700,6 +700,43 @@
                           </div>
                         </div>
 
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="control-label">تصویر 1</label>
+                                <input type="file" autocomplete="off" name="attachments[]"> 
+                              </label>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="control-label">تصویر 2</label>
+                                <input type="file" autocomplete="off" name="attachments[]"> 
+                              </label>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="control-label">تصویر 3</label>
+                                <input type="file" autocomplete="off" name="attachments[]"> 
+                              </label>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="control-label">تصویر 4</label>
+                                <input type="file" autocomplete="off" name="attachments[]"> 
+                              </label>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="control-label">تصویر 5</label>
+                                <input type="file" autocomplete="off" name="attachments[]"> 
+                              </label>
+                          </div>
+                        </div>
+
+
                       </div>
                       <div class="form-actions text-left" style="margin-top:80px">
                         <button type="submit" class="btn btn-success" onclick="submit_form()"> ثبت <i class="fa fa-check"></i> </button>

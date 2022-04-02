@@ -8940,3 +8940,9 @@ a:hover {
  .alphabetic-number {
     font-size: 14px !important;
 }
+
+.pic {
+    background-color: #e4e4e4;
+    width: 100px;
+    height: 100px;
+}
