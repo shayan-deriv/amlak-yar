@@ -247,7 +247,7 @@ class PropertyController extends Controller
           ]);
 
       }
-  }
+    }
 
     return redirect()->route('properties.index');
   }
@@ -350,7 +350,7 @@ class PropertyController extends Controller
           ]);
 
       }
-  }
+    }
 
     return redirect()->route('properties.index');
   }
@@ -386,7 +386,9 @@ class PropertyController extends Controller
   {
     $model = Property::published()
       ->join('specifications', 'specifications.property_id', '=', 'properties.id')
+      ->where('for_rent',1)
       ->where('specifications.evacuation_date', '<=', Carbon::now()->addDays(60)->toDateString())
+      ->where('specifications.evacuation_date', '>=', Carbon::now()->toDateString())
       ->orderBy('specifications.evacuation_date')
       ->paginate(50);
 
