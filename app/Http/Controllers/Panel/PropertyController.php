@@ -144,6 +144,11 @@ class PropertyController extends Controller
         $sub_query->where('cabinet',1);
       });
     }
+
+    if($request->for_colleague){
+      $query->where('for_colleague',1);
+    }
+
     $model = $query->orderByDesc('created_at')->paginate(50);
     $model->appends($request->except('page'));
     return view('panel.admin.properties.index', compact('model', 'states', 'cities', 'areas', 'complexes'));
@@ -247,7 +252,7 @@ class PropertyController extends Controller
           ]);
 
       }
-  }
+    }
 
     return redirect()->route('properties.index');
   }
@@ -350,7 +355,7 @@ class PropertyController extends Controller
           ]);
 
       }
-  }
+    }
 
     return redirect()->route('properties.index');
   }
@@ -386,9 +391,12 @@ class PropertyController extends Controller
   {
     $model = Property::published()
       ->join('specifications', 'specifications.property_id', '=', 'properties.id')
+      ->where('for_rent',1)
+      ->where('specifications.evacuation_date', '!=', null )
       ->where('specifications.evacuation_date', '<=', Carbon::now()->addDays(60)->toDateString())
+      ->where('specifications.evacuation_date', '>=', Carbon::now()->toDateString())
       ->orderBy('specifications.evacuation_date')
-      ->paginate(50);
+      ->paginate(50); 
 
     $model->appends($request->except('page'));
     return view('panel.admin.to_be_evacuated.index', compact('model'));

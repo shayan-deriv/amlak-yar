@@ -12,108 +12,124 @@
 @section('content')
   <div class="row">
     <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-usd f-s-40 color-primary"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2>{{currency_to_per(20)}} </h2>
-            <p class="m-b-0">ویلایی</p>
+      <a href="{{route('properties.index')}}?type=1">
+        <div class="card p-30">
+          <div class="media">
+            <div class="media-left meida media-middle">
+              <span><i class="fa fa-usd f-s-40 color-primary"></i></span>
+            </div>
+            <div class="media-body media-text-right">
+              <h2>{{$counts['villa']}} </h2>
+              <p class="m-b-0">ویلایی</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-shopping-cart f-s-40 color-success"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2>{{eng_to_per(10)}} </h2>
-            <p class="m-b-0">آپارتمان</p>
+      <a href="{{route('properties.index')}}?type=3">
+        <div class="card p-30">
+          <div class="media">
+            <div class="media-left meida media-middle">
+              <span><i class="fa fa-shopping-cart f-s-40 color-success"></i></span>
+            </div>
+            <div class="media-body media-text-right">
+              <h2>{{$counts['apartment']}} </h2>
+              <p class="m-b-0">آپارتمان</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-home f-s-40 color-warning"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2>{{eng_to_per(5)}}</h2>
-            <p class="m-b-0">زمین</p>
+      <a href="{{route('properties.index')}}?type=2">
+        <div class="card p-30">
+          <div class="media">
+            <div class="media-left meida media-middle">
+              <span><i class="fa fa-home f-s-40 color-warning"></i></span>
+            </div>
+            <div class="media-body media-text-right">
+              <h2>{{$counts['field']}}</h2>
+              <p class="m-b-0">زمین</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-user f-s-40 color-danger"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2>{{eng_to_per(4)}} </h2>
-            <p class="m-b-0">زمین بزرگ</p>
+      <a href="{{route('properties.index')}}?type=5">
+        <div class="card p-30">
+          <div class="media">
+            <div class="media-left meida media-middle">
+              <span><i class="fa fa-user f-s-40 color-danger"></i></span>
+            </div>
+            <div class="media-body media-text-right">
+              <h2>{{$counts['large_field']}} </h2>
+              <p class="m-b-0">زمین بزرگ</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-usd f-s-40 color-info"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2>{{eng_to_per(3)}}</h2>
-            <p class="m-b-0">سایر</p>
+      <a href="{{route('properties.index')}}?type=6">
+        <div class="card p-30">
+          <div class="media">
+            <div class="media-left meida media-middle">
+              <span><i class="fa fa-usd f-s-40 color-info"></i></span>
+            </div>
+            <div class="media-body media-text-right">
+              <h2>{{$counts['other']}}</h2>
+              <p class="m-b-0">سایر</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-gratipay f-s-40 color-success"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2>{{eng_to_per(2)}} </h2>
-            <p class="m-b-0">مورد اجاره ای</p>
+      <a href="{{route('properties.index')}}?for_rent=true">
+        <div class="card p-30">
+          <div class="media">
+            <div class="media-left meida media-middle">
+              <span><i class="fa fa-gratipay f-s-40 color-success"></i></span>
+            </div>
+            <div class="media-body media-text-right">
+              <h2>{{$counts['for_rent']}} </h2>
+              <p class="m-b-0">مورد اجاره ای</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-edit f-s-40 color-primary"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2>{{eng_to_per(8)}} </h2>
-            <p class="m-b-0">مورد فروشی</p>
+      <a href="{{route('properties.index')}}?for_sell=true">
+        <div class="card p-30">
+          <div class="media">
+            <div class="media-left meida media-middle">
+              <span><i class="fa fa-edit f-s-40 color-primary"></i></span>
+            </div>
+            <div class="media-body media-text-right">
+              <h2>{{$counts['for_sell']}} </h2>
+              <p class="m-b-0">مورد فروشی</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-handshake-o f-s-40 color-warning"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2>{{eng_to_per(6)}} </h2>
-            <p class="m-b-0">همکاران</p>
+      <a href="{{route('properties.index')}}?for_colleague=true">
+        <div class="card p-30">
+          <div class="media">
+            <div class="media-left meida media-middle">
+              <span><i class="fa fa-handshake-o f-s-40 color-warning"></i></span>
+            </div>
+            <div class="media-body media-text-right">
+              <h2>{{$counts['for_colleague']}} </h2>
+              <p class="m-b-0">همکاران</p>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
   {{-- <div class="row">
