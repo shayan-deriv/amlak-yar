@@ -707,7 +707,7 @@
                               @foreach ($model->attachments as $index => $attachment)
                                 <div>
                                   <div>
-                                    <div class="pic" style="background:url('{{asset("$attachment->url")}}');background-position: center;background-size: cover;"></div>
+                                    <div class="pic" style="width:100px;height:100px;background:url('{{asset("$attachment->url")}}');background-position: center;background-size: cover;"></div>
                                     <div style="margin-top:20px;margin-bottom:20px;">
                                       <a href="{{asset("$attachment->url")}}" target="_blank" >مشاهده</a>
                                       |
