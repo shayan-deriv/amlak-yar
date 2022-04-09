@@ -370,6 +370,15 @@
               </div>
             </div>
           </div>
+
+          <div class="col-md-12" style="margin-bottom:25px;">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" {{app('request')->input('for_colleague') == true ? 'checked' : ''}} name="for_colleague" id="for_colleague">
+              <label class="form-check-label" for="for_colleague" style="    margin-right: 20px;">
+                برای همکار
+              </label>
+            </div>
+          </div>
         </div>
         <div class="form-actions text-left" >
           <button type="submit" class="btn btn-success" onclick="search()"> جستجو <i class="fa fa-search"></i> </button>
