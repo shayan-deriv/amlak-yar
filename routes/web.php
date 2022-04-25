@@ -48,6 +48,7 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::get('/edit/{property}', [PropertyController::class,'edit'])->name('edit');
         Route::patch('/update/{property}', [PropertyController::class,'update'])->name('update');
         Route::get('/archive', [PropertyController::class,'archive'])->name('archive');
+        Route::get('/delete', [PropertyController::class,'delete'])->name('delete');
         Route::get('/publish', [PropertyController::class,'publish'])->name('publish');
         Route::get('/archived', [PropertyController::class,'archived'])->name('archived');
         Route::get('/delete-attachment/{attachment}', [PropertyController::class,'deleteAttachment'])->name('delete-attachment');

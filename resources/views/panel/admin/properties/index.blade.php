@@ -463,6 +463,13 @@
                               {{-- <i  class="fa fa-close" aria-hidden="true"></i> --}}
                               <span class="">بایگانی</span>
                             </a>
+
+                            <span style="padding: 0 2px;border-right:1px solid;"></span>
+                            <a class="has-arrow" href="{{ route('properties.delete') }}?id={{ $item->id }}" onclick="return confirm('اطمینان دارید؟')"
+                              aria-expanded="false" style="color:red">
+                              {{-- <i  class="fa fa-close" aria-hidden="true"></i> --}}
+                              <span class="">حذف</span>
+                            </a>
                           </td>
                         </tr>
 

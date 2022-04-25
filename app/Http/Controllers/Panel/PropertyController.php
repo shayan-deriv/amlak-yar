@@ -370,6 +370,16 @@ class PropertyController extends Controller
     return redirect()->route('properties.index');
   }
 
+  public function delete(Request $request)
+  {
+
+    Property::where('id', $request->id)->update([
+      'status' => Property::DELETED
+    ]);
+
+    return redirect()->route('properties.index');
+  }
+
   public function archived(Request $request)
   {
     $model = Property::archived()->orderByDesc('created_at')->paginate(50);

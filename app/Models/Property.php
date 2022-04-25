@@ -122,6 +122,7 @@ class Property extends Model
     //status
     const PUBLISHED = 1;
     const ARCHIVED = 2;
+    const DELETED = 3;
 
     public static function statusList()
     {
