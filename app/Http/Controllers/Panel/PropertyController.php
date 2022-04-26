@@ -372,10 +372,9 @@ class PropertyController extends Controller
 
   public function delete(Request $request)
   {
-
-    Property::where('id', $request->id)->update([
-      'status' => Property::DELETED
-    ]);
+    $id = $request->id;
+    Specification::where('property_id',$id)->delete();
+    Property::where('id', $id)->delete();
 
     return redirect()->route('properties.index');
   }
@@ -399,11 +398,25 @@ class PropertyController extends Controller
 
   public function toBeEvacuated(Request $request)
   {
-    $model = Property::published()
-      ->join('specifications', 'specifications.property_id', '=', 'properties.id')
+    $model = Property::join('specifications', 'specifications.property_id', '=', 'properties.id')
+      ->join('cities', 'cities.id', '=', 'properties.city_id')
+      ->join('areas', 'areas.id', '=', 'properties.area_id')
+      ->select([
+        'properties.id as id',
+        'properties.type as type',
+        'properties.landlord as landlord',
+        'properties.for_rent as for_rent',
+        'properties.for_sell as for_sell',
+        'properties.address as address',
+        'properties.for_pre_sell as for_pre_sell',
+        'specifications.evacuation_date as evacuation_date',
+        'cities.name as city',
+        'areas.name as area',
+
+      ])
       ->where('for_rent',1)
       ->where('specifications.evacuation_date', '!=', null )
-      ->where('specifications.evacuation_date', '<=', Carbon::now()->addDays(60)->toDateString())
+      ->where('specifications.evacuation_date', '<=', Carbon::now()->addDays(45)->toDateString())
       ->where('specifications.evacuation_date', '>=', Carbon::now()->toDateString())
       ->orderBy('specifications.evacuation_date')
       ->paginate(50); 

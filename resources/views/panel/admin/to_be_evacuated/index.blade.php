@@ -44,9 +44,9 @@
                             {{ $item->for_sell ? '/ فروش' : '' }}
                             {{ $item->for_pre_sell ? '/ پیش فروش' : '' }}
                           </td>
-                          <td data-title="آدرس" class="simti_td_center">{{ $item->city->name }} {{ $item->area ? ' - '.$item->area->name : ''}} {{ $item->complex ? ' - مجتمع '.$item->complex->title : ''}} - {{ $item->address}}</td>
+                          <td data-title="آدرس" class="simti_td_center">{{ $item->city }} {{ $item->area ? ' - '.$item->area : ''}} {{ $item->complex ? ' - مجتمع '.$item->complex->title : ''}} - {{ $item->address}}</td>
                           <td data-title="مالک" class="simti_td_center">
-                            {{\Morilog\Jalali\Jalalian::fromDateTime($item->specification->evacuation_date)->format('Y-m-d')}}
+                            {{\Morilog\Jalali\Jalalian::fromDateTime(($item->specification->evacuation_date ?? ''))->format('Y-m-d')}}
                           </td>
                           
 

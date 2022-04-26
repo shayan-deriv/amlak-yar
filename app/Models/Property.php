@@ -173,5 +173,17 @@ class Property extends Model
     public function attachments(){
         return $this->hasMany(Attachment::class, 'property_id', 'id');
     }
+
+    public function delete()
+    {
+        // delete all related photos 
+        $this->specification()->delete();
+        // as suggested by Dirk in comment,
+        // it's an uglier alternative, but faster
+        // Photo::where("user_id", $this->id)->delete()
+
+        // delete the user
+        return $this->delete();
+    }
     
 }
