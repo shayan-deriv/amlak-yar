@@ -266,6 +266,19 @@
                         </li>
 
                         <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="fa fa-folder" aria-hidden="true"></i>
+                                <span class="hide-menu">مخاطبین
+                                    {{--  <span class="label label-rouded label-primary pull-right">۲</span>  --}}
+                                </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{route('contacts.index')}}">همه مخاطبین </a></li>
+                                <li><a href="{{route('contacts.create')}}">مخاطب جدید </a></li>
+                            </ul>
+                        </li>
+
+                        <li>
                             <a href="{{route('to_be_evacuated')}}">
                                 <i class="fa  fa-calendar" aria-hidden="true"></i>
                                 <span class="hide-menu">نزدیک تخلیه</span>
@@ -278,6 +291,8 @@
                                 <span class="hide-menu">بکاپ اطلاعات</span>
                             </a>
                         </li>
+
+                        
 
                         {{-- <li>
                             <a href="{{route('settings.show')}}">

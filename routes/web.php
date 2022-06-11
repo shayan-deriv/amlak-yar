@@ -8,6 +8,7 @@ use App\Http\Controllers\Panel\ColleagueController;
 use App\Http\Controllers\Panel\AreaController;
 use App\Http\Controllers\Panel\ComplexController;
 use App\Http\Controllers\Panel\BackupController;
+use App\Http\Controllers\Panel\COntactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +83,15 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::get('/archive', [ColleagueController::class,'archive'])->name('archive');
         Route::get('/publish', [ColleagueController::class,'publish'])->name('publish');
         Route::get('/archived', [ColleagueController::class,'archived'])->name('archived');
+    });
+
+    Route::prefix('contacts')->name('contacts.')->group(function () {
+        Route::get('/', [ContactController::class,'index'])->name('index');
+        Route::get('/create', [ContactController::class,'create'])->name('create');
+        Route::post('/store', [ContactController::class,'store'])->name('store');
+        Route::get('/edit/{contact}', [ContactController::class,'edit'])->name('edit');
+        Route::patch('/update/{contact}', [ContactController::class,'update'])->name('update');
+        Route::get('/delete', [ContactController::class,'delete'])->name('delete');
     });
 
     Route::prefix('archived')->name('archived.')->group(function () {
