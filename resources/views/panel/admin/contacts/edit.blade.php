@@ -59,19 +59,19 @@
 @endsection
 @section('page_title')
 <div class="col-md-5 align-self-center">
-  <h3 class="text-primary"> افزودن بنگاه</h3>
+  <h3 class="text-primary"> ویرایش مخاطب</h3>
 </div>
 <div class="col-md-7 align-self-center">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="javascript:void(0)">داشبورد</a></li>
-    <li class="breadcrumb-item active">بنگاه</li>
-    <li class="breadcrumb-item active">جدید </li>
+    <li class="breadcrumb-item active">مخاطب</li>
+    <li class="breadcrumb-item active">{{$model->name}} </li>
   </ol>
 </div>
 @endsection
 
 @section('content')
-<form id="property_form" action="{{ route('colleagues.update',$model->id) }}" method="POST" enctype="multipart/form-data">
+<form id="property_form" action="{{ route('contacts.update',$model->id) }}" method="POST" >
   @csrf
   @method('PATCH')
   <div class="row">
@@ -84,107 +84,21 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="control-label">نام بنگاه</label>
-                      <input autocomplete="off" type="text" id="title" name="title" value="{{ old('title', $model->title) }}"
-                        class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
-                      @if ($errors->has('title'))
-                      <small class="form-control-feedback text-danger">{{ $errors->first('title') }}</small>
+                      <label class="control-label">نام مخاطب</label>
+                      <input autocomplete="off" type="text" id="name" name="name" value="{{ old('name', $model->name) }}"
+                        class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}">
+                      @if ($errors->has('name'))
+                      <small class="form-control-feedback text-danger">{{ $errors->first('name') }}</small>
                       @endif
                     </div>
                   </div>
-
-                  <div class="col-md-4">
+                  <div class="col-md-8">
                     <div class="form-group">
-                      <label class="control-label">صاحب بنگاه</label>
-                      <input autocomplete="off" type="text" id="owner" name="owner" value="{{ old('owner', $model->owner) }}"
-                        class="form-control {{ $errors->has('owner') ? 'is-invalid' : '' }}">
-                      @if ($errors->has('owner'))
-                      <small class="form-control-feedback text-danger">{{ $errors->first('owner') }}</small>
-                      @endif
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="control-label">موبایل 1</label>
-                      <input autocomplete="off" type="text" id="primary_mobile" name="primary_mobile"
-                        class="form-control {{ $errors->has('primary_mobile') ? 'is-invalid' : '' }}" maxlength="11"
-                        value="{{ old('primary_mobile', $model->primary_mobile) }}" onkeyup="onlyNumber(this)">
-                      @if ($errors->has('primary_mobile'))
-                      <small class="form-control-feedback text-danger">{{ $errors->first('primary_mobile') }}</small>
-                      @endif
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="control-label">موبایل 2</label>
-                      <input autocomplete="off" type="text" id="secondary_mobile" name="secondary_mobile"
-                        class="form-control {{ $errors->has('secondary_mobile') ? 'is-invalid' : '' }}" maxlength="11"
-                        value="{{ old('secondary_mobile', $model->secondary_mobile) }}" onkeyup="onlyNumber(this)">
-                      @if ($errors->has('secondary_mobile'))
-                      <small class="form-control-feedback text-danger">{{ $errors->first('secondary_mobile') }}</small>
-                      @endif
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="control-label">شماره تلفن </label>
-                      <input autocomplete="off" maxlength="11" type="text" id="phone" name="phone"
-                        class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                        value="{{ old('phone', $model->phone) }}" onkeyup="onlyNumber(this)">
-                      @if ($errors->has('phone'))
-                      <small class="form-control-feedback text-danger">{{ $errors->first('phone') }}</small>
-                      @endif
-                    </div>
-                  </div>
-
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="control-label">استان</label>
-                      <select name="state_id" id="state_id" class="form-control selectpicker show-tick"
-                        data-live-search="true">
-                        @foreach ($states as $state)
-                        <option value="{{ $state->id }}" {{ old('state_id',$model->state_id)==$state->id ? 'selected' : '' }}>
-                          {{ $state->fa_name }}
-                        </option>
-                        @endforeach
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="control-label">شهر</label>
-                      <select name="city_id" id="city_id" class="form-control selectpicker show-tick"
-                        data-live-search="true">
-                        @foreach ($cities as $city)
-                        <option value="{{ $city->id }}" {{ old('city_id',$model->city_id)==$city->id ? 'selected' : '' }}>
-                          {{ $city->name }}
-                        </option>
-                        @endforeach
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="control-label">محله</label>
-                      <select name="area_id" id="area_id" class="form-control selectpicker show-tick"
-                        data-live-search="true">
-                        @foreach ($areas as $area)
-                        <option value="{{ $area->id }}" {{ old('area_id',$model->area_id)==$area->id ? 'selected' : '' }}>
-                          {{ $area->name }}
-                        </option>
-                        @endforeach
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label class="control-label">آدرس</label>
-                      <input autocomplete="off" type="text" id="address" name="address"
-                        class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
-                        value="{{ old('address', $model->address) }}">
-                      @if ($errors->has('address'))
-                      <small class="form-control-feedback text-danger">{{ $errors->first('address') }}</small>
+                      <label class="control-label">شماره ها</label>
+                      <textarea autocomplete="off" type="text" id="phones" name="phones" style="height:100px;padding:10px"
+                        class="form-control {{ $errors->has('phones') ? 'is-invalid' : '' }}">{{ old('phones', $model->phones) }}</textarea>
+                      @if ($errors->has('phones'))
+                      <small class="form-control-feedback text-danger">{{ $errors->first('phones') }}</small>
                       @endif
                     </div>
                   </div>

@@ -16,6 +16,10 @@ class ContactController extends Controller
             $query->where('name','like',"%$request->name%");
         }
 
+        if($request->phones){
+            $query->where('phones','like',"%$request->phones%");
+        }
+
         $model = $query->orderByDesc('created_at')->paginate(50);
         $model->appends($request->except('page'));
         return view('panel.admin.contacts.index', compact('model'));
@@ -47,6 +51,7 @@ class ContactController extends Controller
     public function update(Request $request, $contact){
         $this->validate($request, [
             'name' => 'required',
+            'phones' => 'required',
         ]);
         
         Contact::where('id',$contact)->update($request->except(['_token','_method']));

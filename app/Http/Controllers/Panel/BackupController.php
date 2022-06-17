@@ -16,7 +16,7 @@ class BackupController extends Controller
         $mysqlPassword      = env('DB_PASSWORD');
         $DbName             = env('DB_DATABASE');
         $backup_name        = "amlakyar_";
-        $tables             = array("users", "password_resets", "failed_jobs", "personal_access_tokens", "states", "cities", "areas", "complexes", "properties", "specifications", "colleagues","attachments", "migrations");
+        $tables             = array("users", "password_resets", "failed_jobs", "personal_access_tokens", "states", "cities", "areas", "complexes", "properties", "specifications", "colleagues","attachments","contacts", "migrations");
 
         $connect = new \PDO("mysql:host=$mysqlHostName;dbname=$DbName;charset=utf8", "$mysqlUserName", "$mysqlPassword", array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
         $get_all_table_query = "SHOW TABLES";
