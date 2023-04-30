@@ -8,7 +8,7 @@ use App\Http\Controllers\Panel\ColleagueController;
 use App\Http\Controllers\Panel\AreaController;
 use App\Http\Controllers\Panel\ComplexController;
 use App\Http\Controllers\Panel\BackupController;
-use App\Http\Controllers\Panel\COntactController;
+use App\Http\Controllers\Panel\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ Route::namespace('Panel')->middleware('auth')->group(function () {
         Route::patch('/update/{complex}', [ComplexController::class,'update'])->name('update');
     });
 
-    
+
     Route::prefix('colleagues')->name('colleagues.')->group(function () {
         Route::get('/', [ColleagueController::class,'index'])->name('index');
         Route::get('/create', [ColleagueController::class,'create'])->name('create');
